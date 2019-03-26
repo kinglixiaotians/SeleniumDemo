@@ -1,5 +1,6 @@
-package com.selenium.test;
+package com.selenium.test.flx;
 
+import com.selenium.test.flx.order.editOrder;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.util.ImageHelper;
 import org.apache.commons.io.FileUtils;
@@ -16,10 +17,11 @@ import java.io.IOException;
  * Created by 李啸天 on 2019/3/22.
  */
 public class demoFlx {
-    WebDriver driver ;
+    WebDriver driver;
     public String windowsHandle;
     public String customNo;
-    public static String instanFile(String fileUrl){
+
+    public static String instanFile(String fileUrl) {
         String result = null;
         try {
             File imageFile = new File(fileUrl);
@@ -29,68 +31,70 @@ public class demoFlx {
             //将验证码图片的内容识别为字符串
             result = instance.doOCR(imageFile);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    public void taskScreenShot(){
+    public void taskScreenShot() {
         long date = System.currentTimeMillis();
         String path = String.valueOf(date);
         String cusPath = System.getProperty("user.dir");
-        path = path+".png";
-        String screenPath = cusPath+"/"+path;
+        path = path + ".png";
+        String screenPath = cusPath + "/" + path;
         System.out.println(screenPath);
         //实现截图
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(file,new File(screenPath));
-        }catch (IOException e){
+            FileUtils.copyFile(file, new File(screenPath));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    public static void saveImage(WebDriver driver,String imageUrl){
+    public static void saveImage(WebDriver driver, String imageUrl) {
         try {
             WebElement ele = driver.findElement(By.id("imgVerifyCode"));
             //读取图片id下面的图片
-            File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             // Get entire page screenshot
-            BufferedImage fullImg= ImageIO.read(screenshot);
+            BufferedImage fullImg = ImageIO.read(screenshot);
             // Get the location of element on the page
-            org.openqa.selenium.Point point= ele.getLocation();
+            org.openqa.selenium.Point point = ele.getLocation();
             // Get width and height of the element
-            int eleWidth= ele.getSize().getWidth();
-            int eleHeight= ele.getSize().getHeight();
+            int eleWidth = ele.getSize().getWidth();
+            int eleHeight = ele.getSize().getHeight();
             // Crop the entire page screenshot to get only element screenshot
-            BufferedImage eleScreenshot= fullImg.getSubimage(point.getX(), point.getY(), eleWidth, eleHeight);
+            BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), point.getY(), eleWidth, eleHeight);
             //eleScreenshot = ImageHelper.convertImageToBinary(eleScreenshot);
             //放大五倍
             eleScreenshot = ImageHelper.getScaledInstance(eleScreenshot, eleWidth * 3, eleHeight * 2);
             ImageIO.write(eleScreenshot, "png", screenshot);
             // Copy the element screenshot to disk
 
-            File screenshotLocation= new File(imageUrl);
+            File screenshotLocation = new File(imageUrl);
             FileUtils.copyFile(screenshot, screenshotLocation);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public static boolean isAlertPersent(WebDriver driver){
+    public static boolean isAlertPersent(WebDriver driver) {
         try {
             driver.switchTo().alert();
             return true;
-        }catch (NoAlertPresentException e){return false;}
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
     }
 
     @Test
-    public boolean runs(){
+    public boolean runs() {
         //chrom插件路径
-        System.setProperty("webdriver.chrome.driver", "E:\\2019\\driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\IDEA\\chromedriver\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("http://192.168.2.100:28080/FlxServer/coframe/auth/login/login.jsp");
         driver.manage().window().maximize();
@@ -98,26 +102,35 @@ public class demoFlx {
             Thread.sleep(1000);
             //登录
             windowsHandle = driver.getWindowHandle();
-            driver.findElement(By.id("userId")).sendKeys("100003");
+            driver.findElement(By.id("userId")).sendKeys("100004");
             driver.findElement(By.id("password")).sendKeys("000000");
             driver.findElement(By.className("log")).click();
             Thread.sleep(500);
-            //客户管理
-            driver.findElement(By.id("1061")).click();
-            //客户开户档案
-            driver.findElement(By.id("1062")).click();
-            Thread.sleep(2000);
-            this.saveCustom();
+//            //客户管理
+//            driver.findElement(By.id("1061")).click();
+//            //客户开户档案
+//            driver.findElement(By.id("1062")).click();
+//            Thread.sleep(2000);
+//            this.saveCustom();
+//            Thread.sleep(1000);
+//            this.queryCustom();
+//            Thread.sleep(1000);
+//            this.updateCustom();
+
+            //销售管理
+            driver.findElement(By.id("1081")).click();
+            //订单录入
+            driver.findElement(By.id("1103")).click();
             Thread.sleep(1000);
-            this.queryCustom();
-        }catch (Exception e){
+            editOrder.entryOrder("01510225");
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return true;
     }
 
     @Test
-    public void queryCustom(){
+    public void queryCustom() {
         driver.switchTo().frame("mainframe");
         driver.findElement(By.id("customNo$text")).click();
         driver.findElement(By.id("customNo$text")).sendKeys(customNo);
@@ -126,8 +139,9 @@ public class demoFlx {
         driver.findElement(By.className("mini-button-text")).click();
         driver.switchTo().defaultContent();
     }
+
     @Test
-    public void saveCustom(){
+    public void saveCustom() {
         try {
             driver.switchTo().frame("mainframe");
             //点击添加按钮，弹出添加界面
@@ -138,7 +152,6 @@ public class demoFlx {
             Thread.sleep(1000);
             driver.findElement(By.id("mini-17"));
             driver.findElement(By.className("mini-panel-body"));
-
 
 
             driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"mini-17\"]/div/div[2]/div[2]/iframe")));
@@ -165,9 +178,9 @@ public class demoFlx {
             driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"mini-17\"]/div/div[2]/div[2]/iframe")));
             //授权人姓名，身份证，电话
             driver.findElement(By.id("entity.contactPerson$text")).click();
-            driver.findElement(By.id("entity.contactPerson$text")).sendKeys("lxt");
+            driver.findElement(By.id("entity.contactPerson$text")).sendKeys("dzk");
             driver.findElement(By.id("entity.contactPersonIdcard$text")).click();
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("42102319960722521X");
+            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("420984199701051755");
             driver.findElement(By.id("entity.cellPhone$text")).click();
             driver.findElement(By.id("entity.cellPhone$text")).sendKeys("12345678912");
             //主站需要进行实名认证
@@ -182,24 +195,65 @@ public class demoFlx {
             driver.findElement(By.id("mini-119")).click();
             Thread.sleep(500);
             driver.findElement(By.id("mini-117")).click();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Test
-    public void testrun(){
+    public void updateCustom() {
+        try {
+            //如果是直接查询就需要，先添加再查询就注释
+            driver.switchTo().frame("mainframe");
+
+            driver.findElement(By.className("mini-grid-radio-mask")).click();
+            //点击修改按钮，弹出修改界面
+            driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-edit")).click();
+            //返回主窗体，进入修改页面
+            driver.switchTo().defaultContent();
+            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
+            //driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"mini-2\"]/div/div[2]/div[2]/iframe")));
+            //修改 企业档案 授权人信息
+            driver.findElement(By.id("entity.contactPerson$text")).clear();
+            driver.findElement(By.id("entity.contactPerson$text")).sendKeys("dzk123");
+            //主站需要进行实名认证
+            driver.findElement(By.id("certbtn")).click();
+            Thread.sleep(1000);
+            //认证失败---点击alert继续
+            driver.findElement(By.id("mini-117")).click();
+
+            //修改 协议信息
+            driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
+            driver.findElement(By.id("mini-62$ck$0")).click();
+            driver.findElement(By.id("mini-62$ck$20")).click();
+            //保存
+            driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-save")).click();
+            Thread.sleep(500);
+            driver.findElement(By.id("mini-119")).click();
+            Thread.sleep(500);
+            driver.findElement(By.id("mini-125")).click();
+            Thread.sleep(500);
+            driver.findElement(By.id("mini-123")).click();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testrun() {
         demoFlx de = new demoFlx();
         de.runs();
     }
 
-    public boolean isAlert(WebDriver driver){
+    public boolean isAlert(WebDriver driver) {
         try {
             driver.switchTo().alert();
             System.out.println("当前有弹窗！！");
             return true;
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
 
-            return false;}
+            return false;
+        }
     }
 
 }

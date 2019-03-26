@@ -99,7 +99,7 @@ public class demo1  {
         }catch (NoAlertPresentException e){return false;}
     }
 
-    @Test
+    //@Test
     public boolean runs(){
         //chrom插件路径
         System.setProperty("webdriver.chrome.driver", "E:\\2019\\driver\\chromedriver.exe");
@@ -137,7 +137,7 @@ public class demo1  {
         return true;
     }
 
-    @Test(description = "福优网测试登录案例")
+    //@Test(description = "福优网测试登录案例")
     public void testrun(){
         demo1 de = new demo1();
         boolean flag = de.runs();
