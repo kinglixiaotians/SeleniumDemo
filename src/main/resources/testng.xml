@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="D:/idea_workspace/SeleniumDemo">
+        <classes>
+            <class name="com.selenium.test.demo1">
+                <methods>
+                    <include name="runs"/><include name="testrun"/>
+                </methods>
+            </class>
+            <class name="com.selenium.test.demoFlx">
+                <methods>
+                    <include name="runs"/>
+                    <include name="queryCustom"/>
+                    <include name="saveCustom"/>
+                    <include name="testrun"/>
+                </methods>
+            </class>
+            <class name="com.selenium.DemoApplicationTests">
+                <methods>
+                    <include name="contextLoads"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="com.selenium.test.util.TestListenerScreenShot" />
+    </listeners>
+</suite>

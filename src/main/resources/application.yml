@@ -1,0 +1,8 @@
+server:
+  port: 7070
+
+
+baidu:
+  appid: 15819857
+  apikey: wC9kBK4NsZFCelWECe5utmGu
+  appsecret: tS1XI21mFXd00V0s4wn8iMqGp2DAamWs
