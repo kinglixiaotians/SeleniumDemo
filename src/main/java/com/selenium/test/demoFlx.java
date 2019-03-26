@@ -87,7 +87,7 @@ public class demoFlx {
         }catch (NoAlertPresentException e){return false;}
     }
 
-    //@Test
+    @Test
     public boolean runs(){
         //chrom插件路径
         System.setProperty("webdriver.chrome.driver", "E:\\2019\\driver\\chromedriver.exe");
@@ -116,7 +116,7 @@ public class demoFlx {
         return true;
     }
 
-    //@Test
+    @Test
     public void queryCustom(){
         driver.switchTo().frame("mainframe");
         driver.findElement(By.id("customNo$text")).click();
@@ -126,7 +126,7 @@ public class demoFlx {
         driver.findElement(By.className("mini-button-text")).click();
         driver.switchTo().defaultContent();
     }
-    //@Test
+    @Test
     public void saveCustom(){
         try {
             driver.switchTo().frame("mainframe");
@@ -186,7 +186,7 @@ public class demoFlx {
             e.printStackTrace();
         }
     }
-    //@Test
+    @Test
     public void testrun(){
         demoFlx de = new demoFlx();
         de.runs();

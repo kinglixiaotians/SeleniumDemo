@@ -1,5 +1,6 @@
 package com.selenium.test;
 
+import com.google.common.base.Verify;
 import com.selenium.test.baidu.OcrTest;
 import com.selenium.test.util.TestListenerScreenShot;
 import net.sourceforge.tess4j.Tesseract;
