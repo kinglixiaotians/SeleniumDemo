@@ -1,11 +1,11 @@
 package com.selenium.flx.custom;
 
+import com.selenium.base.DriverBase;
 import com.selenium.flx.order.editOrder;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.util.ImageHelper;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 import javax.imageio.ImageIO;
@@ -16,10 +16,16 @@ import java.io.IOException;
 /**
  * Created by 李啸天 on 2019/3/22.
  */
-public class demoFlx {
-    WebDriver driver;
+public class demoFlx extends DriverBase {
+
     public String windowsHandle;
     public String customNo;
+    public WebDriver driver=driverName();
+
+    /*@BeforeClass
+    public void loginTest(){
+        this.driver = driverName();
+    }*/
 
     public static String instanFile(String fileUrl) {
         String result = null;
@@ -93,8 +99,8 @@ public class demoFlx {
     @Test
     public boolean runs() {
         //chrom插件路径
-        System.setProperty("webdriver.chrome.driver", "D:\\IDEA\\chromedriver\\chromedriver.exe");
-        driver = new ChromeDriver();
+        //System.setProperty("webdriver.chrome.driver", "D:\\IDEA\\chromedriver\\chromedriver.exe");
+        //driver = new ChromeDriver();
         driver.get("http://192.168.2.100:28080/FlxServer/coframe/auth/login/login.jsp");
         driver.manage().window().maximize();
         try {

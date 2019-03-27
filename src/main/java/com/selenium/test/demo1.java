@@ -1,16 +1,12 @@
 package com.selenium.test;
 
-import com.google.common.base.Verify;
 import com.selenium.test.baidu.OcrTest;
-import com.selenium.test.util.TestListenerScreenShot;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.util.ImageHelper;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Reporter;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,7 +16,6 @@ import java.io.IOException;
 /**
  * Created by 李啸天 on 2019/3/21.
  */
-@Listeners({TestListenerScreenShot.class})
 public class demo1  {
 
     private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";

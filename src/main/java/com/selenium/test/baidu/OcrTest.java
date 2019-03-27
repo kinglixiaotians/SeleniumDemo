@@ -1,11 +1,10 @@
 package com.selenium.test.baidu;
 
-import com.selenium.utils.baidu.ocr.AipOcr;
+import com.selenium.utils.ocr.AipOcr;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by 李啸天 on 2019/3/22.

@@ -1,7 +1,7 @@
 package com.selenium.Login;
 
 import com.selenium.test.baidu.OcrTest;
-import com.selenium.utils.baidu.ocr.AipOcr;
+import com.selenium.utils.ocr.AipOcr;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
