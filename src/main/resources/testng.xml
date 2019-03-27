@@ -8,7 +8,7 @@
                     <include name="runs"/><include name="testrun"/>
                 </methods>
             </class>
-            <class name="com.selenium.test.flx.demoFlx">
+            <class name="com.selenium.flx.custom.demoFlx">
                 <methods>
                     <include name="runs"/>
                     <include name="queryCustom"/>
