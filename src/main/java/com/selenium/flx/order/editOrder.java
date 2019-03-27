@@ -4,8 +4,7 @@ import org.openqa.selenium.*;
 import org.testng.annotations.Test;
 
 public class editOrder {
-    public String customNo;
-    public String orderId="20190327016";
+    public String orderId;
 
     //订单录入
     @Test

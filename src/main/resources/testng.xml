@@ -8,7 +8,7 @@
                     <include name="runs"/><include name="testrun"/>
                 </methods>
             </class>
-            <class name="com.selenium.flx.custom.demoFlx">
+            <class name="com.selenium.flx.custom.editCustom">
                 <methods>
                     <include name="runs"/>
                     <include name="queryCustom"/>
@@ -23,7 +23,4 @@
             </class>
         </classes>
     </test>
-    <listeners>
-        <listener class-name="com.selenium.test.util.TestListenerScreenShot" />
-    </listeners>
 </suite>
