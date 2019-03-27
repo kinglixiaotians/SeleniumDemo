@@ -1,7 +1,16 @@
 package com.selenium.utils;
 
-import java.io.InputStream;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import java.io.*;
+import java.security.MessageDigest;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+
+import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
 
 /**
  * Created by 李啸天 on 2018/11/26.
@@ -23,7 +32,6 @@ public class PropertiesConfig extends Properties{
         }
         catch (Exception e)
         {
-            // TODO: handle exception
             e.printStackTrace();
         }
     }
@@ -39,4 +47,5 @@ public class PropertiesConfig extends Properties{
             return propertiesUtil;
         }
     }
+
 }
