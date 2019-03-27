@@ -40,7 +40,6 @@ public class Login {
                 Thread.sleep(1000);
                 driver.findElement(By.className("login_Btn")).click();
             }
-
             ///企业登陆管理
             Thread.sleep(2000);
             driver.findElement(By.xpath("//*[@id=\"dowebok\"]/div[1]/div/a[2]")).click();
