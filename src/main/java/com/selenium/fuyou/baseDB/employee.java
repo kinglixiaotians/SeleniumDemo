@@ -1,6 +1,6 @@
-package com.selenium.EmployeeManager;
+package com.selenium.fuyou.baseDB;
 
-public class Employee {
+public class employee {
     private String realName;
     private int departmentID;
     private String userID;
@@ -47,7 +47,7 @@ public class Employee {
         this.date = date;
     }
 
-    public Employee(String realName,int departmentID,String userID,String phoneNum,String date){
+    public employee(String realName,int departmentID,String userID,String phoneNum,String date){
         this.realName = realName;
         this.departmentID = departmentID;
         this.userID = userID;
