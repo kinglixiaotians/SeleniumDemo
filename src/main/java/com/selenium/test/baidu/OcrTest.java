@@ -31,8 +31,8 @@ public class OcrTest {
         JSONObject jsonObject = client.basicGeneral(imageUrl,options);
         Map<String,Object> map =new HashMap<>();
         System.out.println("请求响应结果:"+jsonObject.toString());
-        if (jsonObject.getJSONArray("words_result")!=null){
-            JSONArray array = jsonObject.getJSONArray("words_result");
+        JSONArray array = jsonObject.getJSONArray("words_result");
+        if(array.length()>0){
             JSONObject json = array.getJSONObject(0);
             String words = json.getString("words");
             System.out.println(words);
