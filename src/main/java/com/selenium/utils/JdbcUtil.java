@@ -24,9 +24,10 @@ public class JdbcUtil {
 
     /**
      * 获取短信验证码
-     * @param name
+     * @param phoneNo
      */
-    public String querySmsCode(String name){
+    public String querySmsCode(String phoneNo){
+        String code = null;
         try {
             //加载驱动
             Class.forName(driverName);
@@ -35,12 +36,13 @@ public class JdbcUtil {
             //操作数据库
             String sql="select top 1 Code from aspnet_CodeInfo where UserName=? order by CreateTime desc";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,name);
+            statement.setString(1,phoneNo);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 System.out.println(rs.getString("Code"));
+                code = rs.getString("Code");
             }
-            return rs.getString("Code");
+            return code;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -53,6 +55,7 @@ public class JdbcUtil {
      * @return
      */
     public String queryCellPhone(String customNo){
+        String phoneNo = null;
         try {
             //加载驱动
             Class.forName(driverName);
@@ -65,8 +68,9 @@ public class JdbcUtil {
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 System.out.println(rs.getString("CellPhone"));
+                phoneNo = rs.getString("CellPhone");
             }
-            return rs.getString("CellPhone");
+            return phoneNo;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -75,7 +79,8 @@ public class JdbcUtil {
 
     public static void main(String[] args) {
         JdbcUtil jdbcUtil = new JdbcUtil();
-        jdbcUtil.querySmsCode("15000364728");
+        String phoneNo = jdbcUtil.queryCellPhone("01510276");
+        jdbcUtil.querySmsCode(phoneNo);
     }
 
 }
