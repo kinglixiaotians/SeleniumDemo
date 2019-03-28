@@ -32,23 +32,25 @@ public class fuyou extends DriverBase {
             Thread.sleep(500);
             driver.findElement(By.className("layui-layer-setwin")).click();
             driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/label[1]/a")).click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             driver.findElement(By.id("username")).sendKeys(username);
+            Thread.sleep(500);
             driver.findElement(By.id("password")).sendKeys(password);
             loginValidate log = new loginValidate();
             String result = log.validateCoding(driver);
             driver.findElement(By.id("verifyCode")).sendKeys(result);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             driver.findElement(By.className("login_Btn")).click();
-
             //循环输入验证码登陆
             while (log.isAlertPersent(driver)) {
+                driver.switchTo().alert().accept();
                 driver.findElement(By.id("verifyCode")).clear();
                 Thread.sleep(500);
                 result = log.validateCoding(driver);
                 driver.findElement(By.id("verifyCode")).sendKeys(result);
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 driver.findElement(By.className("login_Btn")).click();
+                Thread.sleep(500);
             }
             //企业登陆管理
             Thread.sleep(1000);

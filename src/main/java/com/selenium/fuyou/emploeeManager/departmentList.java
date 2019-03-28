@@ -2,9 +2,11 @@ package com.selenium.fuyou.emploeeManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Test;
 
 public class departmentList {
     //新增部门
+    @Test
     public static void addDep(WebDriver driver){
         try {
             driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/ul/li[2]/a")).click();
@@ -55,6 +57,7 @@ public class departmentList {
     }
 
     //删除部门
+    @Test
     public static void deleteDep(WebDriver driver){
         try{
             Thread.sleep(500);
@@ -71,6 +74,7 @@ public class departmentList {
     }
 
     //编辑部门
+    @Test
     public static void updataDep(WebDriver driver){
         try{
             Thread.sleep(500);

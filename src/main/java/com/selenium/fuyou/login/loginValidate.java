@@ -14,12 +14,34 @@ public class loginValidate {
     //验证是否有弹窗
     public static boolean isAlertPersent(WebDriver driver){
         try {
-            driver.switchTo().alert().accept();
+            driver.switchTo().alert();
             return true;
         }catch (NoAlertPresentException e){
             return false;
         }
     }
+
+    //验证是否Notic
+    public static boolean isExistNotice(WebDriver driver){
+        try {
+            driver.findElement(By.className("notice"));
+            return true;
+        }catch (NoAlertPresentException e){
+            return false;
+        }
+    }
+
+    //验证是否有提示弹窗
+    public static boolean isExistTips(WebDriver driver){
+        try {
+            driver.findElement(By.className("notice"));
+            return true;
+        }catch (NoAlertPresentException e){
+            return false;
+        }
+    }
+
+    //
 
     //读取验证码
     public static String validateCoding(WebDriver driver){
@@ -36,9 +58,14 @@ public class loginValidate {
             File screenshotLocation = new File("E:\\2019\\validCoding.png");
             FileUtils.copyFile(screenshot, screenshotLocation);
             result = OcrTest.orcImage(screenshotLocation.toString());
+            boolean flag = (boolean) result.get("states");
+            while(!flag){
+                result = OcrTest.orcImage(screenshotLocation.toString());
+                flag = (boolean) result.get("states");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  null;
+        return  (String)result.get("words");
     }
 }
