@@ -5,7 +5,7 @@ import com.selenium.flx.customService.customDetail;
 import com.selenium.flx.order.editOrder;
 import com.selenium.flx.custom.editCustom;
 import com.selenium.flx.custom.sepecEditCustom;
-import com.selenium.fuyou.fuyou;
+import com.selenium.fuyou.fuYou;
 import com.selenium.utils.PropertiesConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -70,8 +70,8 @@ public class flx extends DriverBase {
             judgement(order.entryOrder(se.customNo, driver));
 
             //登录企业号回复订单
-            fuyou fy = new fuyou();
-            if(!fy.fuyouLogin(se.customNo, "123456")){
+            fuYou fy = new fuYou();
+            if(!fy.fuYouLogin(se.customNo, "123456")){
                 driver.close();
             }
 

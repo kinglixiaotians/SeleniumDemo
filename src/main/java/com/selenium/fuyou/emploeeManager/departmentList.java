@@ -7,9 +7,8 @@ import org.testng.annotations.Test;
 public class departmentList {
     //新增部门
     @Test
-    public static void addDep(WebDriver driver){
+    public void addDep(WebDriver driver){
         try {
-            driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/ul/li[2]/a")).click();
             Thread.sleep(500);
             String [] dep = new String[] { "运营","研发","随便","测试" };
             driver.findElement(By.id("bumen")).click();
@@ -38,7 +37,7 @@ public class departmentList {
         }
     }
 
-    public static boolean isExistAddBox(WebDriver driver){
+    public boolean isExistAddBox(WebDriver driver){
         try {
             driver.findElement(By.className("zeromodal-container"));
             return true;
@@ -47,7 +46,7 @@ public class departmentList {
         }
     }
 
-    public static boolean isExistErrorModel(WebDriver driver) {
+    public boolean isExistErrorModel(WebDriver driver) {
         try {
             driver.findElement(By.className("zeromodal-overlay"));
             return true;
@@ -58,7 +57,7 @@ public class departmentList {
 
     //删除部门
     @Test
-    public static void deleteDep(WebDriver driver){
+    public void deleteDep(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]")).click();
@@ -75,7 +74,7 @@ public class departmentList {
 
     //编辑部门
     @Test
-    public static void updataDep(WebDriver driver){
+    public void updataDep(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]")).click();
