@@ -1,5 +1,6 @@
 package com.selenium.test.baidu;
 
+import com.selenium.utils.PropertiesConfig;
 import com.selenium.utils.ocr.AipOcr;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,9 +13,9 @@ import java.util.HashMap;
 public class OcrTest {
 
     //设置APPID/AK/SK
-    public static final String APP_ID = "15819857";
-    public static final String API_KEY = "wC9kBK4NsZFCelWECe5utmGu";
-    public static final String SECRET_KEY = "tS1XI21mFXd00V0s4wn8iMqGp2DAamWs";
+    public static final String APP_ID = PropertiesConfig.getInstance().getProperty("baidu.appId");
+    public static final String API_KEY =  PropertiesConfig.getInstance().getProperty("baidu.appKey");
+    public static final String SECRET_KEY =  PropertiesConfig.getInstance().getProperty("baidu.secretKey");
 
     public static String orcImage(String imageUrl) {
         AipOcr client = new AipOcr(APP_ID,API_KEY,SECRET_KEY);

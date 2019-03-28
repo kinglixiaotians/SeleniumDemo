@@ -24,9 +24,9 @@ public class JdbcUtil {
 
     /**
      * 获取短信验证码
-     * @param user
+     * @param name
      */
-    public void querySmsCode(String user){
+    public String querySmsCode(String name){
         try {
             //加载驱动
             Class.forName(driverName);
@@ -35,14 +35,16 @@ public class JdbcUtil {
             //操作数据库
             String sql="select top 1 Code from aspnet_CodeInfo where UserName=? order by CreateTime desc";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,user);
+            statement.setString(1,name);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 System.out.println(rs.getString("Code"));
             }
+            return rs.getString("Code");
         }catch (Exception e){
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void main(String[] args) {
