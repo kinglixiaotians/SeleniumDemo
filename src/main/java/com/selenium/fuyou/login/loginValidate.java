@@ -7,6 +7,8 @@ import org.openqa.selenium.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class loginValidate {
     //验证是否有弹窗
@@ -21,7 +23,7 @@ public class loginValidate {
 
     //读取验证码
     public static String validateCoding(WebDriver driver){
-        String result = "";
+        Map<String,Object> result = new HashMap<>();
         try {
             WebElement ele = driver.findElement(By.id("imgVerifyCode"));
             File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -37,6 +39,6 @@ public class loginValidate {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  result;
+        return  null;
     }
 }
