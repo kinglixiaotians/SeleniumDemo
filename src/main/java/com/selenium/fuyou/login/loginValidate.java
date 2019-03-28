@@ -60,6 +60,7 @@ public class loginValidate {
             result = OcrTest.orcImage(screenshotLocation.toString());
             boolean flag = (boolean) result.get("states");
             while(!flag){
+                Thread.sleep(1000*5);
                 result = OcrTest.orcImage(screenshotLocation.toString());
                 flag = (boolean) result.get("states");
             }

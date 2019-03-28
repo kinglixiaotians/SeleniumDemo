@@ -37,7 +37,7 @@ public class JdbcUtil {
             //获取数据库链接
             Connection conn = DriverManager.getConnection(jdbcUrl,userName,password);
             //操作数据库
-            String sql="select top 1 Code from aspnet_CodeInfo where UserName=? order by CreateTime desc";
+            String sql="select top 1 Code from aspnet_CodeInfo where UserName=? order by CodeId desc";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1,phoneNo);
             ResultSet rs = statement.executeQuery();
