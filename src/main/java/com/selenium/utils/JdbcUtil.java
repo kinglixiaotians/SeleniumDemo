@@ -1,7 +1,10 @@
 package com.selenium.utils;
 
 import com.selenium.base.DriverBase;
+import org.hibernate.validator.internal.util.privilegedactions.GetResource;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.*;
 
 /**
@@ -77,10 +80,30 @@ public class JdbcUtil {
         return null;
     }
 
+    /**
+     * 读取resources下文件的绝对路径
+     * @param resourceUrl
+     * @return
+     */
+    public static String pathUrl(String resourceUrl){
+        try {
+            String encodePath = URLDecoder.decode(GetResource.class.getClassLoader().getResource(resourceUrl).getPath(),"utf-8");
+            String path = encodePath.substring(1,encodePath.length()).replaceAll("/","\\\\");
+            System.out.println(path);
+            return path;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         JdbcUtil jdbcUtil = new JdbcUtil();
         String phoneNo = jdbcUtil.queryCellPhone("01510276");
         jdbcUtil.querySmsCode(phoneNo);
+
+
+
     }
 
 }
