@@ -47,6 +47,32 @@ public class JdbcUtil {
         return null;
     }
 
+    /**
+     * 手机号获取
+     * @param customNo
+     * @return
+     */
+    public String queryCellPhone(String customNo){
+        try {
+            //加载驱动
+            Class.forName(driverName);
+            //获取数据库链接
+            Connection conn = DriverManager.getConnection(jdbcUrl,userName,password);
+            //操作数据库
+            String sql="select CellPhone from aspnet_Members where UserName=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,customNo);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                System.out.println(rs.getString("CellPhone"));
+            }
+            return rs.getString("CellPhone");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         JdbcUtil jdbcUtil = new JdbcUtil();
         jdbcUtil.querySmsCode("15000364728");
