@@ -80,13 +80,10 @@ public class JdbcUtil {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         JdbcUtil jdbcUtil = new JdbcUtil();
         String phoneNo = jdbcUtil.queryCellPhone("01510276");
         jdbcUtil.querySmsCode(phoneNo);
-
-
-
     }
 
 }
