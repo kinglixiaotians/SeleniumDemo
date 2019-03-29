@@ -29,7 +29,7 @@ public class PropertiesConfig extends Properties{
         {
             BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
             this.load(bf);
-            //inputStream.close();
+            inputStream.close();
         }
         catch (Exception e)
         {
@@ -49,4 +49,8 @@ public class PropertiesConfig extends Properties{
         }
     }
 
+    public static void main(String[] args) {
+        String urls = PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl");
+        System.out.println(urls);
+    }
 }
