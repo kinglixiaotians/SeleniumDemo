@@ -3,17 +3,62 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="D:/idea_workspace/SeleniumDemo">
         <classes>
-            <class name="com.selenium.test.demo1">
-                <methods>
-                    <include name="runs"/><include name="testrun"/>
-                </methods>
-            </class>
             <class name="com.selenium.flx.custom.editCustom">
                 <methods>
-                    <include name="runs"/>
                     <include name="queryCustom"/>
                     <include name="saveCustom"/>
+                    <include name="errorSaveCustom"/>
+                    <include name="auditCustom"/>
+                    <include name="updateCustom"/>
+                    <include name="errorUpdateCustom"/>
+                </methods>
+            </class>
+            <class name="com.selenium.flx.custom.sepecEditCustom">
+                <methods>
+                    <include name="custom01"/>
+                    <include name="custom02"/>
+                    <include name="saveCustomTop"/>
+                    <include name="saveCustomBottom"/>
+                    <include name="list"/>
+                </methods>
+            </class>
+            <class name="com.selenium.flx.flx">
+                <methods>
                     <include name="testrun"/>
+                    <include name="runs"/>
+                </methods>
+            </class>
+            <class name="com.selenium.flx.order.editOrder">
+                <methods>
+                    <include name="entryOrder"/>
+                    <include name="handleOrder"/>
+                    <include name="activateOrder"/>
+                </methods>
+            </class>
+            <class name="com.selenium.fuyou.emploeeManager.departmentList">
+                <methods>
+                    <include name="addDep"/>
+                    <include name="deleteDep"/>
+                    <include name="updataDep"/>
+                </methods>
+            </class>
+            <class name="com.selenium.fuyou.emploeeManager.employeeList">
+                <methods>
+                    <include name="addEmp"/>
+                    <include name="updateEmp"/>
+                    <include name="deleteEmp"/>
+                    <include name="searchEmp"/>
+                    <include name="batchImportEmp"/>
+                </methods>
+            </class>
+            <class name="com.selenium.fuyou.fuYou">
+                <methods>
+                    <include name="fuYouTest"/>
+                </methods>
+            </class>
+            <class name="com.selenium.fuyou.login.firstLogin">
+                <methods>
+                    <include name="verificationCustom"/>
                 </methods>
             </class>
             <class name="com.selenium.DemoApplicationTests">
