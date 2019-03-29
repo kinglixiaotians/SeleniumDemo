@@ -38,11 +38,17 @@ public class flx extends DriverBase {
             Thread.sleep(1000);
             //登录
             windowsHandle = driver.getWindowHandle();
-            driver.findElement(By.id("userId")).sendKeys(flxUserId);
+
+            driver.findElement(By.id("userId")).sendKeys("789456");
             driver.findElement(By.id("password")).sendKeys(flxPassword);
             driver.findElement(By.className("log")).click();
             Thread.sleep(500);
-
+            driver.findElement(By.className("mini-button-text")).click();
+            driver.findElement(By.id("userId")).click();
+            driver.findElement(By.id("userId")).clear();
+            driver.findElement(By.id("userId")).sendKeys(flxUserId);
+            driver.findElement(By.className("log")).click();
+            Thread.sleep(500);
 
             //客户管理
             driver.findElement(By.id("1061")).click();
