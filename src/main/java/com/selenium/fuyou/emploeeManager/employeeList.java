@@ -1,6 +1,7 @@
 package com.selenium.fuyou.emploeeManager;
 
 import com.selenium.fuyou.baseDB.employee;
+import com.selenium.utils.PropertiesConfig;
 import com.selenium.utils.ResourcesUrlUtil;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
@@ -167,28 +168,34 @@ public class employeeList {
     public void updateEmp(WebDriver driver){
         try {
             Thread.sleep(500);
-            //点击编辑
-            driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
-            Thread.sleep(500);
-            //初始化部门
-            WebElement element = driver.findElement(By.id("CompanyEmployeesList_ddlUpdateOrganization"));
-            Select downList = new Select(element);
-            //清空数据
-            clearEmpData(driver,downList);
-            //修改
-            updateEmpData(driver,new employee("岁",2,"115","","2019-01-28"),downList);
-            updateEmpData(driver,new employee("qq",3,"273612","","2019-03-23"),downList);
-            //关闭多余编辑窗体
-            boolean flag = isExistUpdateBox(driver);
+            boolean flag = isExistEditButton(driver);
             if(flag){
-                driver.findElement(By.cssSelector(".xubox_close.xulayer_png32.xubox_close0_0")).click();
+                //点击编辑
+                driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
+                Thread.sleep(500);
+                //初始化部门
+                WebElement element = driver.findElement(By.id("CompanyEmployeesList_ddlUpdateOrganization"));
+                Select downList = new Select(element);
+                //清空数据
+                clearEmpData(driver,downList);
+                //修改
+                updateEmpData(driver,new employee("岁",2,"115","","2019-01-28"),downList);
+                updateEmpData(driver,new employee("qq",3,"273612","","2019-03-23"),downList);
+                //关闭多余编辑窗体
+                flag = isExistUpdateBox(driver);
+                if(flag){
+                    driver.findElement(By.cssSelector(".xubox_close.xulayer_png32.xubox_close0_0")).click();
+                }
+                Thread.sleep(500);
+                //部门分类跳转
+                WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
+                List<WebElement> eleList = ele.findElements(By.tagName("a"));
+                eleList.get(3).click();
+                Thread.sleep(1000);
             }
-            Thread.sleep(500);
-            //部门分类跳转
-            WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
-            List<WebElement> eleList = ele.findElements(By.tagName("a"));
-            eleList.get(3).click();
-            Thread.sleep(1000);
+            else{
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,6 +251,16 @@ public class employeeList {
         }
     }
 
+    //判断是否有编辑按钮
+    public boolean isExistEditButton(WebDriver driver){
+        try{
+            driver.findElement(By.cssSelector(".xubox_main.xubox_main_0"));
+            return true;
+        }catch (Exception e){
+            return  false;
+        }
+    }
+
     //判断是否有员工编辑窗口
     public boolean isExistUpdateBox(WebDriver driver){
         try{
@@ -260,20 +277,34 @@ public class employeeList {
     @Test
     public void deleteEmp(WebDriver driver){
         try{
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]")).click();
-            Thread.sleep(500);
-            driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-primary.anblock")).click();
-            Thread.sleep(500);
+            boolean flag = isExistDelButtopn(driver);
+            if(flag){
+                Thread.sleep(500);
+                driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]")).click();
+                Thread.sleep(500);
+                driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-primary.anblock")).click();
+                Thread.sleep(500);
 
-            //部门分类全部
-            WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
-            List<WebElement> eleList = ele.findElements(By.tagName("a"));
-            eleList.get(0).click();
-            Thread.sleep(1000);
-
+                //部门分类全部
+                WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
+                List<WebElement> eleList = ele.findElements(By.tagName("a"));
+                eleList.get(0).click();
+                Thread.sleep(1000);
+            }else{
+                return;
+            }
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    //判断是否有删除按钮
+    public boolean isExistDelButtopn(WebDriver driver){
+        try{
+            driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]"));
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 
@@ -303,15 +334,15 @@ public class employeeList {
             Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[7]/a")).click();
             Thread.sleep(1000);
-            batchImprotEmpData(driver,null,false);
+            batchImprotEmpData(driver,null,false);//空模板错误示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,"w95-1920x1024.jpg",false);
+            batchImprotEmpData(driver, PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl3"),false);//格式错误示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,"员工导入模板2.xls",false);
+            batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl2"),false);//模板数据未通过示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,"员工导入模板1.xls",true);
+            batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"),true);//模板数据为空示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,"员工导入模板.xls",true);
+            batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -328,6 +359,14 @@ public class employeeList {
                     String path = ResourcesUrlUtil.pathUrl(fileName);
                     driver.findElement(By.id("select_btn_1")).sendKeys(path);
                     Thread.sleep(500);
+                    if(fileName.equals("员工导入模板.xls")){
+                        boolean flag = isExistErrorOrSuccessBox(driver);
+                        if(flag){
+                            driver.findElement(By.className("zeromodal-close")).click();
+                        }
+
+                        return;
+                    }
                     driver.findElement(By.id("btnImport")).click();
                 }else{
                     String path = ResourcesUrlUtil.pathUrl(fileName);
@@ -369,7 +408,7 @@ public class employeeList {
         try {
             driver.findElement(By.className("zeromodal-container"));
             return true;
-        }catch (NoAlertPresentException e){
+        }catch (Exception e){
             return false;
         }
     }

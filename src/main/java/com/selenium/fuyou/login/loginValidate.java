@@ -17,7 +17,7 @@ public class loginValidate {
         try {
             driver.switchTo().alert();
             return true;
-        }catch (NoAlertPresentException e){
+        }catch (Exception e){
             return false;
         }
     }
@@ -27,7 +27,7 @@ public class loginValidate {
         try {
             driver.findElement(By.className("notice"));
             return true;
-        }catch (NoAlertPresentException e){
+        }catch (Exception e){
             return false;
         }
     }
@@ -37,7 +37,7 @@ public class loginValidate {
         try {
             driver.findElement(By.id("layui-layer-shade1"));
             return true;
-        }catch (NoAlertPresentException e){
+        }catch (Exception e){
             return false;
         }
     }
@@ -47,7 +47,7 @@ public class loginValidate {
         try {
             driver.findElement(By.id("dowebok"));
             return true;
-        }catch (NoAlertPresentException e){
+        }catch (Exception e){
             return false;
         }
     }

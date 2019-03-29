@@ -18,8 +18,8 @@ public class departmentList {
                 driver.findElement(By.id("orgName")).sendKeys(dep[i]);
                 driver.findElement(By.name("btnadd")).click();
                 boolean flag = isExistErrorModel(driver);
+                Thread.sleep(500);
                 if(flag){
-                    Thread.sleep(500);
                     driver.findElement(By.xpath("/html/body/div[9]/div[2]/div")).click();
                     Thread.sleep(500);
                     driver.findElement(By.id("orgName")).clear();
@@ -37,6 +37,7 @@ public class departmentList {
         }
     }
 
+    //判断是否有新增窗体
     public boolean isExistAddBox(WebDriver driver){
         try {
             driver.findElement(By.className("zeromodal-container"));
@@ -46,6 +47,7 @@ public class departmentList {
         }
     }
 
+    //判断是否有错误窗体
     public boolean isExistErrorModel(WebDriver driver) {
         try {
             driver.findElement(By.className("zeromodal-overlay"));
@@ -59,6 +61,8 @@ public class departmentList {
     @Test
     public void deleteDep(WebDriver driver){
         try{
+            boolean flag = isExistDelButton(driver);
+            if(flag){
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]")).click();
             Thread.sleep(500);
@@ -67,8 +71,21 @@ public class departmentList {
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]")).click();
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-default")).click();
+            }else {
+                return;
+            }
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    //判断是否有删除按钮
+    public boolean isExistDelButton(WebDriver driver){
+        try{
+            driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]"));
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 
@@ -76,16 +93,31 @@ public class departmentList {
     @Test
     public void updataDep(WebDriver driver){
         try{
-            Thread.sleep(500);
-            driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]")).click();
-            Thread.sleep(500);
-            driver.findElement(By.className("dgygtj_in")).clear();
-            Thread.sleep(500);
-            driver.findElement(By.className("dgygtj_in")).sendKeys("研发");
-            Thread.sleep(500);
-            driver.findElement(By.name("btnupdate")).click();
+            boolean flag = isExistEditButton(driver);
+            if(flag) {
+                Thread.sleep(500);
+                driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]")).click();
+                Thread.sleep(500);
+                driver.findElement(By.className("dgygtj_in")).clear();
+                Thread.sleep(500);
+                driver.findElement(By.className("dgygtj_in")).sendKeys("研发");
+                Thread.sleep(500);
+                driver.findElement(By.name("btnupdate")).click();
+            }else {
+                return;
+            }
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    //判断是否有编辑按钮
+    public boolean isExistEditButton(WebDriver driver){
+        try{
+            driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]"));
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 }
