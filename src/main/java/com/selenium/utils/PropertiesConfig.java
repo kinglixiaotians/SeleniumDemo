@@ -27,7 +27,8 @@ public class PropertiesConfig extends Properties{
     {
         try
         {
-            this.load(new InputStreamReader(inputStream,"UTF-8"));
+            BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
+            this.load(bf);
             //inputStream.close();
         }
         catch (Exception e)
@@ -47,4 +48,5 @@ public class PropertiesConfig extends Properties{
             return propertiesUtil;
         }
     }
+
 }
