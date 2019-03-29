@@ -34,7 +34,7 @@ public class fuYou extends DriverBase {
         driver.manage().window().maximize();
         try {
             //登陆
-            login(driver);
+            login(driver,username,password);
 
             //创建鼠标
             Actions mouse = new Actions(driver);
@@ -75,7 +75,7 @@ public class fuYou extends DriverBase {
     }
 
     //region 登陆
-    public void login(WebDriver driver){
+    public void login(WebDriver driver,String username,String password){
         try{
             loginValidate log = new loginValidate();
             boolean flag = log.isExistNotice(driver);
@@ -155,14 +155,14 @@ public class fuYou extends DriverBase {
         employeeList emp = new employeeList();
         //添加员工
         emp.addEmp(driver);
+        //批量导入员工
+        emp.batchImportEmp(driver);
         //编辑员工
         emp.updateEmp(driver);
         //删除员工
         emp.deleteEmp(driver);
         //搜索员工
         emp.searchEmp(driver);
-        //批量导入员工
-        emp.batchImportEmp(driver);
     }
     //endregion
 }

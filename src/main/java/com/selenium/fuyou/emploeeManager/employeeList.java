@@ -4,6 +4,7 @@ import com.selenium.fuyou.baseDB.employee;
 import com.selenium.utils.PropertiesConfig;
 import com.selenium.utils.ResourcesUrlUtil;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
@@ -67,12 +68,6 @@ public class employeeList {
             if(flag){
                 driver.findElement(By.xpath("//*[@id=\"xubox_layer1\"]/div[1]/a")).click();
             }
-
-            //分类跳转操作
-            WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
-            List<WebElement> eleList = ele.findElements(By.tagName("a"));
-            eleList.get(2).click();
-            Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,11 +98,11 @@ public class employeeList {
         try{
             //分页
             boolean pageNextFlag = isExistPageNext(driver);
-            boolean pagePrevFlag = isExistPagePrev(driver);
             if (pageNextFlag){
                 driver.findElement(By.className("page-next")).click();
             }
             Thread.sleep(500);
+            boolean pagePrevFlag = isExistPagePrev(driver);
             if(pagePrevFlag){
                 driver.findElement(By.className("page-prev")).click();
             }
@@ -254,7 +249,7 @@ public class employeeList {
     //判断是否有编辑按钮
     public boolean isExistEditButton(WebDriver driver){
         try{
-            driver.findElement(By.cssSelector(".xubox_main.xubox_main_0"));
+            driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]"));
             return true;
         }catch (Exception e){
             return  false;
@@ -343,6 +338,12 @@ public class employeeList {
             batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"),true);//模板数据为空示例
             Thread.sleep(500);
             batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
+
+            //分类跳转操作
+            WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
+            List<WebElement> eleList = ele.findElements(By.tagName("a"));
+            eleList.get(2).click();
+            Thread.sleep(1000);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -363,8 +364,11 @@ public class employeeList {
                         boolean flag = isExistErrorOrSuccessBox(driver);
                         if(flag){
                             driver.findElement(By.className("zeromodal-close")).click();
+                            Thread.sleep(500);
+                            Actions mouse = new Actions(driver);
+                            mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
+                            driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/ul/li[1]/a")).click();
                         }
-
                         return;
                     }
                     driver.findElement(By.id("btnImport")).click();
