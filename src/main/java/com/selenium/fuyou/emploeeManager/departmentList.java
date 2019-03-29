@@ -11,13 +11,15 @@ public class departmentList {
     public void addDep(WebDriver driver){
         try {
             Thread.sleep(500);
-            String [] dep = new String[] { "运营","研发","随便","测试" };
+            String [] dep = new String[] { "运营","研发","测试","随便" };
             driver.findElement(By.id("bumen")).click();
             //循环添加部门
             for(int i = 0;i < dep.length;i++){
                 Thread.sleep(500);
                 driver.findElement(By.id("orgName")).sendKeys(dep[i]);
+                Thread.sleep(500);
                 driver.findElement(By.name("btnadd")).click();
+                Thread.sleep(500);
                 boolean flag = isExistErrorModel(driver);
                 Thread.sleep(500);
                 if(flag){
@@ -26,8 +28,11 @@ public class departmentList {
                     driver.findElement(By.id("orgName")).clear();
                     continue;
                 }
-                driver.findElement(By.id("bumen")).click();
-                Thread.sleep(500);
+                if(i != dep.length - 1){
+                    Thread.sleep(500);
+                    driver.findElement(By.id("bumen")).click();
+                    Thread.sleep(500);
+                }
             }
             boolean flag = isExistAddBox(driver);
             if(flag){

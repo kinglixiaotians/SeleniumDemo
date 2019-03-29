@@ -26,7 +26,7 @@ public class employeeList {
             ArrayList<employee> staff = new ArrayList<>();
             staff.add(new employee("不知道", 1, "112", "15829834764", "2017-01-04"));
             staff.add(new employee("你猜", 2, "103", "13384750276", ""));
-            staff.add(new employee("你再猜", 2, "1223344", "13188001077", "2018-10-29"));
+            staff.add(new employee("张三", 2, "3492", "13146790377", "2018-10-29"));
             //循环插入员工
             driver.findElement(By.id("bgcreate")).click();
             for (employee e : staff) {
@@ -56,7 +56,7 @@ public class employeeList {
                 //新增失败后操作
                 String s = driver.findElement(By.className("zeromodal-title1")).getText();
                 Thread.sleep(500);
-                if(s.equals("员工工号已存在") || s.equals("已经存在相同的账号")){
+                if(s.equals("员工工号已存在") || s.equals("已经存在相同的账号") || s.equals("手机号有误")){
                     addEmpErrorOperation(driver,downList);
                     continue;
                 }
@@ -170,14 +170,11 @@ public class employeeList {
                 //点击编辑
                 driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
                 Thread.sleep(500);
-                //初始化部门
-                WebElement element = driver.findElement(By.id("CompanyEmployeesList_ddlUpdateOrganization"));
-                Select downList = new Select(element);
                 //清空数据
-                clearEmpData(driver,downList);
+                clearEmpData(driver);
                 //修改
-                updateEmpData(driver,new employee("岁",2,"115","","2019-01-28"),downList);
-                updateEmpData(driver,new employee("qq",3,"273612","","2019-03-23"),downList);
+                updateEmpData(driver,new employee("笑岁",2,"1115","","2019-01-28"));
+                updateEmpData(driver,new employee("dnf",2,"1115","","2019-03-23"));
                 //关闭多余编辑窗体
                 flag = isExistUpdateBox(driver);
                 if(flag){
@@ -199,11 +196,13 @@ public class employeeList {
     }
 
     //清空修改员工数据操作
-    public void clearEmpData(WebDriver driver, Select downList){
+    public void clearEmpData(WebDriver driver){
         try {
             //清空员工名字
             driver.findElement(By.id("updateRealName")).clear();
             //初始化部门
+            WebElement element = driver.findElement(By.id("CompanyEmployeesList_ddlUpdateOrganization"));
+            Select downList = new Select(element);
             downList.selectByIndex(0);
             //清空员工工号
             driver.findElement(By.id("updateExternalUserId")).clear();
@@ -217,11 +216,13 @@ public class employeeList {
     }
 
     //修改员工数据
-    public void updateEmpData(WebDriver driver,employee emp,Select downList){
+    public void updateEmpData(WebDriver driver,employee emp){
         try {
             //员工名字
             driver.findElement(By.id("updateRealName")).sendKeys(emp.getRealName());
             //选择部门
+            WebElement element = driver.findElement(By.id("CompanyEmployeesList_ddlUpdateOrganization"));
+            Select downList = new Select(element);
             downList.selectByIndex(emp.getDepartmentID());
             //员工工号
             driver.findElement(By.id("updateExternalUserId")).sendKeys(emp.getUserID());
@@ -235,13 +236,14 @@ public class employeeList {
             Thread.sleep(500);
             //获取显示成功或失败文本
             String s = driver.findElement(By.className("zeromodal-title1")).getText();
+            Thread.sleep(500);
             //关闭成功或失败窗体
             driver.findElement(By.className("zeromodal-close")).click();
             if(s.equals("修改成功!")){
                 driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
                 Thread.sleep(500);
             }
-            clearEmpData(driver,downList);
+            clearEmpData(driver);
             Thread.sleep(500);
         } catch (Exception e) {
             e.printStackTrace();
@@ -373,8 +375,8 @@ public class employeeList {
                             Actions mouse = new Actions(driver);
                             mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
                             driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/ul/li[1]/a")).click();
+                            return;
                         }
-                        return;
                     }
                     driver.findElement(By.id("btnImport")).click();
                 }else{

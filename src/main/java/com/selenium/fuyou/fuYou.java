@@ -1,6 +1,7 @@
 package com.selenium.fuyou;
 
 import com.selenium.base.DriverBase;
+import com.selenium.fuyou.announcementManager.announcementList;
 import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.login.firstLogin;
@@ -43,61 +44,70 @@ public class fuYou extends DriverBase {
 
             //region 员工管理
 
-            aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
-            num = aList.size();
-            for (int i = num - 1; i >= 0; i--) {
+            if(false) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
-                String s = aList.get(i).getText();
-                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
-                aList.get(i).click();
-                Thread.sleep(500);
-                switch (s) {
-                    case "员工列表":
-                        employeeList(driver);
-                        break;
-                    case "部门列表":
-                        departmentList(driver);
-                        break;
+                num = aList.size();
+                for (int i = num - 1; i >= 0; i--) {
+                    Thread.sleep(500);
+                    aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
+                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
+                    String s = aList.get(i).getText();
+                    aList.get(i).click();
+                    Thread.sleep(500);
+                    switch (s) {
+                        case "员工列表":
+                            employeeList(driver);
+                            break;
+                        case "部门列表":
+                            departmentList(driver);
+                            break;
+                    }
                 }
             }
 
             //endregion
 
             //region 福利管理
-
-            aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
-            num = aList.size();
-            for (int i = 0; i < num; i++) {
+            if(false) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
-                String s = aList.get(i).getText();
-                if (s.equals("团体险")) {
-                    continue;
-                }
-                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
-                aList.get(i).click();
-                Thread.sleep(500);
-                switch (s) {
-                    case "福利发放":
+                num = aList.size();
+                for (int i = 0; i < num; i++) {
+                    aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
+                    String s = aList.get(i).getText();
+                    if (s.equals("团体险")) {
+                        continue;
+                    }
+                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
+                    aList.get(i).click();
+                    Thread.sleep(500);
+                    switch (s) {
+                        case "福利发放":
 
-                        break;
-                    case "优分订单管理":
+                            break;
+                        case "优分订单管理":
 
-                        break;
-                    case "企业收款管理":
+                            break;
+                        case "企业收款管理":
 
-                        break;
-                    case "一卡通兑换":
+                            break;
+                        case "一卡通兑换":
 
-                        break;
+                            break;
+                    }
                 }
             }
-
             //endregion
 
             //region 公告管理
-            aList = navContent("//*[@id=\"fbgg_menu\"]/li[5]");
-            mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
-            aList.get(0).click();
+            if(true) {
+                aList = navContent("//*[@id=\"fbgg_menu\"]/li[5]");
+                announcementList notice = new announcementList();
+                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
+                Thread.sleep(500);
+                aList.get(0).click();
+                notice.announcement(driver);
+                notice.deleteAnnouncement(driver);
+            }
             //endregion
 
             //region 交易管理
