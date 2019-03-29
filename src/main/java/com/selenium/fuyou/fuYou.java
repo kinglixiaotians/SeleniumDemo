@@ -35,28 +35,22 @@ public class fuYou extends DriverBase {
 
             //创建鼠标
             Actions mouse = new Actions(driver);
+            List<WebElement> aList = null;
+            int num = 0;
 
             //region 员工管理
 
-            //部门列表
-            WebElement ele = driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]"));
-            WebElement foundUl = ele.findElement(By.tagName("ul"));
-            List<WebElement> aList = foundUl.findElements(By.tagName("a"));
-            for (int i = 0; i < aList.size(); i++) {
-                ele = driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]"));
-                foundUl = ele.findElement(By.tagName("ul"));
-                aList = foundUl.findElements(By.tagName("a"));
-                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
+            aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
+            num = aList.size();
+            for (int i = num - 1; i >= 0; i--) {
+                aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
                 String s = aList.get(i).getText();
+                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
                 aList.get(i).click();
                 Thread.sleep(500);
-                if(s.equals("员工列表")){
-                    employeeList(driver);
-                    Thread.sleep(500);
-                }
-                if(s.equals("部门列表")){
-                    departmentList(driver);
-                    Thread.sleep(500);
+                switch (s){
+                    case "员工列表": employeeList(driver);break;
+                    case "部门列表": departmentList(driver);break;
                 }
             }
 
@@ -64,8 +58,51 @@ public class fuYou extends DriverBase {
 
             //region 福利管理
 
+            aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
+            num = aList.size();
+            for (int i = 0; i < num; i++) {
+                aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
+                String s = aList.get(i).getText();
+                if(s.equals("团体险")){
+                    continue;
+                }
+                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
+                aList.get(i).click();
+                Thread.sleep(500);
+                switch (s){
+                    case "福利发放":
 
+                        break;
+                    case "优分订单管理":
 
+                        break;
+                    case "企业收款管理":
+
+                        break;
+                    case "一卡通兑换":
+
+                        break;
+                }
+            }
+
+            //endregion
+
+            //region 公告管理
+            aList = navContent("//*[@id=\"fbgg_menu\"]/li[5]");
+            mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
+            aList.get(0).click();
+            //endregion
+
+            //region 交易管理
+            //endregion
+
+            //region 对账单
+            //endregion
+
+            //region 企业采购
+            //endregion
+
+            //region 扫码机收入
             //endregion
 
             return  true;
@@ -77,7 +114,7 @@ public class fuYou extends DriverBase {
 
     //region 登陆
 
-    public void login(String username,String password){
+    public boolean login(String username,String password){
         driver.get(fuYouUrl);
         driver.manage().window().maximize();
         try{
@@ -135,17 +172,30 @@ public class fuYou extends DriverBase {
                 fuYouLogin(username, password);
                 driver.close();
             }
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            return false;
         }
 
     }
 
     //endregion
 
-    //region 员工管理方法
+    //region 导航选择
 
-    //部门列表的测试方法
+    public List<WebElement> navContent(String navPath){
+        WebElement ele = driver.findElement(By.xpath(navPath));
+        WebElement foundUl = ele.findElement(By.tagName("ul"));
+        List<WebElement> result = foundUl.findElements(By.tagName("a"));
+        return  result;
+    }
+
+    //endregion
+
+    //region 员工管理接口
+
+    //部门列表的测试
     public void departmentList(WebDriver driver){
         departmentList dep = new departmentList();
         //部门添加
@@ -156,7 +206,7 @@ public class fuYou extends DriverBase {
         dep.updataDep(driver);
     }
 
-    //员工列表的测试方法
+    //员工列表的测试
     public void employeeList(WebDriver driver){
         employeeList emp = new employeeList();
         //添加员工
@@ -171,5 +221,14 @@ public class fuYou extends DriverBase {
         emp.searchEmp(driver);
     }
 
+    //endregion
+
+    //region 福利管理接口
+    //endregion
+
+    //region 交易管理接口
+    //endregion
+
+    //region 企业采购接口
     //endregion
 }
