@@ -1,5 +1,6 @@
 package com.selenium.flx.custom;
 
+import com.selenium.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 后端postman测试需要的账号
+ * 开户
  */
 @Slf4j
 public class sepecEditCustom {
@@ -34,26 +35,32 @@ public class sepecEditCustom {
      * @param driver
      */
     @Test
-    public String custom01(WebDriver driver) {
-        this.saveCustomTop(driver);
-        //进入协议信息
-        driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
-        //勾选业务权限，除去企业批量还信用卡
-        ArrayList except = new ArrayList();
-        except.add("mini-62$17");
-        list(driver, except);
+    public boolean custom01(WebDriver driver) {
+        try {
 
-        //更改信用卡协议信息
-        //输入框存在默认值时，若需要修改其值。使用sendKeys(Keys.chord(Keys.CONTROL,"a"),"value") value为需要更改的值
-        driver.findElement(By.id("contract.creditSingleFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
-        driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-remove")).click();
-        driver.findElement(By.id("contract.individualCountToCreditUp$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "30000.00");
+            this.saveCustomTop(driver);
+            //进入协议信息
+            driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
+            //勾选业务权限，除去企业批量还信用卡
+            ArrayList except = new ArrayList();
+            except.add("mini-62$17");
+            list(driver, except);
 
-        //更改积分兑换协议信息
-        driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
+            //更改信用卡协议信息
+            //输入框存在默认值时，若需要修改其值。使用sendKeys(Keys.chord(Keys.CONTROL,"a"),"value") value为需要更改的值
+            driver.findElement(By.id("contract.creditSingleFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
+            driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-remove")).click();
+            driver.findElement(By.id("contract.individualCountToCreditUp$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "30000.00");
 
-        this.saveCustomBottom(driver);
-        return "true";
+            //更改积分兑换协议信息
+            driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
+
+            this.saveCustomBottom(driver);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -71,7 +78,42 @@ public class sepecEditCustom {
      * @param driver
      */
     @Test
-    public void custom02(WebDriver driver) {
+    public boolean custom02(WebDriver driver) {
+        try {
+
+
+            this.saveCustomTop(driver);
+            //进入协议信息
+            driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
+            //勾选业务权限，除去企业批量还信用卡
+            ArrayList except = new ArrayList();
+            except.add("mini-62$17");
+            list(driver, except);
+
+            //更改信用卡协议信息
+            driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-remove")).click();
+            driver.findElement(By.id("stepRate.rate1")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3");
+            driver.findElement(By.id("contract.creditSingleUp$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "100.00");
+            driver.findElement(By.id("contract.individualCountToCreditUp$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "30000.00");
+
+            //更改积分兑换协议信息
+            driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
+
+            this.saveCustomBottom(driver);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 正常流程开户
+     *
+     * @param driver
+     */
+    @Test
+    public void normalCustom(WebDriver driver) {
         this.saveCustomTop(driver);
         //进入协议信息
         driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
@@ -79,16 +121,6 @@ public class sepecEditCustom {
         ArrayList except = new ArrayList();
         except.add("mini-62$17");
         list(driver, except);
-
-        //更改信用卡协议信息
-        driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-remove")).click();
-        driver.findElement(By.id("stepRate.rate1")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3");
-        driver.findElement(By.id("contract.creditSingleUp$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "100.00");
-        driver.findElement(By.id("contract.individualCountToCreditUp$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "30000.00");
-
-        //更改积分兑换协议信息
-        driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
-
         this.saveCustomBottom(driver);
     }
 
@@ -125,21 +157,30 @@ public class sepecEditCustom {
             driver.switchTo().defaultContent();
             Thread.sleep(1000);
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
-            //授权人姓名，身份证，电话
+            //正确的授权人姓名，错误的身份证和电话
             driver.findElement(By.id("entity.contactPerson$text")).click();
-
             driver.findElement(By.id("entity.contactPerson$text")).sendKeys("test" + date);
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).click();
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("420984199701051755");
-            driver.findElement(By.id("entity.cellPhone$text")).click();
-            driver.findElement(By.id("entity.cellPhone$text")).sendKeys("17607146095");
-            //主站需要进行实名认证
+            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("saefea");
+            driver.findElement(By.id("entity.cellPhone$text")).sendKeys("2345s423");
+            //主站需要进行实名认证,点击后提示输入的身份证号码有误---点击alert继续
             driver.findElement(By.id("certbtn")).click();
-            //认证失败---点击alert继续
-            Thread.sleep(3000);
-            driver.findElement(By.cssSelector(".mini-panel.mini-window.mini-window-drag")).findElement(By.cssSelector(".mini-button-text")).click();
             Thread.sleep(1000);
-
+            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
+            //输入正确的身份证号
+            driver.findElement(By.id("entity.contactPersonIdcard$text")).clear();
+            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("420984199701051755");
+            //继续实名认证,点击后提示输入的手机号码有误---点击alert继续
+            driver.findElement(By.id("certbtn")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
+            //输入正确的电话号码
+            driver.findElement(By.id("entity.cellPhone$text")).clear();
+            driver.findElement(By.id("entity.cellPhone$text")).sendKeys(PhoneUtil.getTelephone());
+            //继续实名认证
+            driver.findElement(By.id("certbtn")).click();
+            Thread.sleep(3000);
+            //认证失败---点击alert继续
+            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,12 +198,14 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-save")).click();
             Thread.sleep(1000);
-            driver.findElement(By.id("mini-119")).click();
+            driver.findElement(By.id("mini-123")).click();
             Thread.sleep(1000);
-            driver.findElement(By.id("mini-117")).click();
+            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
+            log.info("客户管理--开户:{}--成功",customNo);
         } catch (Exception e) {
             e.printStackTrace();
+            log.info("客户管理--开户:{}--失败",customNo);
         }
     }
 

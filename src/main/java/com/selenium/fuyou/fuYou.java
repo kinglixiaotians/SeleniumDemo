@@ -5,7 +5,9 @@ import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
+import com.selenium.fuyou.welfareManager.scoreOrder;
 import com.selenium.utils.PropertiesConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +17,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+@Slf4j
 public class fuYou extends DriverBase {
     DesiredCapabilities caps = setDownloadsPath("E:\\2019");
     public WebDriver driver = driverName(caps);
@@ -25,13 +28,13 @@ public class fuYou extends DriverBase {
 
     @Test
     public void fuYouTest() {
-        fuYouLogin(username,password);
+        fuYouLogin(username, password);
     }
 
-    public boolean fuYouLogin(String username,String password) {
+    public boolean fuYouLogin(String username, String password) {
         try {
             //登陆
-            login(username,password);
+            login(username, password);
 
             //创建鼠标
             Actions mouse = new Actions(driver);
@@ -48,9 +51,13 @@ public class fuYou extends DriverBase {
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
                 aList.get(i).click();
                 Thread.sleep(500);
-                switch (s){
-                    case "员工列表": employeeList(driver);break;
-                    case "部门列表": departmentList(driver);break;
+                switch (s) {
+                    case "员工列表":
+                        employeeList(driver);
+                        break;
+                    case "部门列表":
+                        departmentList(driver);
+                        break;
                 }
             }
 
@@ -63,13 +70,13 @@ public class fuYou extends DriverBase {
             for (int i = 0; i < num; i++) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
                 String s = aList.get(i).getText();
-                if(s.equals("团体险")){
+                if (s.equals("团体险")) {
                     continue;
                 }
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
                 aList.get(i).click();
                 Thread.sleep(500);
-                switch (s){
+                switch (s) {
                     case "福利发放":
 
                         break;
@@ -105,8 +112,8 @@ public class fuYou extends DriverBase {
             //region 扫码机收入
             //endregion
 
-            return  true;
-        }catch (Exception e){
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -114,18 +121,18 @@ public class fuYou extends DriverBase {
 
     //region 登陆
 
-    public boolean login(String username,String password){
+    public boolean login(String username, String password) {
         driver.get(fuYouUrl);
         driver.manage().window().maximize();
-        try{
+        try {
             loginValidate log = new loginValidate();
             boolean flag = log.isExistNotice(driver);
-            if (flag){
+            if (flag) {
                 driver.findElement(By.className("notice_close")).click();
                 Thread.sleep(500);
             }
             flag = log.isExistTips(driver);
-            if(flag){
+            if (flag) {
                 driver.findElement(By.className("layui-layer-setwin")).click();
                 Thread.sleep(500);
             }
@@ -155,7 +162,7 @@ public class fuYou extends DriverBase {
 
             Thread.sleep(500);
             flag = log.isExistFistUse(driver);
-            if(flag){
+            if (flag) {
                 driver.findElement(By.xpath("//*[@id=\"dowebok\"]/div[1]/div/a[2]")).click();
             }
 
@@ -169,26 +176,24 @@ public class fuYou extends DriverBase {
                 if (!"true".equals(fl.verificationCustom(driver, username))) {
                     driver.close();
                 }
-                fuYouLogin(username, password);
-                driver.close();
+
             }
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-
     }
 
     //endregion
 
     //region 导航选择
 
-    public List<WebElement> navContent(String navPath){
+    public List<WebElement> navContent(String navPath) {
         WebElement ele = driver.findElement(By.xpath(navPath));
         WebElement foundUl = ele.findElement(By.tagName("ul"));
         List<WebElement> result = foundUl.findElements(By.tagName("a"));
-        return  result;
+        return result;
     }
 
     //endregion
@@ -196,7 +201,7 @@ public class fuYou extends DriverBase {
     //region 员工管理接口
 
     //部门列表的测试
-    public void departmentList(WebDriver driver){
+    public void departmentList(WebDriver driver) {
         departmentList dep = new departmentList();
         //部门添加
         dep.addDep(driver);
@@ -207,7 +212,7 @@ public class fuYou extends DriverBase {
     }
 
     //员工列表的测试
-    public void employeeList(WebDriver driver){
+    public void employeeList(WebDriver driver) {
         employeeList emp = new employeeList();
         //添加员工
         emp.addEmp(driver);
@@ -224,6 +229,35 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 福利管理接口
+
+    /**
+     * 企业优分订单回复
+     *
+     * @param customNo
+     * @return
+     */
+    @Test
+    public boolean scoreOrderManager(String customNo) {
+        try {
+            //福利管理 优分订单管理
+            Thread.sleep(1000);
+            Actions mouse = new Actions(driver);
+            mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]"))).perform();
+            driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/ul/li[3]/a")).click();
+            scoreOrder so = new scoreOrder();
+            if (!so.replyOrder(driver, customNo)) {
+                driver.close();
+            }
+            log.info("回复企业订单--企业号：{}--成功", customNo);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("回复企业订单--企业号：{}--失败", customNo);
+            return false;
+        }
+
+    }
+
     //endregion
 
     //region 交易管理接口
