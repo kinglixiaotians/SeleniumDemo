@@ -5,7 +5,6 @@ import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
-import com.selenium.fuyou.welfareManager.scoreOrder;
 import com.selenium.utils.PropertiesConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,16 +29,15 @@ public class fuYou extends DriverBase {
     }
 
     public boolean fuYouLogin(String username,String password) {
-        driver.get(fuYouUrl);
-        driver.manage().window().maximize();
         try {
             //登陆
-            login(driver,username,password);
+            login(username,password);
 
             //创建鼠标
             Actions mouse = new Actions(driver);
 
             //region 员工管理
+
             //部门列表
             WebElement ele = driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]"));
             WebElement foundUl = ele.findElement(By.tagName("ul"));
@@ -61,9 +59,12 @@ public class fuYou extends DriverBase {
                     Thread.sleep(500);
                 }
             }
+
             //endregion
 
             //region 福利管理
+
+
 
             //endregion
 
@@ -75,7 +76,10 @@ public class fuYou extends DriverBase {
     }
 
     //region 登陆
-    public void login(WebDriver driver,String username,String password){
+
+    public void login(String username,String password){
+        driver.get(fuYouUrl);
+        driver.manage().window().maximize();
         try{
             loginValidate log = new loginValidate();
             boolean flag = log.isExistNotice(driver);
@@ -136,9 +140,11 @@ public class fuYou extends DriverBase {
         }
 
     }
+
     //endregion
 
     //region 员工管理方法
+
     //部门列表的测试方法
     public void departmentList(WebDriver driver){
         departmentList dep = new departmentList();
@@ -164,5 +170,6 @@ public class fuYou extends DriverBase {
         //搜索员工
         emp.searchEmp(driver);
     }
+
     //endregion
 }

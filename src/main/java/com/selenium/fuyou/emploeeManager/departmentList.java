@@ -5,7 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 public class departmentList {
-    //新增部门
+    //region 新增部门
+
     @Test
     public void addDep(WebDriver driver){
         try {
@@ -57,7 +58,10 @@ public class departmentList {
         }
     }
 
-    //删除部门
+    //endregion
+
+    //region 删除部门
+
     @Test
     public void deleteDep(WebDriver driver){
         try{
@@ -89,7 +93,10 @@ public class departmentList {
         }
     }
 
-    //编辑部门
+    //endregion
+
+    //region 编辑部门
+
     @Test
     public void updataDep(WebDriver driver){
         try{
@@ -120,4 +127,6 @@ public class departmentList {
             return false;
         }
     }
+
+    //endregion
 }
