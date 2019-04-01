@@ -6,6 +6,8 @@ import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
+import com.selenium.fuyou.transactionManager.electronicInvoice;
+import com.selenium.fuyou.transactionManager.transactionRecord;
 import com.selenium.fuyou.welfareManager.scoreOrder;
 import com.selenium.utils.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,7 @@ public class fuYou extends DriverBase {
             Actions mouse = new Actions(driver);
             List<WebElement> aList = null;
             int num = 0;
+            String s = null;
 
             //region 员工管理
 
@@ -53,15 +56,15 @@ public class fuYou extends DriverBase {
                     Thread.sleep(500);
                     aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
-                    String s = aList.get(i).getText();
+                    s = aList.get(i).getText();
                     aList.get(i).click();
                     Thread.sleep(500);
                     switch (s) {
                         case "员工列表":
-                            employeeList(driver);
+                            employeeListInterface();
                             break;
                         case "部门列表":
-                            departmentList(driver);
+                            departmentListInterface();
                             break;
                     }
                 }
@@ -75,7 +78,7 @@ public class fuYou extends DriverBase {
                 num = aList.size();
                 for (int i = 0; i < num; i++) {
                     aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
-                    String s = aList.get(i).getText();
+                    s = aList.get(i).getText();
                     if (s.equals("团体险")) {
                         continue;
                     }
@@ -101,6 +104,7 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 公告管理
+
             if(false) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[5]");
                 announcementList notice = new announcementList();
@@ -110,9 +114,32 @@ public class fuYou extends DriverBase {
                 notice.announcement(driver);
                 notice.deleteAnnouncement(driver);
             }
+
             //endregion
 
             //region 交易管理
+
+            if(false){
+                aList = navContent("//*[@id=\"fbgg_menu\"]/li[6]");
+                num = aList.size();
+                for (int i = 0;i < num;i++){
+                    Thread.sleep(500);
+                    aList = navContent("//*[@id=\"fbgg_menu\"]/li[6]");
+                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[6]/a"))).perform();
+                    s = aList.get(i).getText();
+                    Thread.sleep(500);
+                    aList.get(i).click();
+                    switch (s){
+                        case "交易记录":
+                            transactionRecordInterface();
+                            break;
+                        case "电子发票":
+                            electronicInvoiceInterface();
+                            break;
+                    }
+                }
+            }
+
             //endregion
 
             //region 对账单
@@ -212,7 +239,7 @@ public class fuYou extends DriverBase {
     //region 员工管理接口
 
     //部门列表的测试
-    public void departmentList(WebDriver driver) {
+    public void departmentListInterface() {
         departmentList dep = new departmentList();
         //部门添加
         dep.addDep(driver);
@@ -223,7 +250,7 @@ public class fuYou extends DriverBase {
     }
 
     //员工列表的测试
-    public void employeeList(WebDriver driver) {
+    public void employeeListInterface() {
         employeeList emp = new employeeList();
         //添加员工
         emp.addEmp(driver);
@@ -299,9 +326,19 @@ public class fuYou extends DriverBase {
 
     }
 
-    //endregion
+    //endregiontr
 
     //region 交易管理接口
+
+    public void transactionRecordInterface(){
+        transactionRecord tr = new transactionRecord();
+        tr.searchInvoice(driver);
+    }
+
+    public void electronicInvoiceInterface(){
+        electronicInvoice ei = new electronicInvoice();
+    }
+
     //endregion
 
     //region 企业采购接口

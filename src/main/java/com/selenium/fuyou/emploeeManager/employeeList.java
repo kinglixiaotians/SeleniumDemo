@@ -1,8 +1,10 @@
 package com.selenium.fuyou.emploeeManager;
 
 import com.selenium.fuyou.baseDB.employee;
+import com.selenium.utils.PhoneUtil;
 import com.selenium.utils.PropertiesConfig;
 import com.selenium.utils.ResourcesUrlUtil;
+import com.selenium.utils.UserIDUtil;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -24,9 +26,9 @@ public class employeeList {
             paging(driver);
 
             ArrayList<employee> staff = new ArrayList<>();
-            staff.add(new employee("李四", 1, "382", "15884574764", "2017-01-04"));
-            staff.add(new employee("你猜", 2, "93", "13384750276", ""));
-            staff.add(new employee("张三", 2, "3492", "13134790377", "2018-10-29"));
+            staff.add(new employee("李四", 1, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2017-01-04"));
+            staff.add(new employee("你猜", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), ""));
+            staff.add(new employee("张三", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-10-29"));
             //循环插入员工
             driver.findElement(By.id("bgcreate")).click();
             for (employee e : staff) {
@@ -173,13 +175,13 @@ public class employeeList {
                 //清空数据
                 clearEmpData(driver);
                 //修改
-                String s = updateEmpData(driver,new employee("笑岁",2,"1115","","2019-01-28"));
+                String s = updateEmpData(driver,new employee("小刚",2,UserIDUtil.getUserId(),"","2019-01-28"));
                 if(s.equals("员工工号已存在") || s.equals(null)){
                     clearEmpData(driver);
                 }else{
-                    driver.findElement(By.id("bgcreate")).click();
+                    driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
                 }
-                updateEmpData(driver,new employee("dnf",2,"1115","","2019-03-23"));
+                updateEmpData(driver,new employee("dnf",2,UserIDUtil.getUserId(),"","2019-03-23"));
                 Thread.sleep(500);
                 //关闭多余编辑窗体
                 flag = isExistUpdateBox(driver);
