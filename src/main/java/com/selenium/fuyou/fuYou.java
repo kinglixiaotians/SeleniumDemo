@@ -1,6 +1,7 @@
 package com.selenium.fuyou;
 
 import com.selenium.base.DriverBase;
+import com.selenium.fuyou.accountStatement.accountStatement;
 import com.selenium.fuyou.announcementManager.announcementList;
 import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
@@ -146,7 +147,11 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
+            if(false){
+                driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
+                accountStatement as = new accountStatement();
+                as.searchStatement(driver);
+            }
 
             //endregion
 

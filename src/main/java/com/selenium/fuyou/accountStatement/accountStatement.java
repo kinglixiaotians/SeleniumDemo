@@ -2,7 +2,10 @@ package com.selenium.fuyou.accountStatement;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static com.selenium.fuyou.fuYouMethod.getNavList;
 import static com.selenium.fuyou.fuYouMethod.inputSearchDate;
@@ -40,7 +43,25 @@ public class accountStatement {
             driver.findElement(By.cssSelector(".qyzx_clear.qyzx_btn")).click();
             Thread.sleep(500);
 
-            getNavList(driver,".xsdd_time_bm.index_3");
+            driver.findElement(By.cssSelector(".qyzx_download.qyzx_btn")).click();
+
+            List<WebElement> list = getNavList(driver,".xsdd_time_bm.index_3");
+            for (int i = 0; i < list.size(); i++) {
+                list = getNavList(driver,".xsdd_time_bm.index_3");
+                list.get(i).findElement(By.tagName("a")).click();
+                Thread.sleep(500);
+            }
+            list = getNavList(driver,".xsdd_time_bm.index_3");
+            list.get(0).findElement(By.tagName("a")).click();
+            Thread.sleep(500);
+
+            list = getNavList(driver,".xsdd_time_bm.index_4");
+            for (int i = 0; i < list.size(); i++) {
+                list = getNavList(driver,".xsdd_time_bm.index_4");
+                list.get(i).findElement(By.tagName("a")).click();
+                Thread.sleep(500);
+            }
+            Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
         }
