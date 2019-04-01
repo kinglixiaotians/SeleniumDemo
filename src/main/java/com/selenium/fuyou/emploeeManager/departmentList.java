@@ -11,7 +11,7 @@ public class departmentList {
     public void addDep(WebDriver driver){
         try {
             Thread.sleep(500);
-            String [] dep = new String[] { "运营","研发","测试","随便" };
+            String [] dep = new String[] { "运营","研发","测试","后勤" };
             driver.findElement(By.id("bumen")).click();
             //循环添加部门
             for(int i = 0;i < dep.length;i++){
