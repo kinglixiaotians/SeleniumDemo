@@ -26,9 +26,13 @@ public class employeeList {
             paging(driver);
 
             ArrayList<employee> staff = new ArrayList<>();
-            staff.add(new employee("李四", 1, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2017-01-04"));
-            staff.add(new employee("你猜", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), ""));
-            staff.add(new employee("张三", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-10-29"));
+            staff.add(new employee("张三", 1, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2017-01-04"));
+            staff.add(new employee("李四", 1, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2017-03-07"));
+            staff.add(new employee("王五", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2017-11-12"));
+            staff.add(new employee("赵柳", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-10-05"));
+            staff.add(new employee("贤七", 3, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-07-17"));
+            staff.add(new employee("杨八", 3, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-08-13"));
+            staff.add(new employee("孙九", 4, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-03-25"));
             //循环插入员工
             driver.findElement(By.id("bgcreate")).click();
             for (employee e : staff) {

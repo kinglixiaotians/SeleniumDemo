@@ -5,6 +5,7 @@ package com.selenium.utils;
  */
 public class PhoneUtil {
 
+    //region 获取随机手机号
     private static String[] telFirst="134,135,136,137,138,139,150,151,152,157,158,159,130,131,132,155,156,133,153".split(",");
 
     public static int getNum(int start,int end) {
@@ -18,4 +19,7 @@ public class PhoneUtil {
         String thrid=String.valueOf(getNum(1,9100)+10000).substring(1);
         return first+second+thrid;
     }
+    //endregion
+
+
 }

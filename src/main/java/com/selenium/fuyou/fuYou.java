@@ -7,9 +7,9 @@ import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
+import com.selenium.fuyou.welfareManager.welfareManager;
 import com.selenium.fuyou.transactionManager.electronicInvoice;
 import com.selenium.fuyou.transactionManager.transactionRecord;
-import com.selenium.fuyou.welfareManager.scoreOrder;
 import com.selenium.utils.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -19,8 +19,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -77,27 +75,27 @@ public class fuYou extends DriverBase {
             if(false) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
                 num = aList.size();
+                welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
                     aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
-                    s = aList.get(i).getText();
-                    if (s.equals("团体险")) {
-                        continue;
-                    }
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
+                    s = aList.get(i).getText();
                     aList.get(i).click();
                     Thread.sleep(500);
                     switch (s) {
                         case "福利发放":
-
+                            w.provideWelfare(driver, username);
+                            break;
+                        case "团体险":
                             break;
                         case "优分订单管理":
 
                             break;
                         case "企业收款管理":
-
+                            companyGatheringQrcode();
                             break;
                         case "一卡通兑换":
-
+                            w.companyCardPassExchange(driver, username);
                             break;
                     }
                 }
@@ -279,40 +277,30 @@ public class fuYou extends DriverBase {
     //region 福利管理接口
 
     /**
-     * 福利发放
-     *
-     * @return
+     * 企业收款管理
      */
     @Test
-    public boolean provideWelfare() {
+    public boolean companyGatheringQrcode() {
         try {
-            //获取当前时间并进行格式化
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            String date = sdf.format(new Date());
-            //福利名目
-            driver.findElement(By.id("welfareName")).sendKeys("测试" + date);
-            //统一分配
-            driver.findElement(By.id("Score")).sendKeys("100");
-            //精确查找
-//            driver.findElement(By.id("txtkey")).
-            //发放对象
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[2]/i")).click();
+            welfareManager w=new welfareManager();
+            //添加固定与动态金额各一个
+            w.addCompanyGatheringQrcode(driver,true);
+            w.addCompanyGatheringQrcode(driver,false);
+            //修改
+            w.updateCompanyGatheringQrcode(driver,true);
+            w.updateCompanyGatheringQrcode(driver,false);
+            //给固定金额设置时间段
 
-            log.info("福利发放成功");
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("福利发放失败");
             return false;
         }
     }
 
-
     /**
      * 企业优分订单回复
-     *
-     * @param customNo
-     * @return
      */
     @Test
     public boolean scoreOrderManager(String customNo) {
@@ -322,8 +310,8 @@ public class fuYou extends DriverBase {
             Actions mouse = new Actions(driver);
             mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]"))).perform();
             driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/ul/li[3]/a")).click();
-            scoreOrder so = new scoreOrder();
-            if (!so.replyOrder(driver, customNo)) {
+            welfareManager w = new welfareManager();
+            if (!w.replyOrder(driver, customNo)) {
                 driver.close();
             }
             log.info("回复企业订单--企业号：{}--成功", customNo);

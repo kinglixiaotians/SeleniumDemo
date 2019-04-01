@@ -6,12 +6,10 @@ import com.selenium.flx.order.editOrder;
 import com.selenium.flx.custom.editCustom;
 import com.selenium.flx.custom.sepecEditCustom;
 import com.selenium.fuyou.fuYou;
-import com.selenium.fuyou.welfareManager.scoreOrder;
 import com.selenium.utils.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 @Slf4j
@@ -159,6 +157,7 @@ public class flx extends DriverBase {
             judgement(fy.login(se.customNo, "123456"));
             //企业回复订单
             judgement(fy.scoreOrderManager(se.customNo));
+            Thread.sleep(1000);
             fy.driver.close();
             //endregion
 
