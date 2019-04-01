@@ -89,7 +89,7 @@ public class editCustom {
             driver.findElement(By.id("entity.contactPersonIdcard$text")).clear();
             driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("420984199701051755");
             driver.findElement(By.id("certbtn")).click();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             //认证失败---点击alert继续
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
             //保存

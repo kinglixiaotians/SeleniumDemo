@@ -55,8 +55,7 @@ public class sepecEditCustom {
             //更改积分兑换协议信息
             driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
 
-            this.saveCustomBottom(driver);
-            return true;
+            return this.saveCustomBottom(driver);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -80,8 +79,6 @@ public class sepecEditCustom {
     @Test
     public boolean custom02(WebDriver driver) {
         try {
-
-
             this.saveCustomTop(driver);
             //进入协议信息
             driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
@@ -99,8 +96,7 @@ public class sepecEditCustom {
             //更改积分兑换协议信息
             driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
 
-            this.saveCustomBottom(driver);
-            return true;
+            return this.saveCustomBottom(driver);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -113,7 +109,7 @@ public class sepecEditCustom {
      * @param driver
      */
     @Test
-    public void normalCustom(WebDriver driver) {
+    public boolean normalCustom(WebDriver driver) {
         this.saveCustomTop(driver);
         //进入协议信息
         driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
@@ -121,7 +117,7 @@ public class sepecEditCustom {
         ArrayList except = new ArrayList();
         except.add("mini-62$17");
         list(driver, except);
-        this.saveCustomBottom(driver);
+        return this.saveCustomBottom(driver);
     }
 
     /**
@@ -192,7 +188,7 @@ public class sepecEditCustom {
      * @param driver
      */
     @Test
-    public void saveCustomBottom(WebDriver driver) {
+    public boolean saveCustomBottom(WebDriver driver) {
         try {
             //保存
             Thread.sleep(1000);
@@ -202,10 +198,12 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
-            log.info("客户管理--开户:{}--成功",customNo);
+            log.info("客户管理--开户:{}--成功", customNo);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("客户管理--开户:{}--失败",customNo);
+            log.info("客户管理--开户:{}--失败", customNo);
+            return false;
         }
     }
 

@@ -16,6 +16,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -44,7 +46,7 @@ public class fuYou extends DriverBase {
 
             //region 员工管理
 
-            if(true) {
+            if (false) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
                 num = aList.size();
                 for (int i = num - 1; i >= 0; i--) {
@@ -181,7 +183,6 @@ public class fuYou extends DriverBase {
             Thread.sleep(1000);
             String currentUrl = driver.getCurrentUrl();
             if (currentUrl.equals(fuYouUrl + "Company/CompanyFirstLoad")) {
-                Thread.sleep(1000);
                 firstLogin fl = new firstLogin();
                 if (!"true".equals(fl.verificationCustom(driver, username))) {
                     driver.close();
@@ -239,6 +240,36 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 福利管理接口
+
+    /**
+     * 福利发放
+     *
+     * @return
+     */
+    @Test
+    public boolean provideWelfare() {
+        try {
+            //获取当前时间并进行格式化
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            String date = sdf.format(new Date());
+            //福利名目
+            driver.findElement(By.id("welfareName")).sendKeys("测试" + date);
+            //统一分配
+            driver.findElement(By.id("Score")).sendKeys("100");
+            //精确查找
+//            driver.findElement(By.id("txtkey")).
+            //发放对象
+            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[2]/i")).click();
+
+            log.info("福利发放成功");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("福利发放失败");
+            return false;
+        }
+    }
+
 
     /**
      * 企业优分订单回复

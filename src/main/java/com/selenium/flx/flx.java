@@ -83,13 +83,14 @@ public class flx extends DriverBase {
             driver.findElement(By.id("1062")).click();
             Thread.sleep(2000);
             //正常流程开户
-            se.normalCustom(driver);
+            judgement(se.normalCustom(driver));
             //开户后的流程，完成后注销账户
             judgement(procedure(se));
             //endregion
 
             //region 特殊开户
             if ("true".equals(flxOpenSwitch)) {
+                log.info("---以下为特殊开户。");
                 login();
                 //客户管理
                 driver.findElement(By.id("1061")).click();
