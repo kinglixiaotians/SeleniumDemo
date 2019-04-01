@@ -24,9 +24,9 @@ public class employeeList {
             paging(driver);
 
             ArrayList<employee> staff = new ArrayList<>();
-            staff.add(new employee("不知道", 1, "112", "15829834764", "2017-01-04"));
-            staff.add(new employee("你猜", 2, "103", "13384750276", ""));
-            staff.add(new employee("张三", 2, "3492", "13146790377", "2018-10-29"));
+            staff.add(new employee("李四", 1, "382", "15884574764", "2017-01-04"));
+            staff.add(new employee("你猜", 2, "93", "13384750276", ""));
+            staff.add(new employee("张三", 2, "3492", "13134790377", "2018-10-29"));
             //循环插入员工
             driver.findElement(By.id("bgcreate")).click();
             for (employee e : staff) {
@@ -173,8 +173,14 @@ public class employeeList {
                 //清空数据
                 clearEmpData(driver);
                 //修改
-                updateEmpData(driver,new employee("笑岁",2,"1115","","2019-01-28"));
+                String s = updateEmpData(driver,new employee("笑岁",2,"1115","","2019-01-28"));
+                if(s.equals("员工工号已存在") || s.equals(null)){
+                    clearEmpData(driver);
+                }else{
+                    driver.findElement(By.id("bgcreate")).click();
+                }
                 updateEmpData(driver,new employee("dnf",2,"1115","","2019-03-23"));
+                Thread.sleep(500);
                 //关闭多余编辑窗体
                 flag = isExistUpdateBox(driver);
                 if(flag){
@@ -216,7 +222,7 @@ public class employeeList {
     }
 
     //修改员工数据
-    public void updateEmpData(WebDriver driver,employee emp){
+    public String updateEmpData(WebDriver driver,employee emp){
         try {
             //员工名字
             driver.findElement(By.id("updateRealName")).sendKeys(emp.getRealName());
@@ -235,18 +241,14 @@ public class employeeList {
             driver.findElement(By.id("btnupdateUser")).click();
             Thread.sleep(500);
             //获取显示成功或失败文本
-            String s = driver.findElement(By.className("zeromodal-title1")).getText();
+            String result = driver.findElement(By.className("zeromodal-title1")).getText();
             Thread.sleep(500);
             //关闭成功或失败窗体
             driver.findElement(By.className("zeromodal-close")).click();
-            if(s.equals("修改成功!")){
-                driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
-                Thread.sleep(500);
-            }
-            clearEmpData(driver);
-            Thread.sleep(500);
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
+            return  null;
         }
     }
 
@@ -345,7 +347,7 @@ public class employeeList {
             batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"),true);//模板数据为空示例
             Thread.sleep(500);
             batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
-
+            Thread.sleep(500);
             //分类跳转操作
             WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
             List<WebElement> eleList = ele.findElements(By.tagName("a"));
@@ -367,7 +369,7 @@ public class employeeList {
                     String path = ResourcesUrlUtil.pathUrl(fileName);
                     driver.findElement(By.id("select_btn_1")).sendKeys(path);
                     Thread.sleep(500);
-                    if(fileName.equals("员工导入模板.xls")){
+                    if(fileName.equals("fuyou\\员工导入模板.xls")){
                         boolean flag = isExistErrorOrSuccessBox(driver);
                         if(flag){
                             driver.findElement(By.className("zeromodal-close")).click();

@@ -44,7 +44,7 @@ public class fuYou extends DriverBase {
 
             //region 员工管理
 
-            if(false) {
+            if(true) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
                 num = aList.size();
                 for (int i = num - 1; i >= 0; i--) {
@@ -99,7 +99,7 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 公告管理
-            if(true) {
+            if(false) {
                 aList = navContent("//*[@id=\"fbgg_menu\"]/li[5]");
                 announcementList notice = new announcementList();
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
