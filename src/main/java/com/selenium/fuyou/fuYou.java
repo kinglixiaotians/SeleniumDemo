@@ -24,7 +24,7 @@ import java.util.List;
 
 @Slf4j
 public class fuYou extends DriverBase {
-    DesiredCapabilities caps = setDownloadsPath("E:\\2019");
+    DesiredCapabilities caps = setDownloadsPath("E:\\SeleniumDemo1\\src\\main\\resources\\downloadFile");
     public WebDriver driver = driverName(caps);
     //key
     public String fuYouUrl = PropertiesConfig.getInstance().getProperty("driver.fuYou.url");
@@ -131,10 +131,12 @@ public class fuYou extends DriverBase {
                     aList.get(i).click();
                     switch (s){
                         case "交易记录":
-                            transactionRecordInterface();
+                            transactionRecord tr = new transactionRecord();
+                            tr.transactionRecordSearch(driver);
                             break;
                         case "电子发票":
-                            electronicInvoiceInterface();
+                            electronicInvoice ei = new electronicInvoice();
+                            ei.electronicInvoiceSearch(driver);
                             break;
                     }
                 }
@@ -143,6 +145,9 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 对账单
+
+            driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
+
             //endregion
 
             //region 企业采购
@@ -327,19 +332,6 @@ public class fuYou extends DriverBase {
     }
 
     //endregiontr
-
-    //region 交易管理接口
-
-    public void transactionRecordInterface(){
-        transactionRecord tr = new transactionRecord();
-        tr.searchInvoice(driver);
-    }
-
-    public void electronicInvoiceInterface(){
-        electronicInvoice ei = new electronicInvoice();
-    }
-
-    //endregion
 
     //region 企业采购接口
     //endregion
