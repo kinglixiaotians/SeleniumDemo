@@ -24,9 +24,9 @@ public class electronicInvoice {
             inputSearchDate(driver,"2019-02-27","2019-2-11","CompanyTransactionRecordList_startDate","CompanyTransactionRecordList_endDate");
 
             Thread.sleep(500);
-            List<WebElement> list = getNavList(driver,".xsdd_time_bm.index_1");
+            List<WebElement> list = getNavList(driver,".xsdd_time_bm.index_1","li",2);
             for (int i = 1; i < list.size(); i++) {
-                list = getNavList(driver,".xsdd_time_bm.index_1");
+                list = getNavList(driver,".xsdd_time_bm.index_1","li",2);
                 list.get(i).findElement(By.tagName("a")).click();
                 Thread.sleep(500);
                 driver.findElement(By.className("qyzx_search")).click();

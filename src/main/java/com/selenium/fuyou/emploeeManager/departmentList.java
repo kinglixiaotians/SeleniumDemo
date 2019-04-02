@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 public class departmentList {
+
     //region 新增部门
 
     @Test
@@ -103,7 +104,7 @@ public class departmentList {
     //region 编辑部门
 
     @Test
-    public void updataDep(WebDriver driver){
+    public void updateDep(WebDriver driver){
         try{
             boolean flag = isExistEditButton(driver);
             if(flag) {
@@ -112,7 +113,7 @@ public class departmentList {
                 Thread.sleep(500);
                 driver.findElement(By.className("dgygtj_in")).clear();
                 Thread.sleep(500);
-                driver.findElement(By.className("dgygtj_in")).sendKeys("研发");
+                driver.findElement(By.className("dgygtj_in")).sendKeys("测试");
                 Thread.sleep(500);
                 driver.findElement(By.name("btnupdate")).click();
             }else {
@@ -134,4 +135,5 @@ public class departmentList {
     }
 
     //endregion
+
 }

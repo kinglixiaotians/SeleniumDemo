@@ -13,6 +13,9 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.selenium.fuyou.fuYouMethod.getNavList;
+import static com.selenium.fuyou.fuYouMethod.trySelectGet;
+
 
 public class employeeList {
 
@@ -42,7 +45,9 @@ public class employeeList {
                 //员工部门
                 WebElement ele = driver.findElement(By.id("CompanyEmployeesList_ddlOrganization"));
                 Select downList = new Select(ele);
-                downList.selectByIndex(e.getDepartmentID());
+                int num = trySelectGet(driver,"CompanyEmployeesList_ddlOrganization",e.getDepartmentID());
+                downList.selectByIndex(num);
+
                 Thread.sleep(500);
                 //员工工号
                 driver.findElement(By.id("ExternalUserId")).sendKeys(e.getUserID());
@@ -57,7 +62,7 @@ public class employeeList {
                 driver.findElement(By.id("CompanyEmployeesList_addJoinDate")).click();
                 //保存
                 driver.findElement(By.xpath("//*[@id=\"createcontent\"]/div/div[9]/label/input")).click();
-                Thread.sleep(500);
+                Thread.sleep(1000);
 
                 //新增失败后操作
                 String s = driver.findElement(By.className("zeromodal-title1")).getText();
@@ -184,6 +189,7 @@ public class employeeList {
                     clearEmpData(driver);
                 }else{
                     driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
+                    clearEmpData(driver);
                 }
                 updateEmpData(driver,new employee("dnf",2,UserIDUtil.getUserId(),"","2019-03-23"));
                 Thread.sleep(500);
@@ -193,10 +199,10 @@ public class employeeList {
                     driver.findElement(By.cssSelector(".xubox_close.xulayer_png32.xubox_close0_0")).click();
                 }
                 Thread.sleep(500);
+
                 //部门分类跳转
-                WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
-                List<WebElement> eleList = ele.findElements(By.tagName("a"));
-                eleList.get(3).click();
+                List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
+                eleList.get(3).findElement(By.tagName("li")).click();
                 Thread.sleep(1000);
             }
             else{
@@ -235,6 +241,7 @@ public class employeeList {
             //选择部门
             WebElement element = driver.findElement(By.id("CompanyEmployeesList_ddlUpdateOrganization"));
             Select downList = new Select(element);
+            int num = trySelectGet(driver,"CompanyEmployeesList_ddlUpdateOrganization",emp.getDepartmentID());
             downList.selectByIndex(emp.getDepartmentID());
             //员工工号
             driver.findElement(By.id("updateExternalUserId")).sendKeys(emp.getUserID());
@@ -294,9 +301,8 @@ public class employeeList {
                 Thread.sleep(500);
 
                 //部门分类全部
-                WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
-                List<WebElement> eleList = ele.findElements(By.tagName("a"));
-                eleList.get(0).click();
+                List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
+                eleList.get(0).findElement(By.tagName("a")).click();
                 Thread.sleep(1000);
             }else{
                 return;
@@ -354,10 +360,10 @@ public class employeeList {
             Thread.sleep(500);
             batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
             Thread.sleep(500);
+
             //分类跳转操作
-            WebElement ele = driver.findElement(By.cssSelector(".qyzx_bm.bm_menu"));
-            List<WebElement> eleList = ele.findElements(By.tagName("a"));
-            eleList.get(2).click();
+            List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
+            eleList.get(2).findElement(By.tagName("a")).click();
             Thread.sleep(1000);
         }catch (Exception e){
             e.printStackTrace();
@@ -433,4 +439,5 @@ public class employeeList {
     }
 
     //endregion
+
 }

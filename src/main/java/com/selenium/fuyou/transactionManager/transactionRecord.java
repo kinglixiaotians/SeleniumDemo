@@ -30,9 +30,9 @@ public class transactionRecord {
 
             //模糊日期查询
             Thread.sleep(500);
-            List<WebElement> liList = getNavList(driver,".xsdd_time_bm.index_1");
+            List<WebElement> liList = getNavList(driver,".xsdd_time_bm.index_1","li",2);
             for (int i = 1; i < liList.size(); i++) {
-                liList = getNavList(driver,".xsdd_time_bm.index_1");
+                liList = getNavList(driver,".xsdd_time_bm.index_1","li",2);
                 Thread.sleep(500);
                 liList.get(i).findElement(By.tagName("a")).click();
                 Thread.sleep(500);
@@ -40,9 +40,9 @@ public class transactionRecord {
             }
 
             //交易类型分类
-            liList = getNavList(driver,".xsdd_time_bm.index_2");
+            liList = getNavList(driver,".xsdd_time_bm.index_2","li",2);
             for (int i = 0; i < liList.size(); i++) {
-                liList = getNavList(driver,".xsdd_time_bm.index_2");
+                liList = getNavList(driver,".xsdd_time_bm.index_2","li",2);
                 Thread.sleep(500);
                 liList.get(i).findElement(By.tagName("a")).click();
             }

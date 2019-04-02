@@ -45,19 +45,19 @@ public class accountStatement {
 
             driver.findElement(By.cssSelector(".qyzx_download.qyzx_btn")).click();
 
-            List<WebElement> list = getNavList(driver,".xsdd_time_bm.index_3");
+            List<WebElement> list = getNavList(driver,".xsdd_time_bm.index_3","li",2);
             for (int i = 0; i < list.size(); i++) {
-                list = getNavList(driver,".xsdd_time_bm.index_3");
+                list = getNavList(driver,".xsdd_time_bm.index_3","li",2);
                 list.get(i).findElement(By.tagName("a")).click();
                 Thread.sleep(500);
             }
-            list = getNavList(driver,".xsdd_time_bm.index_3");
+            list = getNavList(driver,".xsdd_time_bm.index_3","li",2);
             list.get(0).findElement(By.tagName("a")).click();
             Thread.sleep(500);
 
-            list = getNavList(driver,".xsdd_time_bm.index_4");
+            list = getNavList(driver,".xsdd_time_bm.index_4","li",2);
             for (int i = 0; i < list.size(); i++) {
-                list = getNavList(driver,".xsdd_time_bm.index_4");
+                list = getNavList(driver,".xsdd_time_bm.index_4","li",2);
                 list.get(i).findElement(By.tagName("a")).click();
                 Thread.sleep(500);
             }

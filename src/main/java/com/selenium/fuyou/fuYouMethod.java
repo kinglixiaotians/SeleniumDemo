@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -39,14 +40,33 @@ public class fuYouMethod {
     }
 
     //获取导航列表
-    public static List<WebElement> getNavList(WebDriver driver, String ulPath){
+    //byState：0 id,1 className,2 cssSelector,3 xPath
+    public static List<WebElement> getNavList(WebDriver driver, String ulPath,String findTagName,int byState){
         try {
-            WebElement element = driver.findElement(By.cssSelector(ulPath));
-            List<WebElement> liList = element.findElements(By.tagName("li"));
+            WebElement element = null;
+            switch (byState){
+                case 0:element = driver.findElement(By.id(ulPath));break;
+                case 1:element = driver.findElement(By.className(ulPath));break;
+                case 2:element = driver.findElement(By.cssSelector(ulPath));break;
+                case 3:element = driver.findElement(By.xpath(ulPath));break;
+            }
+            List<WebElement> liList = element.findElements(By.tagName(findTagName));
             return liList;
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //判断下拉列表是否超出
+    public static int trySelectGet(WebDriver driver,String path,int num){
+        try{
+            WebElement ele = driver.findElement(By.id(path));
+            Select downList = new Select(ele);
+            downList.selectByIndex(num);
+            return num;
+        }catch (Exception e){
+            return 0;
         }
     }
 

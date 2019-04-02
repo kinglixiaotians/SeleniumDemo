@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static com.selenium.fuyou.fuYouMethod.getNavList;
+
 public class announcementList {
 
     //region 发布公告
@@ -56,8 +58,7 @@ public class announcementList {
     public void checkEmp(WebDriver driver,int [] check,int [] uncheck){
         try{
             if(check.length != 0){
-                WebElement element = driver.findElement(By.id("fbgg_choice"));
-                List<WebElement> checkList = element.findElements(By.tagName("li"));
+                List<WebElement> checkList = getNavList(driver,"fbgg_choice","li",0);
                 for (int i = 0; i < check.length; i++) {
                     if(check[i] < checkList.size()) {
                         Thread.sleep(500);
@@ -66,8 +67,7 @@ public class announcementList {
                 }
                 if(uncheck.length != 0){
                     for (int i = 0; i < uncheck.length; i++) {
-                        element = driver.findElement(By.id("fbgg_con_bg"));
-                        checkList = element.findElements(By.tagName("span"));
+                        checkList = getNavList(driver,"fbgg_con_bg","span",0);
                         if(uncheck[i] < checkList.size()){
                             Thread.sleep(500);
                             checkList.get(uncheck[i]).findElement(By.tagName("i")).click();
@@ -105,8 +105,7 @@ public class announcementList {
     //发布成功后操作
     public void releaseSuccess(WebDriver driver){
         try{
-            WebElement element = driver.findElement(By.id("fbgg_con_bg"));
-            List<WebElement> checkList = element.findElements(By.tagName("span"));
+            List<WebElement> checkList = getNavList(driver,"fbgg_con_bg","span",0);
             if(checkList.size() == 0){
                 driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-default")) .click();
                 return;

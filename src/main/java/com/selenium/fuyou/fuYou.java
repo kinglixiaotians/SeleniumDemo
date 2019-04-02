@@ -5,6 +5,7 @@ import com.selenium.fuyou.accountStatement.accountStatement;
 import com.selenium.fuyou.announcementManager.announcementList;
 import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
+import com.selenium.fuyou.enterpriseProcurement.enterpriseProcurement;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
 import com.selenium.fuyou.welfareManager.welfareManager;
@@ -20,6 +21,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
 import java.util.List;
+
+import static com.selenium.fuyou.fuYouMethod.getNavList;
 
 @Slf4j
 public class fuYou extends DriverBase {
@@ -49,14 +52,14 @@ public class fuYou extends DriverBase {
             //region 员工管理
 
             if (false) {
-                aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[3]","li",3);
                 num = aList.size();
                 for (int i = num - 1; i >= 0; i--) {
                     Thread.sleep(500);
-                    aList = navContent("//*[@id=\"fbgg_menu\"]/li[3]");
+                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[3]","li",3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
-                    s = aList.get(i).getText();
-                    aList.get(i).click();
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
+                    aList.get(i).findElement(By.tagName("a")).click();
                     Thread.sleep(500);
                     switch (s) {
                         case "员工列表":
@@ -73,14 +76,14 @@ public class fuYou extends DriverBase {
 
             //region 福利管理
             if(false) {
-                aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    aList = navContent("//*[@id=\"fbgg_menu\"]/li[4]");
+                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
-                    s = aList.get(i).getText();
-                    aList.get(i).click();
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
+                    aList.get(i).findElement(By.tagName("a")).click();
                     Thread.sleep(500);
                     switch (s) {
                         case "福利发放":
@@ -105,11 +108,12 @@ public class fuYou extends DriverBase {
             //region 公告管理
 
             if(false) {
-                aList = navContent("//*[@id=\"fbgg_menu\"]/li[5]");
+                Thread.sleep(500);
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[5]","li",3);
                 announcementList notice = new announcementList();
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
                 Thread.sleep(500);
-                aList.get(0).click();
+                aList.get(0).findElement(By.tagName("a")).click();
                 notice.announcement(driver);
                 notice.deleteAnnouncement(driver);
             }
@@ -119,15 +123,16 @@ public class fuYou extends DriverBase {
             //region 交易管理
 
             if(false){
-                aList = navContent("//*[@id=\"fbgg_menu\"]/li[6]");
+                Thread.sleep(500);
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                 num = aList.size();
                 for (int i = 0;i < num;i++){
                     Thread.sleep(500);
-                    aList = navContent("//*[@id=\"fbgg_menu\"]/li[6]");
+                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[6]/a"))).perform();
-                    s = aList.get(i).getText();
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
-                    aList.get(i).click();
+                    aList.get(i).findElement(By.tagName("a")).click();
                     switch (s){
                         case "交易记录":
                             transactionRecord tr = new transactionRecord();
@@ -146,6 +151,7 @@ public class fuYou extends DriverBase {
             //region 对账单
 
             if(false){
+                Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
                 as.searchStatement(driver);
@@ -154,6 +160,28 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 企业采购
+
+            if (true) {
+                Thread.sleep(500);
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
+                num = aList.size();
+                for (int i = 0; i < num; i++) {
+                    Thread.sleep(500);
+                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
+                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
+                    aList.get(i).findElement(By.tagName("a")).click();
+                    Thread.sleep(500);
+                    switch (s){
+                        case "企业采购":
+                            enterpriseProcurementInterface();
+                            break;
+                        case "采购订单":
+                            break;
+                    }
+                }
+            }
+
             //endregion
 
             //region 扫码机收入
@@ -168,6 +196,7 @@ public class fuYou extends DriverBase {
 
     //region 登陆
 
+    @Test
     public boolean login(String username, String password) {
         driver.get(fuYouUrl);
         driver.manage().window().maximize();
@@ -233,17 +262,6 @@ public class fuYou extends DriverBase {
 
     //endregion
 
-    //region 导航选择
-
-    public List<WebElement> navContent(String navPath) {
-        WebElement ele = driver.findElement(By.xpath(navPath));
-        WebElement foundUl = ele.findElement(By.tagName("ul"));
-        List<WebElement> result = foundUl.findElements(By.tagName("a"));
-        return result;
-    }
-
-    //endregion
-
     //region 员工管理接口
 
     //部门列表的测试
@@ -254,7 +272,7 @@ public class fuYou extends DriverBase {
         //部门删除
         dep.deleteDep(driver);
         //部门编辑
-        dep.updataDep(driver);
+        dep.updateDep(driver);
     }
 
     //员工列表的测试
@@ -327,5 +345,14 @@ public class fuYou extends DriverBase {
     //endregiontr
 
     //region 企业采购接口
+
+    //企业采购
+    public void enterpriseProcurementInterface(){
+        enterpriseProcurement ep = new enterpriseProcurement();
+//        ep.isHaveAddress(driver);
+        ep.updateAddress(driver);
+    }
+
     //endregion
+
 }
