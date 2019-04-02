@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class fuYouMethod {
@@ -68,6 +70,13 @@ public class fuYouMethod {
         }catch (Exception e){
             return 0;
         }
+    }
+
+    //返回当前时间  格式为：yyyyMMddHHmmss（例：20190401160321）
+    public static String nowDate() {
+        //获取当前时间并进行格式化
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return sdf.format(new Date());
     }
 
 }

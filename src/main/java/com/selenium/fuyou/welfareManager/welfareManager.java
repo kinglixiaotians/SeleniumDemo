@@ -15,16 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.selenium.fuyou.fuYouMethod.nowDate;
+
 @Slf4j
 public class welfareManager {
-
-
-    //返回当前时间  格式为：yyyyMMddHHmmss（例：20190401160321）
-    public static String nowDate() {
-        //获取当前时间并进行格式化
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        return sdf.format(new Date());
-    }
 
     //region 福利发放
 
@@ -125,7 +119,7 @@ public class welfareManager {
 
             //输入福利名目
             driver.findElement(By.xpath("/html/body/div[4]/ul/li[2]/a")).click();
-            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + welfareManager.nowDate());
+            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             Thread.sleep(500);
             //下载分配模板(员工账户)
             driver.findElement(By.id("Button1")).click();
@@ -137,7 +131,7 @@ public class welfareManager {
             driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
             //刷新页面（可以重新获取验证码）
             driver.navigate().refresh();
-            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + welfareManager.nowDate());
+            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
 
             //修改并上传
             uploadFiles(driver, custom);
@@ -146,7 +140,7 @@ public class welfareManager {
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
 
             //输入福利名目
-            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + welfareManager.nowDate());
+            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             //下载分配模板(员工工号)
             driver.findElement(By.id("Button2")).click();
             Thread.sleep(3000);
