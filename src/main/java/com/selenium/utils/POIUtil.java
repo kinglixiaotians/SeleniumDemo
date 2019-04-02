@@ -94,6 +94,7 @@ public class POIUtil {
             File [] files = file.listFiles();
             for(File name:files){
                 String names = name.toString();
+                if(names.indexOf("员工导入模版")==-1||names.indexOf("企业对账信息")==-1)
                 if(names.endsWith(".xls")){
                     System.out.println(names);
                     return names;
@@ -108,7 +109,7 @@ public class POIUtil {
 
     public static void main(String[] args) throws Exception {
         //定义文件夹
-        String path = "E:\\2019\\20190401";
+        String path = "D:\\IDEA\\SeleniumDemo1\\src\\main\\resources\\fuyou";
         //查询文件夹下以xls结尾的文件
         String fileName = POIUtil.xlsUrl(path);
         //读取

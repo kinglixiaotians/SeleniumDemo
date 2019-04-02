@@ -82,17 +82,18 @@ public class fuYou extends DriverBase {
                 for (int i = 0; i < num; i++) {
                     aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
+                    Thread.sleep(500);
                     s = aList.get(i).findElement(By.tagName("a")).getText();
+                    Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
                     Thread.sleep(500);
                     switch (s) {
                         case "福利发放":
-                            w.provideWelfare(driver, username);
+                            provideWelfare();
                             break;
                         case "团体险":
                             break;
                         case "优分订单管理":
-
                             break;
                         case "企业收款管理":
                             companyGatheringQrcode();
@@ -295,20 +296,17 @@ public class fuYou extends DriverBase {
     //region 福利管理接口
 
     /**
-     * 企业收款管理
+     * 福利发放
      */
     @Test
-    public boolean companyGatheringQrcode() {
+    private boolean provideWelfare() {
         try {
-            welfareManager w=new welfareManager();
-            //添加固定与动态金额各一个
-            w.addCompanyGatheringQrcode(driver,true);
-            w.addCompanyGatheringQrcode(driver,false);
-            //修改
-            w.updateCompanyGatheringQrcode(driver,true);
-            w.updateCompanyGatheringQrcode(driver,false);
-            //给固定金额设置时间段
-
+            welfareManager w = new welfareManager();
+            //单个福利发放
+            w.singleProvideWelfare(driver, username);
+            Thread.sleep(1000);
+            //批量福利发放
+            w.multipleprovideWelfare(driver, username);
 
             return true;
         } catch (Exception e) {
@@ -342,7 +340,48 @@ public class fuYou extends DriverBase {
 
     }
 
-    //endregiontr
+    /**
+     * 企业收款管理
+     */
+    @Test
+    public boolean companyGatheringQrcode() {
+        try {
+            welfareManager w = new welfareManager();
+            //添加固定与动态金额各一个
+            Thread.sleep(500);
+            w.addCompanyGatheringQrcode(driver, true);
+            Thread.sleep(500);
+            w.addCompanyGatheringQrcode(driver, false);
+            Thread.sleep(500);
+            //修改
+            Thread.sleep(500);
+            w.updateCompanyGatheringQrcode(driver, true);
+            Thread.sleep(500);
+            w.updateCompanyGatheringQrcode(driver, false);
+            Thread.sleep(500);
+            //给固定金额设置时间段
+            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[3]")).click();
+            Thread.sleep(500);
+            w.editFixedCompanyGatheringQrcode(driver);
+            //删除
+            Thread.sleep(2000);
+            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span")).click();
+            Thread.sleep(2000);
+            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]/span")).click();
+            Thread.sleep(2000);
+            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span")).click();
+            Thread.sleep(2000);
+            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]")).click();
+            Thread.sleep(2000);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //endregion
 
     //region 企业采购接口
 
