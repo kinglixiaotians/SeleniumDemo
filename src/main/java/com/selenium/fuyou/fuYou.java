@@ -123,7 +123,7 @@ public class fuYou extends DriverBase {
 
             //region 交易管理
 
-            if(false){
+            if(true){
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                 num = aList.size();
@@ -151,7 +151,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(false){
+            if(true){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
@@ -388,8 +388,9 @@ public class fuYou extends DriverBase {
     //企业采购
     public void enterpriseProcurementInterface(){
         enterpriseProcurement ep = new enterpriseProcurement();
-//        ep.isHaveAddress(driver);
+        ep.isHaveAddress(driver);
         ep.updateAddress(driver);
+        ep.deleteAddress(driver);
     }
 
     //endregion

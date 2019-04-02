@@ -198,15 +198,37 @@ public class enterpriseProcurement {
     @Test
     public void deleteAddress(WebDriver driver){
         try{
+            boolean flag = isExistDelButton(driver);
+            if(!flag){
+                return;
+            }
             Thread.sleep(500);
-            driver.findElement(By.id("chooseAddressHeader")).click();
-            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete")).clear();
-            boolean flag = isAlertPresent(driver);
+            driver.findElement(By.className("chooseAddressHeader")).click();
+            Thread.sleep(500);
+            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete")).click();
+            flag = isAlertPresent(driver);
             if(flag){
+                Thread.sleep(500);
                 driver.switchTo().alert().accept();
+            }
+            Thread.sleep(500);
+            driver.findElement(By.className("imgCloseLogin")).click();
+            flag = isAlertPresent(driver);
+            if(flag){
+                addAddress(driver,"李三",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
             }
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    //判断是否有删除按钮
+    public boolean isExistDelButton(WebDriver driver){
+        try{
+            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete"));
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 
@@ -223,4 +245,19 @@ public class enterpriseProcurement {
     }
 
     //endregion
+
+    //region 导航栏
+
+    @Test
+    public void navMenu(WebDriver driver){
+        try{
+            List<WebElement> list = getNavList(driver,"//*[@id=\"aspnetForm\"]/div[4]/div[2]/div/div[1]","a",3);
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //endregion
+
 }
