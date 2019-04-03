@@ -123,7 +123,7 @@ public class fuYou extends DriverBase {
 
             //region 交易管理
 
-            if(true){
+            if(false){
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                 num = aList.size();
@@ -151,7 +151,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(true){
+            if(false){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
@@ -165,22 +165,10 @@ public class fuYou extends DriverBase {
             if (true) {
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
-                num = aList.size();
-                for (int i = 0; i < num; i++) {
-                    Thread.sleep(500);
-                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
-                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
-                    s = aList.get(i).findElement(By.tagName("a")).getText();
-                    aList.get(i).findElement(By.tagName("a")).click();
-                    Thread.sleep(500);
-                    switch (s){
-                        case "企业采购":
-                            enterpriseProcurementInterface();
-                            break;
-                        case "采购订单":
-                            break;
-                    }
-                }
+                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
+                Thread.sleep(500);
+                aList.get(0).findElement(By.tagName("a")).click();
+                enterpriseProcurementInterface();
             }
 
             //endregion
@@ -388,9 +376,12 @@ public class fuYou extends DriverBase {
     //企业采购
     public void enterpriseProcurementInterface(){
         enterpriseProcurement ep = new enterpriseProcurement();
-        ep.isHaveAddress(driver);
-        ep.updateAddress(driver);
-        ep.deleteAddress(driver);
+//        ep.isHaveAddress(driver);
+//        ep.updateAddress(driver);
+//        ep.deleteAddress(driver);
+//        ep.navMenu(driver);
+//        ep.searchProduct(driver);
+        ep.purchaseGoods(driver,username);
     }
 
     //endregion
