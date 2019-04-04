@@ -61,11 +61,8 @@ public class purchaseOrder {
             driver.findElement(By.xpath("//a[contains(@orderid,'" + orderId + "')]")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"xubox_layer1\"]/div[1]/span/a[1]")).click();
-            //查看 打开一个新页面
-            Thread.sleep(1000);
-            driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_hlinkOrderDetails")).click();
-
-            //进入查看页面3秒后关闭查看页面
+            Thread.sleep(2000);
+            //点击查看进入查看页面3秒后关闭查看页面
             lookOrder(driver, orderId);
             return true;
         } catch (Exception e) {
@@ -74,10 +71,22 @@ public class purchaseOrder {
         }
     }
 
-    //进入查看页面3秒后关闭查看页面退回到原页面
+    //点击查看进入查看页面3秒后关闭查看页面退回到原页面
     @Test
     public void lookOrder(WebDriver driver, String orderId) throws InterruptedException {
-        String oldHandle = goNewTabPage(driver, "http://localhost/Company/CompanyOrderDetails?OrderId=" + orderId);
+        //查看 打开一个新页面
+        Thread.sleep(1000);
+        driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_hlinkOrderDetails")).click();
+        String oldHandle = driver.getWindowHandle();
+        //获取当前浏览器打开的页面Handle集合
+        Set<String> set = driver.getWindowHandles();
+        //定位到新打开的tab页
+        for (String h : set) {
+            if (!h.equals(driver.getWindowHandle())) {
+                driver.switchTo().window(h);
+            }
+        }
+        driver.get("http://localhost/Company/CompanyOrderDetails?OrderId=" + orderId);
         Thread.sleep(3000);
         //关闭查看页面 重新定位到原页面
         returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
@@ -153,7 +162,8 @@ public class purchaseOrder {
             String oldHandle = goNewTabPage(driver, "http://localhost/Company/CompanyFinishOrder?orderId=" + orderId);
 
             //进行付款操作
-
+            enterpriseProcurement ep = new enterpriseProcurement();
+            ep.payment(driver);
 
             //关闭当前页面 重新定位到原页面（采购订单页面）
             returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
