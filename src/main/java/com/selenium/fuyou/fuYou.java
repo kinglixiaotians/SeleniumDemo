@@ -56,11 +56,11 @@ public class fuYou extends DriverBase {
             //region 员工管理
 
             if (false) {
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[3]","li",3);
+                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[3]", "li", 3);
                 num = aList.size();
                 for (int i = num - 1; i >= 0; i--) {
                     Thread.sleep(500);
-                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[3]","li",3);
+                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[3]", "li", 3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     aList.get(i).findElement(By.tagName("a")).click();
@@ -79,12 +79,12 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 福利管理
-            if(false) {
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
+            if (false) {
+                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
+                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     aList.get(i).findElement(By.tagName("a")).click();
@@ -374,14 +374,14 @@ public class fuYou extends DriverBase {
     //region 企业采购接口
 
     //企业采购
-    public void enterpriseProcurementInterface(){
+    public void enterpriseProcurementInterface() {
         enterpriseProcurement ep = new enterpriseProcurement();
 //        ep.isHaveAddress(driver);
 //        ep.updateAddress(driver);
 //        ep.deleteAddress(driver);
 //        ep.navMenu(driver);
 //        ep.searchProduct(driver);
-        ep.purchaseGoods(driver,username);
+        ep.purchaseGoods(driver, username);
     }
 
     //endregion

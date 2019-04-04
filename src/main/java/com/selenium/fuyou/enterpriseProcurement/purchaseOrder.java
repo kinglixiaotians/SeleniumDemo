@@ -52,28 +52,22 @@ public class purchaseOrder {
             Thread.sleep(1000);
             driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_hlinkOrderDetails")).click();
 
-            //region 进入查看页面3秒后关闭查看页面
-
-            //获取当前浏览器打开的页面Handle集合
-            Set<String> set = driver.getWindowHandles();
-            //转为Object集合用于操作
-            Object[] o = set.toArray();
-            //定位到查看页面
-            driver.switchTo().window(o[1].toString());
-            driver.get("http://localhost/Company/CompanyOrderDetails?OrderId=" + orderId);
-            Thread.sleep(3000);
-            //关闭查看页面
-            driver.close();
-            //重新定位到原页面
-            driver.switchTo().window(o[0].toString());
-            driver.get("http://localhost/Company/CompanyOrderInformation");
-
-            //endregion
+            //进入查看页面3秒后关闭查看页面
+            lookOrder(driver, orderId);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    //进入查看页面3秒后关闭查看页面退回到原页面
+    @Test
+    public void lookOrder(WebDriver driver, String orderId) throws InterruptedException {
+        String oldHandle = goNewTabPage(driver, "http://localhost/Company/CompanyOrderDetails?OrderId=" + orderId);
+        Thread.sleep(3000);
+        //关闭查看页面 重新定位到原页面
+        returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
     }
 
     /**
@@ -92,7 +86,6 @@ public class purchaseOrder {
             Alert alt = driver.switchTo().alert();
             //点击确定
             alt.accept();
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,22 +93,31 @@ public class purchaseOrder {
         }
     }
 
-
-    //region 测试一下是否能用
-    public static Set<String> set;
-    public static String newhandler;
-
-    public void goNewTabPage(WebDriver driver, String url) {
-        //保存当前浏览器全部页面的句柄
-        set = driver.getWindowHandles();
+    //新开一个tab页并跳转定位到此页面，返回跳转前页面句柄（原页面）
+    public String goNewTabPage(WebDriver driver, String newUrl) {
+        //保存当前页面的句柄
+        String oldHandle = driver.getWindowHandle();
         //新开tab页
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.open(" + url + ");");
+        js.executeScript("window.open();");
+        //获取当前浏览器打开的页面Handle集合
+        Set<String> set = driver.getWindowHandles();
         //定位到新打开的tab页
-        newhandler=driver.getWindowHandle();
-        driver.switchTo().window(newhandler);
+        for (String h : set) {
+            if (!h.equals(driver.getWindowHandle())) {
+                driver.switchTo().window(h);
+            }
+        }
+        driver.get(newUrl);
+        return oldHandle;
     }
-    //endregion
+
+    //关闭当前页面返回之前的页面
+    public void returnOldPage(WebDriver driver, String oldHandle, String oldUrl) {
+        driver.close();
+        driver.switchTo().window(oldHandle);
+        driver.get(oldUrl);
+    }
 
     /**
      * 订单流程3：（订单未付款）
@@ -134,54 +136,19 @@ public class purchaseOrder {
             //点击付款弹到付款页面
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[3]/td/div/button[1]")).click();
-            //获取当前浏览器打开的页面Handle集合
-            Set<String> set = driver.getWindowHandles();
-            //转为Object集合用于操作
-            Object[] o = set.toArray();
-            //定位到付款页面
-            driver.switchTo().window(o[1].toString());
-            driver.get("http://localhost/Company/CompanyFinishOrder?orderId=" + orderId);
+            //跳转并定位到付款页面
+            String oldHandle = goNewTabPage(driver, "http://localhost/Company/CompanyFinishOrder?orderId=" + orderId);
 
             //进行付款操作
 
 
-            //关闭付款页面
-            driver.close();
-            //重新定位到原页面
-            driver.switchTo().window(o[0].toString());
-            driver.get("http://localhost/Company/CompanyOrderInformation");
+            //关闭当前页面 重新定位到原页面（采购订单页面）
+            returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
 
             //查询一次当前订单（刷新）
             getOrder(driver, orderId, "", "", "");
 
-            //进入供应商页面进行发货操作
-            Supplier(driver, orderId);
-            //发完货关闭发货页面
-            driver.close();
-            //回到原页面查看物流
-            driver.switchTo().window(o[0].toString());
-            driver.get("http://localhost/Company/CompanyOrderInformation");
-            //确认订单
-
-
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * 供应商发货
-     *
-     * @param driver
-     * @param orderId
-     * @return
-     */
-    @Test
-    public boolean Supplier(WebDriver driver, String orderId) {
-        try {
-            //浏览器新开一个tab页面
+            //新开tab页
             Thread.sleep(500);
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("window.open();");
@@ -189,6 +156,21 @@ public class purchaseOrder {
             //登录供应商发货
             supplier s = new supplier();
             s.giveExpress(driver, orderId);
+            //关闭当前页面 重新定位到原页面（采购订单页面）
+            returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
+
+            //查看物流
+            Thread.sleep(1000);
+            driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_Logistics")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[1]/td/div/i")).click();
+            Thread.sleep(1000);
+            //确认订单
+            driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_lkbtnConfirmOrder")).click();
+            //获取弹出的对话框
+            Alert alt = driver.switchTo().alert();
+            //点击确定
+            alt.accept();
 
             return true;
         } catch (Exception e) {
@@ -196,5 +178,4 @@ public class purchaseOrder {
             return false;
         }
     }
-
 }
