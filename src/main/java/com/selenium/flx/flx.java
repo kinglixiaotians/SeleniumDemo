@@ -42,8 +42,6 @@ public class flx extends DriverBase {
     @Test
     public boolean login() {
         try {
-            //隐式等待,二十秒内不出现就报错
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             //region 登录
             Thread.sleep(1000);
             windowsHandle = driver.getWindowHandle();

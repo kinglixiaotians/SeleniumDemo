@@ -3,9 +3,6 @@ package com.selenium.flx.order;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
-
 @Slf4j
 public class editOrder {
     public String orderId ;
@@ -18,8 +15,6 @@ public class editOrder {
     //@Test
     public boolean entryOrder(String customNo, WebDriver driver) {
         try {
-            //隐式等待,二十秒内不出现就报错
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             driver.switchTo().defaultContent();
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/sales/order/orderQueryList.jsp')]")));
             //点击订单录入按钮

@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 开户
@@ -37,8 +36,7 @@ public class sepecEditCustom {
     //@Test
     public boolean custom01(WebDriver driver) {
         try {
-            //隐式等待,二十秒内不出现就报错
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
             this.saveCustomTop(driver);
             //进入协议信息
             driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();

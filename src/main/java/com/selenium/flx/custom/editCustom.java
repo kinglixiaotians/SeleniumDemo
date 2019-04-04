@@ -5,8 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
-
 @Slf4j
 public class editCustom {
     public String customNo;
@@ -18,8 +16,6 @@ public class editCustom {
     //@Test
     public void queryCustom(WebDriver driver, String customNo) {
         try {
-            //隐式等待,二十秒内不出现就报错
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             this.customNo=customNo;
             driver.switchTo().frame("mainframe");
             driver.findElement(By.id("customNo$text")).click();
