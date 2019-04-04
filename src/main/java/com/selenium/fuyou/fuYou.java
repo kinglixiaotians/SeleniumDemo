@@ -6,7 +6,6 @@ import com.selenium.fuyou.announcementManager.announcementList;
 import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.enterpriseProcurement.enterpriseProcurement;
-import com.selenium.fuyou.enterpriseProcurement.purchaseOrder;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
 import com.selenium.fuyou.welfareManager.welfareManager;
@@ -79,16 +78,18 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 福利管理
-            if (false) {
-                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
+            if(false) {
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
+                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
+                    Thread.sleep(500);
                     s = aList.get(i).findElement(By.tagName("a")).getText();
+                    Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     switch (s) {
                         case "福利发放":
                             provideWelfare();
@@ -110,9 +111,9 @@ public class fuYou extends DriverBase {
 
             //region 公告管理
 
-            if (false) {
+            if(false) {
                 Thread.sleep(500);
-                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[5]", "li", 3);
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[5]","li",3);
                 announcementList notice = new announcementList();
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
                 Thread.sleep(500);
@@ -125,18 +126,18 @@ public class fuYou extends DriverBase {
 
             //region 交易管理
 
-            if (false) {
+            if(false){
                 Thread.sleep(500);
-                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[6]", "li", 3);
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                 num = aList.size();
-                for (int i = 0; i < num; i++) {
+                for (int i = 0;i < num;i++){
                     Thread.sleep(500);
-                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[6]", "li", 3);
+                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[6]/a"))).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
-                    switch (s) {
+                    switch (s){
                         case "交易记录":
                             transactionRecord tr = new transactionRecord();
                             tr.transactionRecordSearch(driver);
@@ -153,7 +154,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if (false) {
+            if(false){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
@@ -166,7 +167,7 @@ public class fuYou extends DriverBase {
 
             if (true) {
                 Thread.sleep(500);
-                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[8]", "li", 3);
+                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
                 Thread.sleep(500);
                 aList.get(0).findElement(By.tagName("a")).click();
@@ -193,18 +194,20 @@ public class fuYou extends DriverBase {
         driver.manage().window().maximize();
         try {
             loginValidate log = new loginValidate();
+
             boolean flag = log.isExistNotice(driver);
             if (flag) {
                 driver.findElement(By.className("notice_close")).click();
                 Thread.sleep(500);
             }
+
             flag = log.isExistTips(driver);
             if (flag) {
                 driver.findElement(By.className("layui-layer-setwin")).click();
                 Thread.sleep(500);
             }
 
-            //
+
             driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/label[1]/a")).click();
             Thread.sleep(500);
             driver.findElement(By.id("username")).sendKeys(username);
@@ -230,7 +233,8 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
             flag = log.isExistFistUse(driver);
             if (flag) {
-                driver.findElement(By.xpath("//*[@id=\"dowebok\"]/div[1]/div/a[2]")).click();
+                Thread.sleep(500);
+                driver.findElement(By.className("qyCloseIcon")).click();
             }
 
             //判断是否为企业账号首次登录
@@ -354,11 +358,13 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
             w.editFixedCompanyGatheringQrcode(driver);
             //删除
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span")).click();
+            Thread.sleep(2000);
             driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]/span")).click();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span")).click();
+            Thread.sleep(2000);
             driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]")).click();
             Thread.sleep(2000);
 
@@ -381,7 +387,7 @@ public class fuYou extends DriverBase {
 //        ep.deleteAddress(driver);
 //        ep.navMenu(driver);
 //        ep.searchProduct(driver);
-        ep.purchaseGoods(driver, username);
+        ep.purchaseGoods(driver);
     }
 
     //endregion

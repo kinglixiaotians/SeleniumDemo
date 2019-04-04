@@ -45,7 +45,7 @@ public class loginValidate {
     //验证首页弹窗提示
     public static boolean isExistFistUse(WebDriver driver){
         try {
-            driver.findElement(By.id("dowebok"));
+            driver.findElement(By.className("qyBeginIcon"));
             return true;
         }catch (Exception e){
             return false;

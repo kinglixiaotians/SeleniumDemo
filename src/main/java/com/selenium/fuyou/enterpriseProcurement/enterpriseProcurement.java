@@ -1,8 +1,7 @@
 package com.selenium.fuyou.enterpriseProcurement;
 
-import com.selenium.utils.JdbcUtil;
+import com.selenium.utils.AESDncodeUtil;
 import com.selenium.utils.PhoneUtil;
-import jdk.nashorn.internal.ir.WhileNode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -131,12 +130,23 @@ public class enterpriseProcurement {
         try{
             driver.findElement(By.className("chooseAddressHeader")).click();
             Thread.sleep(500);
-            addressData(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl01_btnEdit",null,null,null,null,null,null,null,PhoneUtil.getTelephone(),true);
+            boolean flag = isExistDelButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit");
+            if(!flag){
+                driver.findElement(By.id("imgCloseLogin")).click();
+                return;
+            }
+            addressData(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit",null,null,null,null,null,null,null,PhoneUtil.getTelephone(),true);
+            //判断是否有默认地址
+            flag = isExistSetDefaultButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault");
+            if(flag){
+                driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    //地址数据输入
     private void addressData(WebDriver driver,String updatePath,String name,Integer provinceNum,Integer cityNum,Integer areaNum,String address,String zipCode,String telPhone,String cellPhone,boolean isClick){
         try{
             driver.findElement(By.id(updatePath)).click();
@@ -186,6 +196,7 @@ public class enterpriseProcurement {
             }
             driver.findElement(By.id("CompanyFinishOrder_btnAddAddress")).click();
             Thread.sleep(500);
+
             boolean flag = isAlertPresent(driver);
             if(flag){
                 driver.switchTo().alert().accept();
@@ -193,6 +204,26 @@ public class enterpriseProcurement {
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    //判断是否有编辑按钮
+    private boolean isExistDelButton(WebDriver driver,String path){
+        try{
+            driver.findElement(By.id(path));
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    //判断是否有设为默认按钮
+    private boolean isExistSetDefaultButton(WebDriver driver,String path){
+        try{
+            driver.findElement(By.id(path));
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 
@@ -210,7 +241,13 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             driver.findElement(By.className("chooseAddressHeader")).click();
             Thread.sleep(500);
-            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete")).click();
+            List<WebElement> list = getNavList(driver,"tab_box1","tr",1);
+            if(list.size() <= 2){
+                driver.findElement(By.className("imgCloseLogin")).click();
+                return;
+            }
+            Thread.sleep(500);
+            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl01_btnDelete")).click();
             flag = isAlertPresent(driver);
             if(flag){
                 Thread.sleep(500);
@@ -218,9 +255,19 @@ public class enterpriseProcurement {
             }
             Thread.sleep(500);
             driver.findElement(By.className("imgCloseLogin")).click();
+            //判断是否没有地址
             flag = isAlertPresent(driver);
             if(flag){
-                addAddress(driver,"李三",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
+                driver.switchTo().alert().accept();
+                addAddress(driver,"李si",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
+                //判断地址数大于5时是否有默认地址
+                flag = isExistSetDefaultButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault");
+                if(flag){
+                    Thread.sleep(500);
+                    driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
+                    return;
+                }
+                driver.findElement(By.className("imgCloseLogin")).click();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -250,21 +297,22 @@ public class enterpriseProcurement {
             int num = list.size();
             for (int i = 0; i < num; i++) {
                 list = getNavList(driver,"h_chooselist","a",1);
-                Thread.sleep(500);
                 list.get(i).click();
-                Thread.sleep(500);
+            }
+            Thread.sleep(500);
+
+
+            List<WebElement> divList = getNavList(driver,"category_list","div",1);
+            List<WebElement> aList = divList.get(0).findElements(By.tagName("a"));
+            int aNum = aList.size();
+            for (int i = 0; i < aNum; i++) {
+                divList = getNavList(driver,"category_list","div",1);
+                aList = divList.get(0).findElements(By.tagName("a"));
+                aList.get(i).click();
             }
 
-            list = getNavList(driver,"//*[@id=\"aspnetForm\"]/div[4]/div[2]/div/div[1]","a",3);
-            num = list.size();
-            for (int i = 0; i < num; i++) {
-                list = getNavList(driver,"//*[@id=\"aspnetForm\"]/div[4]/div[2]/div/div[1]","a",3);
-                Thread.sleep(500);
-                list.get(i).click();
-                Thread.sleep(500);
-            }
-            driver.findElement(By.xpath("//*[@id=\"aspnetForm\"]/div[4]/div[2]/div/h2[1]/a")).click();
-
+            list = getNavList(driver,"category_list","h2",1);
+            list.get(0).findElement(By.tagName("a")).click();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -290,6 +338,7 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___btnSearch")).click();
             Thread.sleep(500);
+
             List<WebElement> list = getNavList(driver,"CompanyFinishOrder_search_Common_CutdownSearch___ckbListproductSearchType","input",0);
             list.get(0).click();
             Thread.sleep(500);
@@ -300,11 +349,13 @@ public class enterpriseProcurement {
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___txtEndPrice")).clear();
             list = getNavList(driver,"CompanyFinishOrder_search_Common_CutdownSearch___ckbListproductSearchType","input",0);
             list.get(0).click();
+
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___btnSearch")).click();
             Thread.sleep(500);
-            list = getNavList(driver,"//*[@id=\"aspnetForm\"]/div[4]/div[3]/div[4]/div[2]/ul","a",3);
+
+            list = getNavList(driver,"category_sequence","a",1);
             for (int i = 0; i < list.size(); i++) {
-                list = getNavList(driver,"//*[@id=\"aspnetForm\"]/div[4]/div[3]/div[4]/div[2]/ul","a",3);
+                list = getNavList(driver,"category_sequence","a",1);
                 Thread.sleep(500);
                 list.get(i).click();
             }
@@ -318,10 +369,11 @@ public class enterpriseProcurement {
     //region 商品购买
 
     @Test
-    public void purchaseGoods(WebDriver driver,String userName) {
+    public void purchaseGoods(WebDriver driver) {
         try {
+            purchaseOrder po = new purchaseOrder();
             Thread.sleep(500);
-            List<WebElement> productList = getNavList(driver, "//*[@id=\"aspnetForm\"]/div[4]/div[3]/div[5]/ul", "li", 3);
+            List<WebElement> productList = getNavList(driver, "category_pro_list", "li", 1);
             productList.get(0).click();
             Thread.sleep(500);
             List<String> url = getUrl(driver);
@@ -354,7 +406,7 @@ public class enterpriseProcurement {
             //添加购物车后继续购物
             addShoppingCart(driver,0);
             List<WebElement> smallProductList = getNavList(driver,"products_16","li",0);
-            smallProductList.get(0).click();
+            smallProductList.get(1).click();
             Thread.sleep(500);
 
             //关闭第一次打开的商品页面
@@ -369,19 +421,58 @@ public class enterpriseProcurement {
             //添加购物车并跳转到购物车页面
             addShoppingCart(driver,1);
             //购物车
-            shoppingCart(driver);
-            //购买
-            Buy(driver,0);
-            //付款
-            payment(driver,userName);
+            boolean flag = shoppingCart(driver);
+            String s = "";
+            if(flag){
+                //购买
+                Buy(driver,0);
+                Thread.sleep(500);
+                s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
+                s = s.substring(4);
+                Thread.sleep(500);
+                //付款
+                payment(driver);
+                Thread.sleep(500);
+                mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
+                Thread.sleep(500);
+                driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+                Thread.sleep(500);
+                po.getOrder(driver,s,"","","");
+                Thread.sleep(500);
+                po.orderProcessRefund(driver,s);
+                Thread.sleep(500);
+//                driver.close();
+            }else{
+                driver.close();
+            }
+            //创建不付款订单
 //            url = getUrl(driver);
 //            driver.switchTo().window(url.get(0));
+//            doNotPayment(driver);
+//            s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
+//            s = s.substring(4);
+//            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
+//            Thread.sleep(500);
+//            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+//            po.getOrder(driver,s,"","","");
+//            Thread.sleep(500);
+//            po.orderProcessCancelPayment(driver,s);
+//            driver.close();
 //
-//            //创建不付款订单
-//            doNotPayment(driver,5);
 //
-//            doNotPayment(driver,2);
-//
+//            url = getUrl(driver);
+//            driver.switchTo().window(url.get(0));
+//            doNotPayment(driver);
+//            s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
+//            s = s.substring(4);
+//            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
+//            Thread.sleep(500);
+//            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+//            Thread.sleep(500);
+//            po.getOrder(driver,s,"","","");
+//            Thread.sleep(500);
+//            po.orderProcess(driver,s);
+//            driver.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -407,7 +498,7 @@ public class enterpriseProcurement {
     }
 
     //购物车结算
-    private void shoppingCart(WebDriver driver){
+    private boolean shoppingCart(WebDriver driver){
         try{
             //取消全选
             Thread.sleep(500);
@@ -435,13 +526,18 @@ public class enterpriseProcurement {
                 Thread.sleep(500);
             }
 
+            flag = isShoppingCartHasProduct(driver);
+            if(flag){
+                return false;
+            }
+
             driver.findElement(By.xpath("//*[@id=\"CompanyShoppingCart_CompanyCommon_ShoppingCart_ProductList___pnlShopProductCart\"]/div[1]/div[1]/div/ins")).click();
             Thread.sleep(500);
             driver.findElement(By.id("CompanyShoppingCart_btnCheckout")).click();
-
         }catch (Exception e){
             e.printStackTrace();
         }
+        return true;
     }
 
     //购买页面操作
@@ -449,10 +545,10 @@ public class enterpriseProcurement {
         try{
             Thread.sleep(500);
             List<WebElement> addressList = getNavList(driver,"address_tab","div",1);
-            if(addressList.size() != 0){
+            if(addressList.size() > 1){
                 addressList.get(1).click();
             }
-            driver.findElement(By.xpath("//*[@id=\"aspnetForm\"]/div[3]/div[2]/div/div[5]/div[2]/div[2]/span/span/span")).click();
+            driver.findElement(By.className("combo-arrow")).click();
             boolean flag = isExistdeliveryTime(driver);
             if(flag){
                 List<WebElement> timeList = getNavList(driver,".combo-panel.panel-body.panel-body-noheader","div",2);
@@ -470,7 +566,7 @@ public class enterpriseProcurement {
     }
 
     //付款页面
-    public void payment(WebDriver driver,String userName){
+    public void payment(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.id("aOrderPay")).click();
@@ -494,26 +590,23 @@ public class enterpriseProcurement {
                         driver.findElement(By.className("zeromodal-close")).click();
                     }
                     Thread.sleep(500);
-                    s = driver.manage().getCookieNamed("smsnum" + new JdbcUtil().queryCellPhone(userName)).getValue();
-                    System.out.println(s);
-//                    JdbcUtil j = new JdbcUtil();
-//                    driver.findElement(By.id("textfieldpassword")).sendKeys(j.querySmsCode(j.queryCellPhone(userName)));
-//                    Thread.sleep(500);
-//                    driver.findElement(By.id("btnLoginAndBuy")).click();
-//                    Thread.sleep(500);
-//                    flag = isExistSuccessOrErrorBox(driver);
-//                    if(flag){
-//                        s = driver.findElement(By.className("zeromodal-title1")).getText();
-//                        Thread.sleep(500);
-//                        driver.findElement(By.className("zeromodal-close")).click();
-//                        if(s.equals("参数错误！")){
-//                            driver.findElement(By.className("dialog_title_r")).click();
-//                            Thread.sleep(500);
-//                        }
-//                    }
+                    String verificationCode = AESDncodeUtil.decryptAES(driver.manage().getCookieNamed("VerifyCookie").getValue(),"FMpT+/DPUvN7qCJdTktmNQ==","Vs3Wurs07nh9Lt+0QVT2Vg==");
+                    driver.findElement(By.id("textfieldpassword")).sendKeys(verificationCode);
+                    Thread.sleep(500);
+                    driver.findElement(By.id("btnLoginAndBuy")).click();
+                    Thread.sleep(500);
+                    flag = isExistSuccessOrErrorBox(driver);
+                    if(flag){
+                        s = driver.findElement(By.className("zeromodal-title1")).getText();
+                        Thread.sleep(500);
+                        driver.findElement(By.className("zeromodal-close")).click();
+                        if(s.equals("参数错误！")){
+                            driver.findElement(By.className("dialog_title_r")).click();
+                            Thread.sleep(500);
+                        }
+                    }
                 }
             }
-//            driver.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -527,28 +620,36 @@ public class enterpriseProcurement {
     }
 
     //创建不付款订单
-    private void doNotPayment(WebDriver driver,int num){
+    private void doNotPayment(WebDriver driver){
         try{
             Thread.sleep(500);
             List<WebElement> productList = getNavList(driver, "//*[@id=\"aspnetForm\"]/div[4]/div[3]/div[5]/ul", "li", 3);
-            while (productList.size() < num){
-                num = num - 1;
-            }
-            productList.get(num).click();
+            Thread.sleep(500);
+            productList.get(2).click();
             Thread.sleep(500);
             List<String> url = getUrl(driver);
             driver.switchTo().window(url.get(1));
             url = getUrl(driver);
             driver.switchTo().window(url.get(1));
+            Thread.sleep(500);
             driver.findElement(By.id("buyButton")).click();
             Thread.sleep(500);
             Buy(driver,1);
-            Thread.sleep(500);
-            driver.close();
+            Thread.sleep(1000);
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    //判断购物车中是否有物品
+    private boolean isShoppingCartHasProduct(WebDriver driver){
+        try{
+            driver.findElement(By.className("message")).click();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     //判断是否有支付验证窗体
