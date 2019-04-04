@@ -4,7 +4,6 @@ import com.selenium.utils.JdbcUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 
 @Slf4j
 public class firstLogin {
@@ -15,7 +14,7 @@ public class firstLogin {
      * @param driver
      * @param custom
      */
-    @Test
+    //@Test
     public String verificationCustom(WebDriver driver, String custom) {
         try {
             //短信确认

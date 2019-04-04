@@ -94,14 +94,14 @@ public class fuYou extends DriverBase {
                     Thread.sleep(500);
                     switch (s) {
                         case "福利发放":
-//                            provideWelfare();
+                            provideWelfare();
                             break;
                         case "团体险":
                             break;
                         case "优分订单管理":
                             break;
                         case "企业收款管理":
-//                            companyGatheringQrcode();
+                            companyGatheringQrcode();
                             break;
                         case "一卡通兑换":
                             w.companyCardPassExchange(driver, username);
@@ -113,7 +113,7 @@ public class fuYou extends DriverBase {
 
             //region 公告管理
 
-            if(true) {
+            if(false) {
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[5]","li",3);
                 announcementList notice = new announcementList();
@@ -128,7 +128,7 @@ public class fuYou extends DriverBase {
 
             //region 交易管理
 
-            if(true){
+            if(false){
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                 num = aList.size();
@@ -156,7 +156,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(true){
+            if(false){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
@@ -167,7 +167,7 @@ public class fuYou extends DriverBase {
 
             //region 企业采购
 
-            if (true) {
+            if (false) {
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
@@ -249,7 +249,6 @@ public class fuYou extends DriverBase {
                 if (!"true".equals(fl.verificationCustom(driver, username))) {
                     driver.close();
                 }
-
             }
             return true;
         } catch (Exception e) {
@@ -360,16 +359,16 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
             w.editFixedCompanyGatheringQrcode(driver);
             //删除
-            Thread.sleep(2000);
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span")).click();
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]/span")).click();
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span")).click();
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]")).click();
-            Thread.sleep(2000);
-
+            Thread.sleep(1000);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
