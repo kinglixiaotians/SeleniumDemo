@@ -3,7 +3,6 @@ package com.selenium.fuyou.welfareManager;
 import com.selenium.utils.JdbcUtil;
 import com.selenium.utils.POIUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,8 +10,6 @@ import org.springframework.util.ResourceUtils;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import static com.selenium.fuyou.fuYouMethod.nowDate;
@@ -388,8 +385,6 @@ public class welfareManager {
             //确认兑换
             driver.findElement(By.id("btnSubmit")).click();
 
-            //兑换需时间，短则五秒内，长可到十几秒。
-            Thread.sleep(8000);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
             log.info("一卡通兑换成功");
