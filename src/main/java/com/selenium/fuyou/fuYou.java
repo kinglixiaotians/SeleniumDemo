@@ -80,12 +80,12 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 福利管理
-            if(true) {
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
+            if (true) {
+                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
+                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
                     Thread.sleep(500);
                     s = aList.get(i).findElement(By.tagName("a")).getText();
@@ -113,9 +113,9 @@ public class fuYou extends DriverBase {
 
             //region 公告管理
 
-            if(false) {
+            if (false) {
                 Thread.sleep(500);
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[5]","li",3);
+                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[5]", "li", 3);
                 announcementList notice = new announcementList();
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
                 Thread.sleep(500);
@@ -128,18 +128,18 @@ public class fuYou extends DriverBase {
 
             //region 交易管理
 
-            if(false){
+            if (false) {
                 Thread.sleep(500);
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
+                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[6]", "li", 3);
                 num = aList.size();
-                for (int i = 0;i < num;i++){
+                for (int i = 0; i < num; i++) {
                     Thread.sleep(500);
-                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
+                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[6]", "li", 3);
                     mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[6]/a"))).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
-                    switch (s){
+                    switch (s) {
                         case "交易记录":
                             transactionRecord tr = new transactionRecord();
                             tr.transactionRecordSearch(driver);
@@ -156,7 +156,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(false){
+            if (false) {
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
@@ -169,7 +169,7 @@ public class fuYou extends DriverBase {
 
             if (false) {
                 Thread.sleep(500);
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
+                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[8]", "li", 3);
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
                 Thread.sleep(500);
                 aList.get(0).findElement(By.tagName("a")).click();
@@ -190,21 +190,21 @@ public class fuYou extends DriverBase {
 
     //region 登陆
 
-//    @Test
+    //    @Test
     public boolean login(String username, String password) {
         driver.get(fuYouUrl);
         driver.manage().window().maximize();
         try {
             loginValidate log = new loginValidate();
             //判断是否存在广告
-            boolean flag = isExistBoxOrExistButton(driver,"notice",1);
+            boolean flag = isExistBoxOrExistButton(driver, "notice", 1);
             if (flag) {
                 driver.findElement(By.className("notice_close")).click();
                 Thread.sleep(500);
             }
 
             //判断是否存在提示窗体
-            flag = isExistBoxOrExistButton(driver,"layui-layer-shade1",0);
+            flag = isExistBoxOrExistButton(driver, "layui-layer-shade1", 0);
             if (flag) {
                 driver.findElement(By.className("layui-layer-setwin")).click();
                 Thread.sleep(500);
@@ -234,7 +234,7 @@ public class fuYou extends DriverBase {
             }
 
             Thread.sleep(500);
-            flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
+            flag = isExistBoxOrExistButton(driver, "qyBeginIcon", 1);
             if (flag) {
                 Thread.sleep(500);
                 driver.findElement(By.className("qyCloseIcon")).click();
@@ -246,8 +246,9 @@ public class fuYou extends DriverBase {
             String currentUrl = driver.getCurrentUrl();
             if (currentUrl.equals(fuYouUrl + "Company/CompanyFirstLoad")) {
                 firstLogin fl = new firstLogin();
-                if (!"true".equals(fl.verificationCustom(driver, username))) {
+                if (!fl.verificationCustom(driver, username)) {
                     driver.close();
+                    return false;
                 }
             }
             return true;
@@ -295,7 +296,7 @@ public class fuYou extends DriverBase {
      * 福利发放
      */
     @Test
-    private boolean  provideWelfare() {
+    private boolean provideWelfare() {
         try {
             welfareManager w = new welfareManager();
             //单个福利发放

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 public class firstLogin {
 
@@ -15,8 +17,9 @@ public class firstLogin {
      * @param custom
      */
     //@Test
-    public String verificationCustom(WebDriver driver, String custom) {
+    public boolean verificationCustom(WebDriver driver, String custom) {
         try {
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             //短信确认
             driver.findElement(By.id("sendcodebt")).click();
             //获取手机验证码
@@ -38,11 +41,11 @@ public class firstLogin {
             Thread.sleep(1000);
             driver.findElement(By.className("layui-layer-btn0")).click();
             log.info("企业：{}首次登录验证成功",custom);
-            return "true";
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             log.info("企业：{}首次登录验证失败",custom);
-            return "false";
+            return false;
         }
     }
 }
