@@ -374,14 +374,14 @@ public class enterpriseProcurement {
             Buy(driver,0);
             //付款
             payment(driver,userName);
-            url = getUrl(driver);
-            driver.switchTo().window(url.get(0));
-
-            //创建不付款订单
-            doNotPayment(driver,5);
-
-            doNotPayment(driver,2);
-
+//            url = getUrl(driver);
+//            driver.switchTo().window(url.get(0));
+//
+//            //创建不付款订单
+//            doNotPayment(driver,5);
+//
+//            doNotPayment(driver,2);
+//
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -494,24 +494,26 @@ public class enterpriseProcurement {
                         driver.findElement(By.className("zeromodal-close")).click();
                     }
                     Thread.sleep(500);
-                    JdbcUtil j = new JdbcUtil();
-                    driver.findElement(By.id("textfieldpassword")).sendKeys(j.querySmsCode(j.queryCellPhone(userName)));
-                    Thread.sleep(500);
-                    driver.findElement(By.id("btnLoginAndBuy")).click();
-                    Thread.sleep(500);
-                    flag = isExistSuccessOrErrorBox(driver);
-                    if(flag){
-                        s = driver.findElement(By.className("zeromodal-title1")).getText();
-                        Thread.sleep(500);
-                        driver.findElement(By.className("zeromodal-close")).click();
-                        if(s.equals("参数错误！")){
-                            driver.findElement(By.className("dialog_title_r")).click();
-                            Thread.sleep(500);
-                        }
-                    }
+                    s = driver.manage().getCookieNamed("smsnum" + new JdbcUtil().queryCellPhone(userName)).getValue();
+                    System.out.println(s);
+//                    JdbcUtil j = new JdbcUtil();
+//                    driver.findElement(By.id("textfieldpassword")).sendKeys(j.querySmsCode(j.queryCellPhone(userName)));
+//                    Thread.sleep(500);
+//                    driver.findElement(By.id("btnLoginAndBuy")).click();
+//                    Thread.sleep(500);
+//                    flag = isExistSuccessOrErrorBox(driver);
+//                    if(flag){
+//                        s = driver.findElement(By.className("zeromodal-title1")).getText();
+//                        Thread.sleep(500);
+//                        driver.findElement(By.className("zeromodal-close")).click();
+//                        if(s.equals("参数错误！")){
+//                            driver.findElement(By.className("dialog_title_r")).click();
+//                            Thread.sleep(500);
+//                        }
+//                    }
                 }
             }
-            driver.close();
+//            driver.close();
         }catch (Exception e){
             e.printStackTrace();
         }

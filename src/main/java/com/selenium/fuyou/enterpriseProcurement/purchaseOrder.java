@@ -37,6 +37,19 @@ public class purchaseOrder {
 
     }
 
+    //测试各种查询订单
+    public void VariousGetOrder(WebDriver driver) throws InterruptedException {
+        getOrder(driver,"asegfSEfg","","","");
+        getOrder(driver,"","SZEgffwq","","");
+        getOrder(driver,"","","2019-04-04","2018-04-04");
+        //提示开始时间不能大于结束时间！ 点击确认
+        driver.findElement(By.xpath("//*[@id=\"xubox_layer2\"]/div[1]/span/a[1]")).click();
+        getOrder(driver,"2019","","","");
+        getOrder(driver,"","测试","","");
+        getOrder(driver,"","","2019-04-03","2019-04-03");
+        getOrder(driver,"","","","");
+    }
+
     /**
      * 订单流程-1：（订单已付款）
      * 申请退款 查看订单
