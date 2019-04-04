@@ -6,6 +6,7 @@ import com.selenium.fuyou.announcementManager.announcementList;
 import com.selenium.fuyou.emploeeManager.departmentList;
 import com.selenium.fuyou.emploeeManager.employeeList;
 import com.selenium.fuyou.enterpriseProcurement.enterpriseProcurement;
+import com.selenium.fuyou.enterpriseProcurement.purchaseOrder;
 import com.selenium.fuyou.login.firstLogin;
 import com.selenium.fuyou.login.loginValidate;
 import com.selenium.fuyou.welfareManager.welfareManager;
@@ -13,6 +14,7 @@ import com.selenium.fuyou.transactionManager.electronicInvoice;
 import com.selenium.fuyou.transactionManager.transactionRecord;
 import com.selenium.utils.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -78,7 +80,7 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 福利管理
-            if(false) {
+            if(true) {
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
                 num = aList.size();
                 welfareManager w = new welfareManager();
@@ -92,14 +94,14 @@ public class fuYou extends DriverBase {
                     Thread.sleep(500);
                     switch (s) {
                         case "福利发放":
-                            provideWelfare();
+//                            provideWelfare();
                             break;
                         case "团体险":
                             break;
                         case "优分订单管理":
                             break;
                         case "企业收款管理":
-                            companyGatheringQrcode();
+//                            companyGatheringQrcode();
                             break;
                         case "一卡通兑换":
                             w.companyCardPassExchange(driver, username);
@@ -111,7 +113,7 @@ public class fuYou extends DriverBase {
 
             //region 公告管理
 
-            if(false) {
+            if(true) {
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[5]","li",3);
                 announcementList notice = new announcementList();
@@ -126,7 +128,7 @@ public class fuYou extends DriverBase {
 
             //region 交易管理
 
-            if(false){
+            if(true){
                 Thread.sleep(500);
                 aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
                 num = aList.size();
@@ -154,7 +156,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(false){
+            if(true){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();
@@ -293,7 +295,7 @@ public class fuYou extends DriverBase {
      * 福利发放
      */
     @Test
-    private boolean provideWelfare() {
+    private boolean  provideWelfare() {
         try {
             welfareManager w = new welfareManager();
             //单个福利发放
@@ -301,7 +303,6 @@ public class fuYou extends DriverBase {
             Thread.sleep(1000);
             //批量福利发放
             w.multipleprovideWelfare(driver, username);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -312,7 +313,7 @@ public class fuYou extends DriverBase {
     /**
      * 企业优分订单回复
      */
-    @Test
+    //@Test
     public boolean scoreOrderManager(String customNo) {
         try {
             //福利管理 优分订单管理
@@ -382,11 +383,11 @@ public class fuYou extends DriverBase {
     //企业采购
     public void enterpriseProcurementInterface() {
         enterpriseProcurement ep = new enterpriseProcurement();
-//        ep.isHaveAddress(driver);
-//        ep.updateAddress(driver);
-//        ep.deleteAddress(driver);
-//        ep.navMenu(driver);
-//        ep.searchProduct(driver);
+        ep.isHaveAddress(driver);
+        ep.updateAddress(driver);
+        ep.deleteAddress(driver);
+        ep.navMenu(driver);
+        ep.searchProduct(driver);
         ep.purchaseGoods(driver);
     }
 

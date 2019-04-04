@@ -441,38 +441,38 @@ public class enterpriseProcurement {
                 Thread.sleep(500);
                 po.orderProcessRefund(driver,s);
                 Thread.sleep(500);
-//                driver.close();
+                driver.close();
             }else{
                 driver.close();
             }
             //创建不付款订单
-//            url = getUrl(driver);
-//            driver.switchTo().window(url.get(0));
-//            doNotPayment(driver);
-//            s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
-//            s = s.substring(4);
-//            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
-//            Thread.sleep(500);
-//            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
-//            po.getOrder(driver,s,"","","");
-//            Thread.sleep(500);
-//            po.orderProcessCancelPayment(driver,s);
-//            driver.close();
-//
-//
-//            url = getUrl(driver);
-//            driver.switchTo().window(url.get(0));
-//            doNotPayment(driver);
-//            s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
-//            s = s.substring(4);
-//            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
-//            Thread.sleep(500);
-//            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
-//            Thread.sleep(500);
-//            po.getOrder(driver,s,"","","");
-//            Thread.sleep(500);
-//            po.orderProcess(driver,s);
-//            driver.close();
+            url = getUrl(driver);
+            driver.switchTo().window(url.get(0));
+            doNotPayment(driver);
+            s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
+            s = s.substring(4);
+            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
+            Thread.sleep(500);
+            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+            po.getOrder(driver,s,"","","");
+            Thread.sleep(500);
+            po.orderProcessCancelPayment(driver,s);
+            driver.close();
+
+
+            url = getUrl(driver);
+            driver.switchTo().window(url.get(0));
+            doNotPayment(driver);
+            s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
+            s = s.substring(4);
+            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
+            Thread.sleep(500);
+            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+            Thread.sleep(500);
+            po.getOrder(driver,s,"","","");
+            Thread.sleep(500);
+            po.orderProcess(driver,s);
+            driver.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -623,7 +623,7 @@ public class enterpriseProcurement {
     private void doNotPayment(WebDriver driver){
         try{
             Thread.sleep(500);
-            List<WebElement> productList = getNavList(driver, "//*[@id=\"aspnetForm\"]/div[4]/div[3]/div[5]/ul", "li", 3);
+            List<WebElement> productList = getNavList(driver, "category_pro_list", "li", 1);
             Thread.sleep(500);
             productList.get(2).click();
             Thread.sleep(500);

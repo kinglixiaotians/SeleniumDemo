@@ -23,7 +23,7 @@ public class supplier extends DriverBase {
      *
      * @param driver
      */
-    @Test
+   // @Test
     public void tabLogin(WebDriver driver) throws InterruptedException {
         //隐式等待,二十秒内不出现就报错
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -44,7 +44,7 @@ public class supplier extends DriverBase {
     }
 
     //用tab页登录并给订单orderId发货
-    @Test
+   // @Test
     public boolean giveExpress(WebDriver driver, String orderId) {
         try {
             //登录

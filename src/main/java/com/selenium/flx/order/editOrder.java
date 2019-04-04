@@ -12,7 +12,7 @@ public class editOrder {
      * @param customNo
      * @param driver
      */
-    @Test
+    //@Test
     public boolean entryOrder(String customNo, WebDriver driver) {
         try {
             driver.switchTo().defaultContent();
@@ -77,7 +77,7 @@ public class editOrder {
      * 财务管理 订单经办
      * @param driver
      */
-    @Test
+    //@Test
     public boolean handleOrder(WebDriver driver) {
         try {
             //查询订单 处理订单
@@ -112,7 +112,7 @@ public class editOrder {
      * 财务管理 订单激活
      * @param driver
      */
-    @Test
+    //@Test
     public boolean activateOrder(WebDriver driver) {
         try {
             //查询订单

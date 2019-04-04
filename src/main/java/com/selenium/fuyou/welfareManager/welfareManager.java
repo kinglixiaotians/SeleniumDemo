@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.selenium.fuyou.fuYouMethod.nowDate;
 
@@ -22,64 +23,32 @@ public class welfareManager {
     /**
      * 单个福利发放
      */
-    @Test
+    //@Test
     public boolean singleProvideWelfare(WebDriver driver, String custom) {
         try {
-            //输入测试清空数据
-            driver.findElement(By.id("welfareName")).sendKeys("afdwdaw");
-            Thread.sleep(500);
-            driver.findElement(By.id("Score")).sendKeys("432");
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[1]")).click();
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[3]")).click();
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[4]")).click();
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[5]")).click();
-            Thread.sleep(1000);
-            //清空
-            driver.findElement(By.id("btnClar")).click();
-
-            //输入正常数据福利名目
-            Thread.sleep(500);
-            driver.findElement(By.id("welfareName")).sendKeys("测试" + nowDate());
-            //统一分配
+            //测试非人类操作
+            driver.findElement(By.id("welfareName")).clear();
             Thread.sleep(500);
             driver.findElement(By.id("Score")).sendKeys("100");
             //精确查找
             Thread.sleep(500);
             driver.findElement(By.id("txtkey")).sendKeys("四");
             Thread.sleep(500);
-            driver.findElement(By.className("iconSearch")).click();
+            driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[4]/div")).click();
+            Thread.sleep(500);
+            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[1]")).click();
             Thread.sleep(500);
             driver.findElement(By.id("txtkey")).clear();
-            Thread.sleep(500);
-            driver.findElement(By.id("txtkey")).sendKeys("五");
-            Thread.sleep(500);
-            driver.findElement(By.className("iconSearch")).click();
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li")).click();
-            Thread.sleep(500);
-            driver.findElement(By.id("txtkey")).clear();
-            //手动选择发放对象
             Thread.sleep(500);
             driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[3]")).click();
             Thread.sleep(500);
             driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[5]")).click();
-            Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[7]")).click();
             //删除已选成员
             Thread.sleep(1000);
             listDelete(driver);
-            Thread.sleep(1000);
             //全选
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"fbgg_choice\"]/ul/li[1]")).click();
-            //更改一位优分为200
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_con_bg\"]/div[5]/input")).clear();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@id=\"fbgg_con_bg\"]/div[5]/input")).sendKeys("200");
             //获取验证码
             driver.findElement(By.id("btnyzm")).click();
             Thread.sleep(1000);
@@ -87,9 +56,27 @@ public class welfareManager {
             Thread.sleep(1000);
             JdbcUtil j = new JdbcUtil();
             String cord = j.querySmsCode(j.queryCellPhone(custom));
-            driver.findElement(By.id("mobileCode")).sendKeys(cord);
-            driver.findElement(By.id("btnSubmit")).click();
+            driver.findElement(By.id("mobileCode")).sendKeys("asdf342");
             Thread.sleep(1000);
+            driver.findElement(By.id("btnSubmit")).click();
+            //福利名目不能为空
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.id("welfareName")).sendKeys("测试");
+            Thread.sleep(1000);
+            driver.findElement(By.id("btnSubmit")).click();
+            //验证码有误
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.id("mobileCode")).sendKeys(cord);
+            Thread.sleep(1000);
+            driver.findElement(By.id("btnSubmit")).click();
+            //继续发放优分
+            //隐式等待
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,32 +97,63 @@ public class welfareManager {
     /**
      * 批量福利发放
      */
-    @Test
+    //@Test
     public boolean multipleprovideWelfare(WebDriver driver, String custom) {
         try {
-
-            //输入福利名目
             driver.findElement(By.xpath("/html/body/div[4]/ul/li[2]/a")).click();
-            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
-            Thread.sleep(500);
+            //点击确认提交  提示   请上传分配表格
+            Thread.sleep(1000);
+            driver.findElement(By.id("binImport")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
             //下载分配模板(员工账户)
             driver.findElement(By.id("Button1")).click();
             Thread.sleep(3000);
-
             //直接上传优分为0的模版
             testFiles(driver, custom);
-            //提示优分不能为0
+            //点击确认提交  提示   福利名不能为空
+            Thread.sleep(1000);
+            driver.findElement(By.id("binImport")).click();
+            Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
+            //输入福利名目
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
+            Thread.sleep(500);
+            //点击确认提交  提示  验证码不能为空
+            Thread.sleep(1000);
+            driver.findElement(By.id("binImport")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
+            //获取验证码
+            Thread.sleep(1000);
+            driver.findElement(By.id("btnyzm")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
+            //填入错误验证码  点击确认提交  提示  验证码有误
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).sendKeys("asdf");
+            Thread.sleep(1000);
+            driver.findElement(By.id("binImport")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
+            //输入正确验证码  提示  优分不能为0
+            JdbcUtil j = new JdbcUtil();
+            String cord = j.querySmsCode(j.queryCellPhone(custom));
+            driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).clear();
+            driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).sendKeys(cord);
+            Thread.sleep(1000);
+            driver.findElement(By.id("binImport")).click();
             //刷新页面（可以重新获取验证码）
             driver.navigate().refresh();
-            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
-
             //修改并上传
+            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             uploadFiles(driver, custom);
             Thread.sleep(1000);
             //继续发放优分
+            //隐式等待
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
-
             //输入福利名目
             driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             //下载分配模板(员工工号)
@@ -143,7 +161,6 @@ public class welfareManager {
             Thread.sleep(3000);
             //修改并上传
             uploadFiles(driver, custom);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,17 +177,6 @@ public class welfareManager {
         String fileName = POIUtil.xlsUrl(path);
         Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"select_btn_1\"]")).sendKeys(fileName);
-        //获取验证码
-        Thread.sleep(1000);
-        driver.findElement(By.id("btnyzm")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
-        Thread.sleep(1000);
-        JdbcUtil j = new JdbcUtil();
-        String cord = j.querySmsCode(j.queryCellPhone(custom));
-        driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).sendKeys(cord);
-        driver.findElement(By.id("binImport")).click();
-        Thread.sleep(1000);
     }
 
     //修改下载的模版优分并上传
@@ -198,6 +204,7 @@ public class welfareManager {
         JdbcUtil j = new JdbcUtil();
         String cord = j.querySmsCode(j.queryCellPhone(custom));
         driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).sendKeys(cord);
+        Thread.sleep(1000);
         driver.findElement(By.id("binImport")).click();
         Thread.sleep(1000);
         //上传操作完成后删除下载的员工模版
@@ -209,7 +216,7 @@ public class welfareManager {
     /**
      * 回复企业订单
      */
-    @Test
+    //@Test
     public boolean replyOrder(WebDriver driver, String custom) {
         try {
             //回复订单
@@ -241,7 +248,7 @@ public class welfareManager {
      *
      * @return
      */
-    @Test
+    //@Test
     public boolean editFixedCompanyGatheringQrcode(WebDriver driver) {
         try {
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div[1]/div/button")).click();
@@ -318,9 +325,10 @@ public class welfareManager {
      *
      * @return
      */
-    @Test
+    //@Test
     public boolean updateCompanyGatheringQrcode(WebDriver driver, boolean b) {
         try {
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[2]")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[2]/div/div/div/span")).click();
@@ -341,10 +349,11 @@ public class welfareManager {
     /**
      * 增加企业收款管理(b为是否固定金额)
      */
-    @Test
+    //@Test
     public boolean addCompanyGatheringQrcode(WebDriver driver, boolean b) {
         try {
             //新增
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/div/button[1]")).click();
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[1]/div/div/div/input")).sendKeys("测试收款" + nowDate());
             //是否固定金额
@@ -369,7 +378,7 @@ public class welfareManager {
     /**
      * 一卡通兑换
      */
-    @Test
+    //@Test
     public boolean companyCardPassExchange(WebDriver driver, String custom) {
         try {
             //兑换金额   金额格式：大于0，可保留两位小数；例如：500 或 450.25
@@ -377,6 +386,7 @@ public class welfareManager {
             //获取验证码
             driver.findElement(By.id("btnyzm")).click();
             Thread.sleep(1000);
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
             JdbcUtil j = new JdbcUtil();
@@ -384,7 +394,7 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             //确认兑换
             driver.findElement(By.id("btnSubmit")).click();
-
+            Thread.sleep(1000);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
             log.info("一卡通兑换成功");

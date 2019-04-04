@@ -17,7 +17,7 @@ public class orderManager {
 
 
     //发货操作
-    @Test
+    //@Test
     public boolean deliverGoods(WebDriver driver, String orderId) {
         try {
             driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a[2]")).click();

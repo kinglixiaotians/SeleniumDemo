@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public boolean custom01(WebDriver driver) {
         try {
 
@@ -76,7 +75,7 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public boolean custom02(WebDriver driver) {
         try {
             this.saveCustomTop(driver);
@@ -108,7 +107,7 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public boolean normalCustom(WebDriver driver) {
         this.saveCustomTop(driver);
         //进入协议信息
@@ -125,7 +124,7 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public void saveCustomTop(WebDriver driver) {
         try {
             //获取当前时间并进行格式化
@@ -187,7 +186,7 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public boolean saveCustomBottom(WebDriver driver) {
         try {
             //保存
@@ -214,7 +213,7 @@ public class sepecEditCustom {
      * @param driver
      * @param except
      */
-    @Test
+    //@Test
     public void list(WebDriver driver, List<String> except) {
         //勾选业务权限，商城业务与蜘蛛网默认勾选，先取消掉
         driver.findElement(By.id("mini-62$ck$5")).click();

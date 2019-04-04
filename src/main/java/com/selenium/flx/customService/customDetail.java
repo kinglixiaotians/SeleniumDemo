@@ -3,7 +3,6 @@ package com.selenium.flx.customService;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 
 @Slf4j
 public class customDetail {
@@ -15,7 +14,7 @@ public class customDetail {
      * @param customNo
      * @return
      */
-    @Test
+    //@Test
     public boolean queryDetail(WebDriver driver, String customNo) {
         try {
             driver.switchTo().frame("mainframe");

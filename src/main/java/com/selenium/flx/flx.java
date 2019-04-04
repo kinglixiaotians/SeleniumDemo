@@ -66,7 +66,7 @@ public class flx extends DriverBase {
      *
      * @return
      */
-    @Test
+    //@Test
     public boolean openCustom(sepecEditCustom se) {
         //chrom插件路径
         driver.get(flxUrl);
@@ -123,7 +123,7 @@ public class flx extends DriverBase {
      * @param se
      * @return
      */
-    @Test
+    //@Test
     public boolean procedure(sepecEditCustom se) {
         try {
             editCustom custom = new editCustom();

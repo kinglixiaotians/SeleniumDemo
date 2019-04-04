@@ -13,7 +13,7 @@ public class editCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public void queryCustom(WebDriver driver, String customNo) {
         try {
             this.customNo=customNo;
@@ -35,7 +35,7 @@ public class editCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public boolean auditCustom(WebDriver driver) {
         try {
             Thread.sleep(1000);
@@ -67,7 +67,7 @@ public class editCustom {
      *
      * @param driver
      */
-    @Test
+    //@Test
     public boolean UpdateCustom(WebDriver driver) {
         try {
             driver.switchTo().frame("mainframe");

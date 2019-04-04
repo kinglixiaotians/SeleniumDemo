@@ -1,6 +1,7 @@
 package com.selenium.fuyou.enterpriseProcurement;
 
 import com.selenium.supplier.supplier;
+import com.selenium.utils.PropertiesConfig;
 import org.openqa.selenium.*;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ public class purchaseOrder {
      * @param startTime 下单开始时间（格式：2016-06-06）
      * @param endTime   下单结束时间（格式：2016-06-06）
      */
-    @Test
+    //@Test
     public void getOrder(WebDriver driver, String orderId, String goodsName, String startTime, String endTime) throws InterruptedException {
         //订单编号
         driver.findElement(By.id("CompanyOrderInformation_txtOrderId")).clear();
@@ -39,22 +40,21 @@ public class purchaseOrder {
 
     //测试各种查询订单
     public void VariousGetOrder(WebDriver driver) throws InterruptedException {
-        getOrder(driver,"asegfSEfg","","","");
-        getOrder(driver,"","SZEgffwq","","");
-        getOrder(driver,"","","2019-04-04","2018-04-04");
+        getOrder(driver, "asegfSEfg", "", "", "");
+        getOrder(driver, "", "SZEgffwq", "", "");
+        getOrder(driver, "", "", "2019-04-04", "2018-04-04");
         //提示开始时间不能大于结束时间！ 点击确认
         driver.findElement(By.xpath("//*[@id=\"xubox_layer2\"]/div[1]/span/a[1]")).click();
-        getOrder(driver,"2019","","","");
-        getOrder(driver,"","测试","","");
-        getOrder(driver,"","","2019-04-03","2019-04-03");
-        getOrder(driver,"","","","");
+        getOrder(driver, "2019", "", "", "");
+        getOrder(driver, "", "测试", "", "");
+        getOrder(driver, "", "", "2019-04-03", "2019-04-04");
     }
 
     /**
      * 订单流程-1：（订单已付款）
      * 申请退款 查看订单
      */
-    @Test
+    //@Test
     public boolean orderProcessRefund(WebDriver driver, String orderId) {
         try {
             Thread.sleep(1000);
@@ -72,42 +72,35 @@ public class purchaseOrder {
     }
 
     //点击查看进入查看页面3秒后关闭查看页面退回到原页面
-    @Test
+    //@Test
     public void lookOrder(WebDriver driver, String orderId) throws InterruptedException {
         //查看 打开一个新页面
         Thread.sleep(1000);
         driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_hlinkOrderDetails")).click();
-        String oldHandle = driver.getWindowHandle();
-        //获取当前浏览器打开的页面Handle集合
-        Set<String> set = driver.getWindowHandles();
-        //定位到新打开的tab页
-        for (String h : set) {
-            if (!h.equals(driver.getWindowHandle())) {
-                driver.switchTo().window(h);
-            }
-        }
-        driver.get("http://localhost/Company/CompanyOrderDetails?OrderId=" + orderId);
         Thread.sleep(3000);
+        String oldHandle = goNewTabPage(driver, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderDetails?OrderId=" + orderId);
         //关闭查看页面 重新定位到原页面
-        returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
+        returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
     }
 
     /**
      * 订单流程2：（订单未付款）
      * 查询订单并取消付款
      */
-    @Test
+    //@Test
     public boolean orderProcessCancelPayment(WebDriver driver, String orderId) {
         try {
             //查询订单
-            getOrder(driver, orderId, "", "", "");
             Thread.sleep(500);
+            getOrder(driver, orderId, "", "", "");
             //取消付款，弹出对话框
             driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_lkbtnCloseOrder")).click();
             //获取弹出的对话框
+            Thread.sleep(1000);
             Alert alt = driver.switchTo().alert();
             //点击确定
             alt.accept();
+            Thread.sleep(1000);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,9 +112,6 @@ public class purchaseOrder {
     public String goNewTabPage(WebDriver driver, String newUrl) {
         //保存当前页面的句柄
         String oldHandle = driver.getWindowHandle();
-        //新开tab页
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.open();");
         //获取当前浏览器打开的页面Handle集合
         Set<String> set = driver.getWindowHandles();
         //定位到新打开的tab页
@@ -149,7 +139,7 @@ public class purchaseOrder {
      * @param orderId
      * @return
      */
-    @Test
+    //@Test
     public boolean orderProcess(WebDriver driver, String orderId) {
         try {
             getOrder(driver, orderId, "", "", "");
@@ -159,14 +149,14 @@ public class purchaseOrder {
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[3]/td/div/button[1]")).click();
             //跳转并定位到付款页面
-            String oldHandle = goNewTabPage(driver, "http://localhost/Company/CompanyFinishOrder?orderId=" + orderId);
+            String oldHandle = goNewTabPage(driver, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyFinishOrder?orderId=" + orderId);
 
             //进行付款操作
             enterpriseProcurement ep = new enterpriseProcurement();
             ep.payment(driver);
 
             //关闭当前页面 重新定位到原页面（采购订单页面）
-            returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
+            returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
 
             //查询一次当前订单（刷新）
             getOrder(driver, orderId, "", "", "");
@@ -180,13 +170,13 @@ public class purchaseOrder {
             supplier s = new supplier();
             s.giveExpress(driver, orderId);
             //关闭当前页面 重新定位到原页面（采购订单页面）
-            returnOldPage(driver, oldHandle, "http://localhost/Company/CompanyOrderInformation");
+            returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
 
             //查看物流
             Thread.sleep(1000);
             driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_Logistics")).click();
             Thread.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[1]/td/div/i")).click();
+            driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[1]/td/div/a")).click();
             Thread.sleep(1000);
             //确认订单
             driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_lkbtnConfirmOrder")).click();

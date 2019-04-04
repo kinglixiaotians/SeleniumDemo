@@ -35,7 +35,6 @@ public class employeeList {
             staff.add(new employee("赵柳", 2, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-10-05"));
             staff.add(new employee("贤七", 3, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-07-17"));
             staff.add(new employee("杨八", 3, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-08-13"));
-            staff.add(new employee("孙九", 4, UserIDUtil.getUserId(), PhoneUtil.getTelephone(), "2018-03-25"));
             //循环插入员工
             driver.findElement(By.id("bgcreate")).click();
             for (employee e : staff) {
