@@ -169,10 +169,8 @@ public class fuYou extends DriverBase {
                 aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[8]", "li", 3);
                 mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
                 Thread.sleep(500);
-                aList.get(1).findElement(By.tagName("a")).click();
-
-
-//                enterpriseProcurementInterface();
+                aList.get(0).findElement(By.tagName("a")).click();
+                enterpriseProcurementInterface();
             }
 
             //endregion
