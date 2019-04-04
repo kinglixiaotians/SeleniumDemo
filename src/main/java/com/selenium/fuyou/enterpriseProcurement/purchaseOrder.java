@@ -140,7 +140,7 @@ public class purchaseOrder {
      * @return
      */
     //@Test
-    public boolean orderProcess(WebDriver driver, String orderId) {
+    public void orderProcess(WebDriver driver, String orderId) {
         try {
             getOrder(driver, orderId, "", "", "");
             Thread.sleep(500);
@@ -153,42 +153,41 @@ public class purchaseOrder {
 
             //进行付款操作
             enterpriseProcurement ep = new enterpriseProcurement();
-            ep.payment(driver);
+            boolean flag = ep.payment(driver);
+            if(flag){
+                //关闭当前页面 重新定位到原页面（采购订单页面）
+                returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
 
-            //关闭当前页面 重新定位到原页面（采购订单页面）
-            returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
+                //查询一次当前订单（刷新）
+                getOrder(driver, orderId, "", "", "");
 
-            //查询一次当前订单（刷新）
-            getOrder(driver, orderId, "", "", "");
+                //新开tab页
+                Thread.sleep(500);
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("window.open();");
+                Thread.sleep(500);
+                //登录供应商发货
+                supplier s = new supplier();
+                s.giveExpress(driver, orderId);
+                //关闭当前页面 重新定位到原页面（采购订单页面）
+                returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
 
-            //新开tab页
-            Thread.sleep(500);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.open();");
-            Thread.sleep(500);
-            //登录供应商发货
-            supplier s = new supplier();
-            s.giveExpress(driver, orderId);
-            //关闭当前页面 重新定位到原页面（采购订单页面）
-            returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
+                //查看物流
+                Thread.sleep(1000);
+                driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_Logistics")).click();
+                Thread.sleep(1000);
+                driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[1]/td/div/a")).click();
+                Thread.sleep(1000);
+                //确认订单
+                driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_lkbtnConfirmOrder")).click();
+                //获取弹出的对话框
+                Alert alt = driver.switchTo().alert();
+                //点击确定
+                alt.accept();
 
-            //查看物流
-            Thread.sleep(1000);
-            driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_Logistics")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[1]/td/div/a")).click();
-            Thread.sleep(1000);
-            //确认订单
-            driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_lkbtnConfirmOrder")).click();
-            //获取弹出的对话框
-            Alert alt = driver.switchTo().alert();
-            //点击确定
-            alt.accept();
-
-            return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 }

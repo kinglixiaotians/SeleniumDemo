@@ -402,17 +402,19 @@ public class enterpriseProcurement {
                 s = s.substring(4);
                 Thread.sleep(500);
                 //付款
-                payment(driver);
-                Thread.sleep(500);
-                mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
-                Thread.sleep(500);
-                driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
-                Thread.sleep(500);
-                po.getOrder(driver,s,"","","");
-                Thread.sleep(500);
-                po.orderProcessRefund(driver,s);
-                Thread.sleep(500);
-                driver.close();
+                boolean payFlag = payment(driver);
+                if(payFlag){
+                    Thread.sleep(500);
+                    mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
+                    Thread.sleep(500);
+                    driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+                    Thread.sleep(500);
+                    po.getOrder(driver,s,"","","");
+                    Thread.sleep(500);
+                    po.orderProcessRefund(driver,s);
+                    Thread.sleep(500);
+                    driver.close();
+                }
             }else{
                 driver.close();
             }
@@ -534,7 +536,7 @@ public class enterpriseProcurement {
     }
 
     //付款页面
-    public void payment(WebDriver driver){
+    public boolean payment(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.id("aOrderPay")).click();
@@ -572,12 +574,14 @@ public class enterpriseProcurement {
                             driver.findElement(By.className("dialog_title_r")).click();
                             Thread.sleep(500);
                         }
+                        return false;
                     }
                 }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
+        return true;
     }
 
     //获取窗体中打开的网站
