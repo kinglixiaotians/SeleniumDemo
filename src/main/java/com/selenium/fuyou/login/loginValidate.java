@@ -12,46 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class loginValidate {
-    //验证是否有弹窗
-    public static boolean isAlertPersent(WebDriver driver){
-        try {
-            driver.switchTo().alert();
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //验证是否广告
-    public static boolean isExistNotice(WebDriver driver){
-        try {
-            driver.findElement(By.className("notice"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //验证是否有提示弹窗
-    public static boolean isExistTips(WebDriver driver){
-        try {
-            driver.findElement(By.id("layui-layer-shade1"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //验证首页弹窗提示
-    public static boolean isExistFistUse(WebDriver driver){
-        try {
-            driver.findElement(By.className("qyBeginIcon"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //读取验证码
     public static String validateCoding(WebDriver driver){
         Map<String,Object> result = new HashMap<>();

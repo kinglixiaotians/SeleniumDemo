@@ -14,7 +14,7 @@ public class accountStatement {
 
     //region 对账单
 
-    @Test
+//    @Test
     public void searchStatement(WebDriver driver){
         try{
             Thread.sleep(500);

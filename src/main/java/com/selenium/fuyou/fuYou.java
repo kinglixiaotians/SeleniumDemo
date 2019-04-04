@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.selenium.fuyou.fuYouMethod.getNavList;
+import static com.selenium.fuyou.fuYouMethod.*;
 
 @Slf4j
 public class fuYou extends DriverBase {
@@ -190,20 +190,21 @@ public class fuYou extends DriverBase {
 
     //region 登陆
 
-    @Test
+//    @Test
     public boolean login(String username, String password) {
         driver.get(fuYouUrl);
         driver.manage().window().maximize();
         try {
             loginValidate log = new loginValidate();
-
-            boolean flag = log.isExistNotice(driver);
+            //判断是否存在广告
+            boolean flag = isExistBoxOrExistButton(driver,"notice",1);
             if (flag) {
                 driver.findElement(By.className("notice_close")).click();
                 Thread.sleep(500);
             }
 
-            flag = log.isExistTips(driver);
+            //判断是否存在提示窗体
+            flag = isExistBoxOrExistButton(driver,"layui-layer-shade1",0);
             if (flag) {
                 driver.findElement(By.className("layui-layer-setwin")).click();
                 Thread.sleep(500);
@@ -221,7 +222,7 @@ public class fuYou extends DriverBase {
             driver.findElement(By.className("login_Btn")).click();
             Thread.sleep(1000);
             //循环输入验证码登陆
-            while (log.isAlertPersent(driver)) {
+            while (isAlertPresent(driver)) {
                 driver.switchTo().alert().accept();
                 driver.findElement(By.id("verifyCode")).clear();
                 Thread.sleep(500);
@@ -233,7 +234,7 @@ public class fuYou extends DriverBase {
             }
 
             Thread.sleep(500);
-            flag = log.isExistFistUse(driver);
+            flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
             if (flag) {
                 Thread.sleep(500);
                 driver.findElement(By.className("qyCloseIcon")).click();

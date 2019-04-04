@@ -8,12 +8,13 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.selenium.fuyou.fuYouMethod.getNavList;
+import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 
 public class announcementList {
 
     //region 发布公告
 
-    @Test
+//    @Test
     public void announcement(WebDriver driver){
         try{
             Thread.sleep(500);
@@ -43,7 +44,7 @@ public class announcementList {
                 Thread.sleep(500);
                 driver.findElement(By.className("iconSearch")).click();
                 Thread.sleep(1000);
-                boolean flag = isExistErrorBox(driver);
+                boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                 if(flag){
                     driver.findElement(By.className("zeromodal-close")).click();
                 }
@@ -89,11 +90,11 @@ public class announcementList {
             Thread.sleep(500);
             driver.findElement(By.className("jnk_send")).click();
             Thread.sleep(500);
-            boolean flag = isExistFailTitleBox(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"zeromodal-title1",1);
             if(flag){
                 releaseFail(driver);
             }
-            flag = isExistSuccessBox(driver);
+            flag = isExistBoxOrExistButton(driver,".zeromodal-body.zeromodal-overflow-y",2);
             if(flag){
                 releaseSuccess(driver);
             }
@@ -129,48 +130,18 @@ public class announcementList {
         }
     }
 
-    //判断是否有弹窗出现
-    public boolean isExistErrorBox(WebDriver driver){
-        try{
-            driver.findElement(By.className("zeromodal-container"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //判断是否有成功窗体出现
-    public boolean isExistSuccessBox(WebDriver driver){
-        try{
-            driver.findElement(By.cssSelector(".zeromodal-body.zeromodal-overflow-y"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //发布失败提示是否是title
-    public boolean isExistFailTitleBox(WebDriver driver){
-        try{
-            driver.findElement(By.className("zeromodal-title1"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //endregion
 
     //region 删除公告
 
-    @Test
+//    @Test
     public void deleteAnnouncement(WebDriver driver){
         try{
-            boolean flag = isExistDelButton(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[4]/div[3]/table/tbody/tr[2]/td[7]/a",3);
             if(flag){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("/html/body/div[4]/div[3]/table/tbody/tr[2]/td[7]/a")).click();
-                flag = isExistDelBox(driver);
+                flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                 if(flag){
                     Thread.sleep(500);
                     driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-primary.anblock")).click();
@@ -185,25 +156,6 @@ public class announcementList {
         }
     }
 
-    //判断是否有删除按钮
-    public boolean isExistDelButton(WebDriver driver){
-        try{
-            driver.findElement(By.xpath("/html/body/div[4]/div[3]/table/tbody/tr[2]/td[7]/a"));
-            return true;
-        }catch (Exception e) {
-            return false;
-        }
-    }
-
-    //判断是否有删除弹窗
-    public boolean isExistDelBox(WebDriver driver){
-        try{
-            driver.findElement(By.className("zeromodal-container"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //endregion
+
 }

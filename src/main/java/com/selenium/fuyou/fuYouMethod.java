@@ -60,7 +60,7 @@ public class fuYouMethod {
         }
     }
 
-    //判断下拉列表是否超出
+    //判断下拉列表是否超出索引
     public static int trySelectGet(WebDriver driver,String path,int num){
         try{
             WebElement ele = driver.findElement(By.id(path));
@@ -77,6 +77,39 @@ public class fuYouMethod {
         //获取当前时间并进行格式化
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         return sdf.format(new Date());
+    }
+
+    //验证是否有弹窗
+    public static boolean isAlertPresent(WebDriver driver){
+        try {
+            driver.switchTo().alert();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    //是否存在窗体
+    public static boolean isExistBoxOrExistButton(WebDriver driver,String path,int num){
+        try{
+            switch (num){
+                case 0 :
+                    driver.findElement(By.id(path));
+                    break;
+                case 1 :
+                    driver.findElement(By.className(path));
+                    break;
+                case 2 :
+                    driver.findElement(By.cssSelector(path));
+                    break;
+                case 3 :
+                    driver.findElement(By.xpath(path));
+                    break;
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 }

@@ -13,15 +13,14 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.selenium.fuyou.fuYouMethod.getNavList;
-import static com.selenium.fuyou.fuYouMethod.trySelectGet;
+import static com.selenium.fuyou.fuYouMethod.*;
 
 
 public class employeeList {
 
     //region 新增员工
 
-    @Test
+//    @Test
     public void addEmp(WebDriver driver) {
         try {
             Thread.sleep(500);
@@ -75,7 +74,7 @@ public class employeeList {
                 driver.findElement(By.id("bgcreate")).click();
                 Thread.sleep(500);
             }
-            boolean flag = isExistAddBox(driver);
+            boolean flag = isExistBoxOrExistButton(driver,".xubox_layer.xubox_layer_0",2);
             if(flag){
                 driver.findElement(By.xpath("//*[@id=\"xubox_layer1\"]/div[1]/a")).click();
             }
@@ -94,26 +93,17 @@ public class employeeList {
         driver.findElement(By.id("CompanyEmployeesList_addJoinDate")).clear();
     }
 
-    //判断是否有新增弹窗
-    public boolean isExistAddBox(WebDriver driver){
-        try {
-            driver.findElement(By.cssSelector(".xubox_layer.xubox_layer_0"));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     //region 分页
     public void paging(WebDriver driver){
         try{
-            //分页
-            boolean pageNextFlag = isExistPageNext(driver);
+            //判断是否有下一页按钮
+            boolean pageNextFlag = isExistBoxOrExistButton(driver,"page-next",1);
             if (pageNextFlag){
                 driver.findElement(By.className("page-next")).click();
             }
             Thread.sleep(500);
-            boolean pagePrevFlag = isExistPagePrev(driver);
+            //判断是否有上一页按钮
+            boolean pagePrevFlag = isExistBoxOrExistButton(driver,"page-prev",1);
             if(pagePrevFlag){
                 driver.findElement(By.className("page-prev")).click();
             }
@@ -123,26 +113,6 @@ public class employeeList {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
-    }
-
-    //判断是否有下一页按钮
-    public boolean isExistPageNext(WebDriver driver){
-        try {
-            driver.findElement(By.className("page-next"));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    //判断是否有上一页按钮
-    public boolean isExistPagePrev(WebDriver driver){
-        try {
-            driver.findElement(By.className("page-prev"));
-            return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 
@@ -171,11 +141,11 @@ public class employeeList {
 
     //region 修改员工信息
 
-    @Test
+//    @Test
     public void updateEmp(WebDriver driver){
         try {
             Thread.sleep(500);
-            boolean flag = isExistEditButton(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]",3);
             if(flag){
                 //点击编辑
                 driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
@@ -193,7 +163,7 @@ public class employeeList {
                 updateEmpData(driver,new employee("dnf",2,UserIDUtil.getUserId(),"","2019-03-23"));
                 Thread.sleep(500);
                 //关闭多余编辑窗体
-                flag = isExistUpdateBox(driver);
+                flag = isExistBoxOrExistButton(driver,".xubox_main.xubox_main_0",2);
                 if(flag){
                     driver.findElement(By.cssSelector(".xubox_close.xulayer_png32.xubox_close0_0")).click();
                 }
@@ -264,34 +234,14 @@ public class employeeList {
         }
     }
 
-    //判断是否有编辑按钮
-    public boolean isExistEditButton(WebDriver driver){
-        try{
-            driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]"));
-            return true;
-        }catch (Exception e){
-            return  false;
-        }
-    }
-
-    //判断是否有员工编辑窗口
-    public boolean isExistUpdateBox(WebDriver driver){
-        try{
-            driver.findElement(By.cssSelector(".xubox_main.xubox_main_0"));
-            return true;
-        }catch (Exception e){
-            return  false;
-        }
-    }
-
     //endregion
 
     //region 删除员工
 
-    @Test
+//    @Test
     public void deleteEmp(WebDriver driver){
         try{
-            boolean flag = isExistDelButtopn(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]",3);
             if(flag){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]")).click();
@@ -311,21 +261,11 @@ public class employeeList {
         }
     }
 
-    //判断是否有删除按钮
-    public boolean isExistDelButtopn(WebDriver driver){
-        try{
-            driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //endregion
 
     //region 搜索员工
 
-    @Test
+//    @Test
     public void searchEmp(WebDriver driver){
         try{
             Thread.sleep(500);
@@ -341,7 +281,7 @@ public class employeeList {
 
     //region 批量导入员工
 
-    @Test
+//    @Test
     public void batchImportEmp(WebDriver driver){
         try{
             Thread.sleep(500);
@@ -381,7 +321,7 @@ public class employeeList {
                     driver.findElement(By.id("select_btn_1")).sendKeys(path);
                     Thread.sleep(500);
                     if(fileName.equals("fuyou\\员工导入模板.xls")){
-                        boolean flag = isExistErrorOrSuccessBox(driver);
+                        boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                         if(flag){
                             driver.findElement(By.className("zeromodal-close")).click();
                             Thread.sleep(500);
@@ -405,35 +345,17 @@ public class employeeList {
 
     public void boxClose(WebDriver driver){
         try{
-            boolean flag = isAlertPersent(driver);
+            boolean flag = isAlertPresent(driver);
             if(flag){
                 driver.switchTo().alert().accept();
             }
             Thread.sleep(500);
-            flag = isExistErrorOrSuccessBox(driver);
+            flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
             if(flag){
                 driver.findElement(By.className("zeromodal-close")).click();
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
-    }
-
-    public boolean isAlertPersent(WebDriver driver){
-        try {
-            driver.switchTo().alert();
-            return true;
-        }catch (NoAlertPresentException e){
-            return false;
-        }
-    }
-
-    public boolean isExistErrorOrSuccessBox(WebDriver driver){
-        try {
-            driver.findElement(By.className("zeromodal-container"));
-            return true;
-        }catch (Exception e){
-            return false;
         }
     }
 

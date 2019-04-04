@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static com.selenium.fuyou.fuYouMethod.getNavList;
+import static com.selenium.fuyou.fuYouMethod.*;
 
 public class enterpriseProcurement {
 
@@ -20,7 +20,7 @@ public class enterpriseProcurement {
 
     //region 用户是否有地址以及添加地址
 
-    @Test
+//    @Test
     public void isHaveAddress(WebDriver driver){
         try{
             String s = driver.findElement(By.className("chooseAddressHeader")).getText();
@@ -125,19 +125,19 @@ public class enterpriseProcurement {
 
     //region 编辑地址
 
-    @Test
+//    @Test
     public void updateAddress(WebDriver driver){
         try{
             driver.findElement(By.className("chooseAddressHeader")).click();
             Thread.sleep(500);
-            boolean flag = isExistDelButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit");
+            boolean flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit",0);
             if(!flag){
                 driver.findElement(By.id("imgCloseLogin")).click();
                 return;
             }
             addressData(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit",null,null,null,null,null,null,null,PhoneUtil.getTelephone(),true);
             //判断是否有默认地址
-            flag = isExistSetDefaultButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault");
+            flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault",0);
             if(flag){
                 driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
             }
@@ -207,34 +207,14 @@ public class enterpriseProcurement {
         }
     }
 
-    //判断是否有编辑按钮
-    private boolean isExistDelButton(WebDriver driver,String path){
-        try{
-            driver.findElement(By.id(path));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //判断是否有设为默认按钮
-    private boolean isExistSetDefaultButton(WebDriver driver,String path){
-        try{
-            driver.findElement(By.id(path));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //endregion
 
     //region 删除地址
 
-    @Test
+//    @Test
     public void deleteAddress(WebDriver driver){
         try{
-            boolean flag = isExistDelButton(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete",0);
             if(!flag){
                 return;
             }
@@ -261,7 +241,7 @@ public class enterpriseProcurement {
                 driver.switchTo().alert().accept();
                 addAddress(driver,"李si",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
                 //判断地址数大于5时是否有默认地址
-                flag = isExistSetDefaultButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault");
+                flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault",0);
                 if(flag){
                     Thread.sleep(500);
                     driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
@@ -274,15 +254,6 @@ public class enterpriseProcurement {
         }
     }
 
-    //判断是否有删除按钮
-    private boolean isExistDelButton(WebDriver driver){
-        try{
-            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
 
     //endregion
 
@@ -290,7 +261,7 @@ public class enterpriseProcurement {
 
     //region 导航栏
 
-    @Test
+//    @Test
     public void navMenu(WebDriver driver){
         try{
             List<WebElement> list = getNavList(driver,"h_chooselist","a",1);
@@ -322,7 +293,7 @@ public class enterpriseProcurement {
 
     //region 商品搜索
 
-    @Test
+//    @Test
     public void searchProduct(WebDriver driver){
         try{
             Thread.sleep(500);
@@ -368,7 +339,7 @@ public class enterpriseProcurement {
 
     //region 商品购买
 
-    @Test
+//    @Test
     public void purchaseGoods(WebDriver driver) {
         try {
             purchaseOrder po = new purchaseOrder();
@@ -486,7 +457,7 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             driver.findElement(By.id("addcartButton")).click();
             Thread.sleep(500);
-            boolean flag = isExistSuccessToShoppingCartBox(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"divshow",0);
             if(flag && num == 0){
                 driver.findElement(By.className("btn-continue")).click();
             }else if(flag && num != 0){
@@ -526,7 +497,7 @@ public class enterpriseProcurement {
                 Thread.sleep(500);
             }
 
-            flag = isShoppingCartHasProduct(driver);
+            flag = isExistBoxOrExistButton(driver,"message",1);
             if(flag){
                 return false;
             }
@@ -549,7 +520,7 @@ public class enterpriseProcurement {
                 addressList.get(1).click();
             }
             driver.findElement(By.className("combo-arrow")).click();
-            boolean flag = isExistdeliveryTime(driver);
+            boolean flag = isExistBoxOrExistButton(driver,".combo-panel.panel-body.panel-body-noheader",2);
             if(flag){
                 List<WebElement> timeList = getNavList(driver,".combo-panel.panel-body.panel-body-noheader","div",2);
                 if(timeList.size() > num){
@@ -571,11 +542,11 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             driver.findElement(By.id("aOrderPay")).click();
             Thread.sleep(500);
-            boolean flag = isExistLoginForPay(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"loginForBuy",0);
             if(flag){
                 driver.findElement(By.id("btnyzm")).click();
                 Thread.sleep(500);
-                flag = isExistSuccessOrErrorBox(driver);
+                flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                 if(flag){
                     Thread.sleep(500);
                     String s = driver.findElement(By.className("zeromodal-title1")).getText();
@@ -595,7 +566,7 @@ public class enterpriseProcurement {
                     Thread.sleep(500);
                     driver.findElement(By.id("btnLoginAndBuy")).click();
                     Thread.sleep(500);
-                    flag = isExistSuccessOrErrorBox(driver);
+                    flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                     if(flag){
                         s = driver.findElement(By.className("zeromodal-title1")).getText();
                         Thread.sleep(500);
@@ -642,66 +613,5 @@ public class enterpriseProcurement {
 
     }
 
-    //判断购物车中是否有物品
-    private boolean isShoppingCartHasProduct(WebDriver driver){
-        try{
-            driver.findElement(By.className("message")).click();
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //判断是否有支付验证窗体
-    private boolean isExistLoginForPay(WebDriver driver){
-        try{
-            driver.findElement(By.id("loginForBuy"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //判断是否有成功或失败窗体
-    private boolean isExistSuccessOrErrorBox(WebDriver driver){
-        try{
-            driver.findElement(By.className("zeromodal-container"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //判断是否弹出成功添加购物车窗体
-    private boolean isExistSuccessToShoppingCartBox(WebDriver driver){
-        try {
-            driver.findElement(By.id("divshow"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    //判断是否有送货时间选择盒子
-    private boolean isExistdeliveryTime(WebDriver driver){
-        try{
-            driver.findElement(By.cssSelector("combo-panel panel-body panel-body-noheader"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //endregion
-
-    //验证是否有弹窗
-    private static boolean isAlertPresent(WebDriver driver){
-        try {
-            driver.switchTo().alert();
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
 }

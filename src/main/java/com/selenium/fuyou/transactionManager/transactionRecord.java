@@ -13,7 +13,7 @@ public class transactionRecord {
 
     //region 查询交易记录
 
-    @Test
+//    @Test
     public void transactionRecordSearch(WebDriver driver){
         try {
             //精确日期查询

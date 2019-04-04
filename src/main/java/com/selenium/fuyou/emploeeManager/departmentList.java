@@ -4,11 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
+import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
+
 public class departmentList {
 
     //region 新增部门
 
-    @Test
+//    @Test
     public void addDep(WebDriver driver){
         try {
             Thread.sleep(500);
@@ -21,7 +23,7 @@ public class departmentList {
                 Thread.sleep(500);
                 driver.findElement(By.name("btnadd")).click();
                 Thread.sleep(500);
-                boolean flag = isExistErrorModel(driver);
+                boolean flag = isExistBoxOrExistButton(driver,"zeromodal-overlay",1);
                 Thread.sleep(500);
                 if(flag){
                     driver.findElement(By.xpath("/html/body/div[9]/div[2]/div")).click();
@@ -35,7 +37,7 @@ public class departmentList {
                     Thread.sleep(500);
                 }
             }
-            boolean flag = isExistAddBox(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
             if(flag){
                 driver.findElement(By.className("zeromodal-close")).click();
             }
@@ -44,34 +46,14 @@ public class departmentList {
         }
     }
 
-    //判断是否有新增窗体
-    public boolean isExistAddBox(WebDriver driver){
-        try {
-            driver.findElement(By.className("zeromodal-container"));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    //判断是否有错误窗体
-    public boolean isExistErrorModel(WebDriver driver) {
-        try {
-            driver.findElement(By.className("zeromodal-overlay"));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     //endregion
 
     //region 删除部门
 
-    @Test
+//    @Test
     public void deleteDep(WebDriver driver){
         try{
-            boolean flag = isExistDelButton(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]",3);
             if(flag){
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]")).click();
@@ -89,24 +71,14 @@ public class departmentList {
         }
     }
 
-    //判断是否有删除按钮
-    public boolean isExistDelButton(WebDriver driver){
-        try{
-            driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]"));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     //endregion
 
     //region 编辑部门
 
-    @Test
+//    @Test
     public void updateDep(WebDriver driver){
         try{
-            boolean flag = isExistEditButton(driver);
+            boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]",3);
             if(flag) {
                 Thread.sleep(500);
                 driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]")).click();
@@ -121,16 +93,6 @@ public class departmentList {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
-    }
-
-    //判断是否有编辑按钮
-    public boolean isExistEditButton(WebDriver driver){
-        try{
-            driver.findElement(By.xpath("/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]"));
-            return true;
-        }catch (Exception e){
-            return false;
         }
     }
 
