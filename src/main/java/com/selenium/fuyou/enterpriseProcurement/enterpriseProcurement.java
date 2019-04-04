@@ -425,7 +425,6 @@ public class enterpriseProcurement {
             mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
             Thread.sleep(500);
             driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
-            po.getOrder(driver,s,"","","");
             Thread.sleep(500);
             po.orderProcessCancelPayment(driver,s);
             driver.close();
@@ -439,8 +438,6 @@ public class enterpriseProcurement {
             mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
             Thread.sleep(500);
             driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
-            Thread.sleep(500);
-            po.getOrder(driver,s,"","","");
             Thread.sleep(500);
             po.orderProcess(driver,s);
             driver.close();
@@ -520,10 +517,10 @@ public class enterpriseProcurement {
                 addressList.get(1).click();
             }
             driver.findElement(By.className("combo-arrow")).click();
-            boolean flag = isExistBoxOrExistButton(driver,".combo-panel.panel-body.panel-body-noheader",2);
+            boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[5]/div",3);
             if(flag){
-                List<WebElement> timeList = getNavList(driver,".combo-panel.panel-body.panel-body-noheader","div",2);
-                if(timeList.size() > num){
+                List<WebElement> timeList = getNavList(driver,"/html/body/div[5]/div","div",3);
+                if(num < timeList.size()){
                     timeList.get(num).click();
                 }else{
                     timeList.get(0).click();

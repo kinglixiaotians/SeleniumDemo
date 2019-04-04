@@ -122,13 +122,13 @@ public class employeeList {
             driver.findElement(By.id("txtGoto")).clear();
             driver.findElement(By.id("txtGoto")).sendKeys("12");
             Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"aspnetForm\"]/div[4]/div[7]/div/span/input[2]")).click();
+            driver.findElement(By.className("button")).click();
             Thread.sleep(500);
             driver.findElement(By.id("txtGoto")).clear();
             Thread.sleep(500);
             driver.findElement(By.id("txtGoto")).sendKeys("1");
             Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"aspnetForm\"]/div[4]/div[7]/div/span/input[2]")).click();
+            driver.findElement(By.className("button")).click();
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
@@ -171,7 +171,7 @@ public class employeeList {
 
                 //部门分类跳转
                 List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
-                eleList.get(3).findElement(By.tagName("li")).click();
+                eleList.get(3).findElement(By.tagName("a")).click();
                 Thread.sleep(1000);
             }
             else{
