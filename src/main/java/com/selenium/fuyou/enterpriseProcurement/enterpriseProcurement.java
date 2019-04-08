@@ -64,7 +64,7 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             driver.findElement(By.xpath("//*[@id=\"province_top\"]/span[2]")).click();
 
-            List<WebElement> list = getNavList(driver,"province_select","li",0);
+            List<WebElement> list = getNavList(driver,null,"province_select","li",0);
             String s = list.get(provinceNum).findElement(By.tagName("a")).getText();
             Thread.sleep(500);
             list.get(provinceNum).findElement(By.tagName("a")).click();
@@ -73,7 +73,7 @@ public class enterpriseProcurement {
                 return;
             }
             Thread.sleep(500);
-            list = getNavList(driver,"city_select","li",0);
+            list = getNavList(driver,null,"city_select","li",0);
             s = list.get(provinceNum).findElement(By.tagName("a")).getText();
             list.get(cityNum).findElement(By.tagName("a")).click();
             if(s.equals("[清空]")){
@@ -81,7 +81,7 @@ public class enterpriseProcurement {
                 return;
             }
             Thread.sleep(500);
-            list = getNavList(driver,"area_select","li",0);
+            list = getNavList(driver,null,"area_select","li",0);
             if(list.size() == 0){
                 driver.findElement(By.id("CompanyFinishOrder_btnAddAddress")).click();
                 return;
@@ -156,17 +156,17 @@ public class enterpriseProcurement {
             }
             Thread.sleep(500);
             if(provinceNum != null){
-                List<WebElement> list = getNavList(driver,"province_select","li",0);
+                List<WebElement> list = getNavList(driver,null,"province_select","li",0);
                 list.get(provinceNum).findElement(By.tagName("a")).click();
             }
             Thread.sleep(500);
             if(cityNum != null){
-                List<WebElement> list = getNavList(driver,"city_select","li",0);
+                List<WebElement> list = getNavList(driver,null,"city_select","li",0);
                 list.get(cityNum).findElement(By.tagName("a")).click();
             }
             Thread.sleep(500);
             if(areaNum != null){
-                List<WebElement> list = getNavList(driver,"area_select","li",0);
+                List<WebElement> list = getNavList(driver,null,"area_select","li",0);
                 list.get(areaNum).findElement(By.tagName("a")).click();
             }
             Thread.sleep(500);
@@ -221,7 +221,7 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             driver.findElement(By.className("chooseAddressHeader")).click();
             Thread.sleep(500);
-            List<WebElement> list = getNavList(driver,"tab_box1","tr",1);
+            List<WebElement> list = getNavList(driver,null,"tab_box1","tr",1);
             if(list.size() <= 2){
                 driver.findElement(By.className("imgCloseLogin")).click();
                 return;
@@ -264,25 +264,25 @@ public class enterpriseProcurement {
 //    @Test
     public void navMenu(WebDriver driver){
         try{
-            List<WebElement> list = getNavList(driver,"h_chooselist","a",1);
+            List<WebElement> list = getNavList(driver,null,"h_chooselist","a",1);
             int num = list.size();
             for (int i = 0; i < num; i++) {
-                list = getNavList(driver,"h_chooselist","a",1);
+                list = getNavList(driver,null,"h_chooselist","a",1);
                 list.get(i).click();
             }
             Thread.sleep(500);
 
 
-            List<WebElement> divList = getNavList(driver,"category_list","div",1);
+            List<WebElement> divList = getNavList(driver,null,"category_list","div",1);
             List<WebElement> aList = divList.get(0).findElements(By.tagName("a"));
             int aNum = aList.size();
             for (int i = 0; i < aNum; i++) {
-                divList = getNavList(driver,"category_list","div",1);
+                divList = getNavList(driver,null,"category_list","div",1);
                 aList = divList.get(0).findElements(By.tagName("a"));
                 aList.get(i).click();
             }
 
-            list = getNavList(driver,"category_list","h2",1);
+            list = getNavList(driver,null,"category_list","h2",1);
             list.get(0).findElement(By.tagName("a")).click();
         }catch (Exception e){
             e.printStackTrace();
@@ -310,7 +310,7 @@ public class enterpriseProcurement {
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___btnSearch")).click();
             Thread.sleep(500);
 
-            List<WebElement> list = getNavList(driver,"CompanyFinishOrder_search_Common_CutdownSearch___ckbListproductSearchType","input",0);
+            List<WebElement> list = getNavList(driver,null,"CompanyFinishOrder_search_Common_CutdownSearch___ckbListproductSearchType","input",0);
             list.get(0).click();
             Thread.sleep(500);
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___btnSearch")).click();
@@ -318,15 +318,15 @@ public class enterpriseProcurement {
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___txtKeywords")).clear();
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___txtStartPrice")).clear();
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___txtEndPrice")).clear();
-            list = getNavList(driver,"CompanyFinishOrder_search_Common_CutdownSearch___ckbListproductSearchType","input",0);
+            list = getNavList(driver,null,"CompanyFinishOrder_search_Common_CutdownSearch___ckbListproductSearchType","input",0);
             list.get(0).click();
 
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___btnSearch")).click();
             Thread.sleep(500);
 
-            list = getNavList(driver,"category_sequence","a",1);
+            list = getNavList(driver,null,"category_sequence","a",1);
             for (int i = 0; i < list.size(); i++) {
-                list = getNavList(driver,"category_sequence","a",1);
+                list = getNavList(driver,null,"category_sequence","a",1);
                 Thread.sleep(500);
                 list.get(i).click();
             }
@@ -344,7 +344,7 @@ public class enterpriseProcurement {
         try {
             purchaseOrder po = new purchaseOrder();
             Thread.sleep(500);
-            List<WebElement> productList = getNavList(driver, "category_pro_list", "li", 1);
+            List<WebElement> productList = getNavList(driver, null,"category_pro_list", "li", 1);
             productList.get(0).click();
             Thread.sleep(500);
             List<String> url = getUrl(driver);
@@ -367,7 +367,7 @@ public class enterpriseProcurement {
             driver.findElement(By.id("buyAmount")).sendKeys("3");
 
             //商品详情评价
-            List<WebElement> navList = getNavList(driver,"product_nav_wrap","a",1);
+            List<WebElement> navList = getNavList(driver,null,"product_nav_wrap","a",1);
             for (int i = 0; i < navList.size(); i++) {
                 Thread.sleep(1000);
                 navList.get(i).click();
@@ -376,7 +376,7 @@ public class enterpriseProcurement {
 
             //添加购物车后继续购物
             addShoppingCart(driver,0);
-            List<WebElement> smallProductList = getNavList(driver,"products_16","li",0);
+            List<WebElement> smallProductList = getNavList(driver,null,"products_16","li",0);
             smallProductList.get(1).click();
             Thread.sleep(500);
 
@@ -404,10 +404,7 @@ public class enterpriseProcurement {
                 //付款
                 boolean payFlag = payment(driver);
                 if(payFlag){
-                    Thread.sleep(500);
-                    mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
-                    Thread.sleep(500);
-                    driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+                    jumpPurchaseOrder(driver,mouse);
                     Thread.sleep(500);
                     po.getOrder(driver,s,"","","");
                     Thread.sleep(500);
@@ -424,10 +421,8 @@ public class enterpriseProcurement {
             doNotPayment(driver);
             s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
             s = s.substring(4);
-            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
             Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
-            Thread.sleep(500);
+            jumpPurchaseOrder(driver,mouse);
             po.orderProcessCancelPayment(driver,s);
             driver.close();
 
@@ -437,9 +432,8 @@ public class enterpriseProcurement {
             doNotPayment(driver);
             s = driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_divOrderPayInfo\"]/span[1]")).getText();
             s = s.substring(4);
-            mouse.moveToElement(driver.findElement(By.id("CompanyFinishOrder_ctl00___libuy"))).perform();
             Thread.sleep(500);
-            driver.findElement(By.xpath("//*[@id=\"CompanyFinishOrder_ctl00___libuy\"]/ul/li[2]/a")).click();
+            jumpPurchaseOrder(driver,mouse);
             Thread.sleep(500);
             po.orderProcess(driver,s);
             driver.close();
@@ -487,7 +481,7 @@ public class enterpriseProcurement {
             Thread.sleep(500);
 
             //删除商品
-            List<WebElement> aList = getNavList(driver,"cart_commodit_settle","a",1);
+            List<WebElement> aList = getNavList(driver,null,"cart_commodit_settle","a",1);
             aList.get(0).click();
             Thread.sleep(500);
             boolean flag = isAlertPresent(driver);
@@ -514,14 +508,14 @@ public class enterpriseProcurement {
     private void Buy(WebDriver driver,int num){
         try{
             Thread.sleep(500);
-            List<WebElement> addressList = getNavList(driver,"address_tab","div",1);
+            List<WebElement> addressList = getNavList(driver,null,"address_tab","div",1);
             if(addressList.size() > 1){
                 addressList.get(1).click();
             }
             driver.findElement(By.className("combo-arrow")).click();
             boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[5]/div",3);
             if(flag){
-                List<WebElement> timeList = getNavList(driver,"/html/body/div[5]/div","div",3);
+                List<WebElement> timeList = getNavList(driver,null,"/html/body/div[5]/div","div",3);
                 if(num < timeList.size()){
                     timeList.get(num).click();
                 }else{
@@ -544,12 +538,12 @@ public class enterpriseProcurement {
             boolean flag = isExistBoxOrExistButton(driver,"loginForBuy",0);
             if(flag){
                 driver.findElement(By.id("btnyzm")).click();
-                Thread.sleep(500);
+                Thread.sleep(1000);
                 flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                 if(flag){
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     String s = driver.findElement(By.className("zeromodal-title1")).getText();
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     driver.findElement(By.className("zeromodal-close")).click();
                     while(!s.equals("发送成功!")){
                         Thread.sleep(60000);
@@ -567,21 +561,18 @@ public class enterpriseProcurement {
                     Thread.sleep(500);
                     flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                     if(flag){
-                        s = driver.findElement(By.className("zeromodal-title1")).getText();
-                        Thread.sleep(500);
                         driver.findElement(By.className("zeromodal-close")).click();
-                        if(s.equals("参数错误！")){
-                            driver.findElement(By.className("dialog_title_r")).click();
-                            Thread.sleep(500);
-                        }
+                        driver.findElement(By.className("dialog_title_r")).click();
+                        Thread.sleep(500);
                         return false;
                     }
+                    return true;
                 }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     //获取窗体中打开的网站
@@ -595,7 +586,7 @@ public class enterpriseProcurement {
     private void doNotPayment(WebDriver driver){
         try{
             Thread.sleep(500);
-            List<WebElement> productList = getNavList(driver, "category_pro_list", "li", 1);
+            List<WebElement> productList = getNavList(driver, null,"category_pro_list", "li", 1);
             Thread.sleep(500);
             productList.get(2).click();
             Thread.sleep(500);
@@ -610,6 +601,20 @@ public class enterpriseProcurement {
             e.printStackTrace();
         }
 
+    }
+
+    //采购订单跳转操作
+    public void jumpPurchaseOrder(WebDriver driver,Actions mouse){
+        try{
+            List<WebElement> list = getNavList(driver,null,"fbgg_menu","li",0);
+            int navIndex = getNavListId(driver,"企业采购");
+            List<WebElement> aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+            mouse.moveToElement(list.get(navIndex)).perform();
+            Thread.sleep(500);
+            aList.get(1).click();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     //endregion

@@ -43,14 +43,15 @@ public class fuYouMethod {
 
     //获取导航列表
     //byState：0 id,1 className,2 cssSelector,3 xPath
-    public static List<WebElement> getNavList(WebDriver driver, String ulPath,String findTagName,int byState){
+    public static List<WebElement> getNavList(WebDriver driver, WebElement element, String ulPath, String findTagName, int byState){
         try {
-            WebElement element = null;
-            switch (byState){
-                case 0:element = driver.findElement(By.id(ulPath));break;
-                case 1:element = driver.findElement(By.className(ulPath));break;
-                case 2:element = driver.findElement(By.cssSelector(ulPath));break;
-                case 3:element = driver.findElement(By.xpath(ulPath));break;
+            if(element == null){
+                switch (byState){
+                    case 0:element = driver.findElement(By.id(ulPath));break;
+                    case 1:element = driver.findElement(By.className(ulPath));break;
+                    case 2:element = driver.findElement(By.cssSelector(ulPath));break;
+                    case 3:element = driver.findElement(By.xpath(ulPath));break;
+                }
             }
             List<WebElement> liList = element.findElements(By.tagName(findTagName));
             return liList;
@@ -110,6 +111,23 @@ public class fuYouMethod {
         }catch (Exception e){
             return false;
         }
+    }
+
+    //匹配导航栏列表
+    public static int getNavListId(WebDriver driver,String findName){
+        List<WebElement> list = getNavList(driver,null,"fbgg_menu","li",0);
+        int num = list.size();
+        String s = null;
+        int result = 0;
+        for (int i = 0; i < num; i++) {
+            list = getNavList(driver,null,"fbgg_menu","li",0);
+            s = list.get(i).getText();
+            if(s.equals(findName)){
+                result = i;
+                break;
+            }
+        }
+        return result;
     }
 
 }

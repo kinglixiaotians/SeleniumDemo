@@ -50,29 +50,42 @@ public class fuYou extends DriverBase {
 
             //创建鼠标
             Actions mouse = new Actions(driver);
+            //顶部导航栏列表
+            List<WebElement> list = null;
+
             List<WebElement> aList = null;
+            //对应顶部导航栏的index
+            int navIndex = 0;
+
             int num = 0;
+
             String s = null;
 
             //region 员工管理
 
-            if (false) {
-                aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[3]", "li", 3);
-                num = aList.size();
-                for (int i = num - 1; i >= 0; i--) {
-                    Thread.sleep(500);
-                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[3]", "li", 3);
-                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
-                    s = aList.get(i).findElement(By.tagName("a")).getText();
-                    aList.get(i).findElement(By.tagName("a")).click();
-                    Thread.sleep(500);
-                    switch (s) {
-                        case "员工列表":
-                            employeeListInterface();
-                            break;
-                        case "部门列表":
-                            departmentListInterface();
-                            break;
+            if (Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.employeeManager.openSwitch"))) {
+                list = getNavList(driver,null,"fbgg_menu","li",0);
+                navIndex = getNavListId(driver,"员工管理");
+                if(navIndex != 0){
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    num = aList.size();
+                    for (int i = num - 1; i >= 0; i--) {
+                        Thread.sleep(500);
+                        list = getNavList(driver,null,"fbgg_menu","li",0);
+                        navIndex = getNavListId(driver,"员工管理");
+                        aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                        mouse.moveToElement(list.get(navIndex)).perform();
+                        s = aList.get(i).findElement(By.tagName("a")).getText();
+                        aList.get(i).findElement(By.tagName("a")).click();
+                        Thread.sleep(500);
+                        switch (s) {
+                            case "员工列表":
+                                employeeListInterface();
+                                break;
+                            case "部门列表":
+                                departmentListInterface();
+                                break;
+                        }
                     }
                 }
             }
@@ -80,32 +93,38 @@ public class fuYou extends DriverBase {
             //endregion
 
             //region 福利管理
-            if(false) {
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[4]","li",3);
-                num = aList.size();
-                welfareManager w = new welfareManager();
-                for (int i = 0; i < num; i++) {
-                    aList = getNavList(driver, "//*[@id=\"fbgg_menu\"]/li[4]", "li", 3);
-                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[4]/a"))).perform();
-                    Thread.sleep(500);
-                    s = aList.get(i).findElement(By.tagName("a")).getText();
-                    Thread.sleep(500);
-                    aList.get(i).findElement(By.tagName("a")).click();
-                    Thread.sleep(500);
-                    switch (s) {
-                        case "福利发放":
-                            provideWelfare();
-                            break;
-                        case "团体险":
-                            break;
-                        case "优分订单管理":
-                            break;
-                        case "企业收款管理":
-                            companyGatheringQrcode();
-                            break;
-                        case "一卡通兑换":
-                            w.companyCardPassExchange(driver, username);
-                            break;
+            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.welfareManager.openSwitch"))) {
+                list = getNavList(driver,null,"fbgg_menu","li",0);
+                navIndex = getNavListId(driver,"福利管理");
+                if(navIndex != 0){
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    num = aList.size();
+                    welfareManager w = new welfareManager();
+                    for (int i = 0; i < num; i++) {
+                        list = getNavList(driver,null,"fbgg_menu","li",0);
+                        navIndex = getNavListId(driver,"福利管理");
+                        aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                        mouse.moveToElement(list.get(navIndex)).perform();
+                        Thread.sleep(500);
+                        s = aList.get(i).findElement(By.tagName("a")).getText();
+                        Thread.sleep(500);
+                        aList.get(i).findElement(By.tagName("a")).click();
+                        Thread.sleep(500);
+                        switch (s) {
+                            case "福利发放":
+                                provideWelfare();
+                                break;
+                            case "团体险":
+                                break;
+                            case "优分订单管理":
+                                break;
+                            case "企业收款管理":
+                                companyGatheringQrcode();
+                                break;
+                            case "一卡通兑换":
+                                w.companyCardPassExchange(driver, username);
+                                break;
+                        }
                     }
                 }
             }
@@ -113,41 +132,52 @@ public class fuYou extends DriverBase {
 
             //region 公告管理
 
-            if(false) {
+            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.announcementManager.openSwitch"))) {
                 Thread.sleep(500);
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[5]","li",3);
-                announcementList notice = new announcementList();
-                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[5]/a"))).perform();
-                Thread.sleep(500);
-                aList.get(0).findElement(By.tagName("a")).click();
-                notice.announcement(driver);
-                notice.deleteAnnouncement(driver);
+                list = getNavList(driver,null,"fbgg_menu","li",0);
+                navIndex = getNavListId(driver,"公告管理");
+                if(navIndex != 0){
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    announcementList notice = new announcementList();
+                    mouse.moveToElement(list.get(navIndex)).perform();
+                    Thread.sleep(500);
+                    aList.get(0).findElement(By.tagName("a")).click();
+                    notice.announcement(driver);
+                    notice.deleteAnnouncement(driver);
+                }
             }
 
             //endregion
 
             //region 交易管理
 
-            if(false){
+            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.transactionManager.openSwitch"))){
                 Thread.sleep(500);
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
-                num = aList.size();
-                for (int i = 0;i < num;i++){
-                    Thread.sleep(500);
-                    aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[6]","li",3);
-                    mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[6]/a"))).perform();
-                    s = aList.get(i).findElement(By.tagName("a")).getText();
-                    Thread.sleep(500);
-                    aList.get(i).findElement(By.tagName("a")).click();
-                    switch (s){
-                        case "交易记录":
-                            transactionRecord tr = new transactionRecord();
-                            tr.transactionRecordSearch(driver);
-                            break;
-                        case "电子发票":
-                            electronicInvoice ei = new electronicInvoice();
-                            ei.electronicInvoiceSearch(driver);
-                            break;
+                list = getNavList(driver,null,"fbgg_menu","li",0);
+                navIndex = getNavListId(driver,"交易管理");
+                if(navIndex != 0){
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    num = aList.size();
+                    for (int i = 0;i < num;i++){
+                        Thread.sleep(500);
+                        list = getNavList(driver,null,"fbgg_menu","li",0);
+                        navIndex = getNavListId(driver,"交易管理");
+                        aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                        Thread.sleep(500);
+                        mouse.moveToElement(list.get(navIndex)).perform();
+                        s = aList.get(i).findElement(By.tagName("a")).getText();
+                        Thread.sleep(500);
+                        aList.get(i).findElement(By.tagName("a")).click();
+                        switch (s){
+                            case "交易记录":
+                                transactionRecord tr = new transactionRecord();
+                                tr.transactionRecordSearch(driver);
+                                break;
+                            case "电子发票":
+                                electronicInvoice ei = new electronicInvoice();
+                                ei.electronicInvoiceSearch(driver);
+                                break;
+                        }
                     }
                 }
             }
@@ -156,29 +186,34 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(true){
+            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.accountStatement.openSwitch"))){
                 Thread.sleep(500);
-                driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
-                accountStatement as = new accountStatement();
-                as.searchStatement(driver);
+                list = getNavList(driver,null,"fbgg_menu","li",0);
+                navIndex = getNavListId(driver,"对账单");
+                if(navIndex != 0){
+                    list.get(navIndex).click();
+                    accountStatement as = new accountStatement();
+                    as.searchStatement(driver);
+                }
             }
 
             //endregion
 
             //region 企业采购
 
-            if (true) {
+            if (Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.enterpriseProcurement.openSwitch"))) {
                 Thread.sleep(500);
-                aList = getNavList(driver,"//*[@id=\"fbgg_menu\"]/li[8]","li",3);
-                mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[8]/a"))).perform();
-                Thread.sleep(500);
-                aList.get(0).findElement(By.tagName("a")).click();
-                enterpriseProcurementInterface();
+                list = getNavList(driver,null,"fbgg_menu","li",0);
+                navIndex = getNavListId(driver,"企业采购");
+                if(navIndex != 0){
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    mouse.moveToElement(list.get(navIndex)).perform();
+                    Thread.sleep(500);
+                    aList.get(0).findElement(By.tagName("a")).click();
+                    enterpriseProcurementInterface();
+                }
             }
 
-            //endregion
-
-            //region 扫码机收入
             //endregion
 
             return true;
@@ -384,11 +419,11 @@ public class fuYou extends DriverBase {
     //企业采购
     public void enterpriseProcurementInterface() {
         enterpriseProcurement ep = new enterpriseProcurement();
-//        ep.isHaveAddress(driver);
-//        ep.updateAddress(driver);
-//        ep.deleteAddress(driver);
-//        ep.navMenu(driver);
-//        ep.searchProduct(driver);
+        ep.isHaveAddress(driver);
+        ep.updateAddress(driver);
+        ep.deleteAddress(driver);
+        ep.navMenu(driver);
+        ep.searchProduct(driver);
         ep.purchaseGoods(driver);
     }
 

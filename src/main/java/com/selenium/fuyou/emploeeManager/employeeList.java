@@ -170,7 +170,7 @@ public class employeeList {
                 Thread.sleep(500);
 
                 //部门分类跳转
-                List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
+                List<WebElement> eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
                 eleList.get(3).findElement(By.tagName("a")).click();
                 Thread.sleep(1000);
             }
@@ -250,7 +250,7 @@ public class employeeList {
                 Thread.sleep(500);
 
                 //部门分类全部
-                List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
+                List<WebElement> eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
                 eleList.get(0).findElement(By.tagName("a")).click();
                 Thread.sleep(1000);
             }else{
@@ -269,7 +269,7 @@ public class employeeList {
     public void searchEmp(WebDriver driver){
         try{
             Thread.sleep(500);
-            driver.findElement(By.className("qyzx_key_input")).sendKeys("酷冷");
+            driver.findElement(By.className("qyzx_key_input")).sendKeys(PhoneUtil.getTelephone());
             driver.findElement(By.className("yqzx_key_search")).click();
             Thread.sleep(1000);
         }catch (Exception e){
@@ -301,7 +301,7 @@ public class employeeList {
             Thread.sleep(500);
 
             //分类跳转操作
-            List<WebElement> eleList = getNavList(driver,".qyzx_bm.bm_menu","li",2);
+            List<WebElement> eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
             eleList.get(2).findElement(By.tagName("a")).click();
             Thread.sleep(1000);
         }catch (Exception e){

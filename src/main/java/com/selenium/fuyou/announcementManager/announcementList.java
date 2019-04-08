@@ -20,15 +20,15 @@ public class announcementList {
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[4]/div[1]/label/a")).click();
             Thread.sleep(1000);
-            searchEmp(driver,new String[]{"随便","不知道","17607136666",""});
+            searchEmp(driver,new String[]{"测试","张三","17607136666",""});
             Thread.sleep(500);
             checkEmp(driver,new int[]{2,5,7},new int[]{0,0,0});
             Thread.sleep(500);
-            release(driver,"不知道要发什么","就随便试试");
+            release(driver,"放假通知","没有");
             Thread.sleep(500);
             checkEmp(driver,new int[]{1,2,3},new int[0]);
             Thread.sleep(500);
-            release(driver,"随便发点","文本不能为空11111。。。");
+            release(driver,"节假日通知","上班");
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class announcementList {
     public void checkEmp(WebDriver driver,int [] check,int [] uncheck){
         try{
             if(check.length != 0){
-                List<WebElement> checkList = getNavList(driver,"fbgg_choice","li",0);
+                List<WebElement> checkList = getNavList(driver,null,"fbgg_choice","li",0);
                 for (int i = 0; i < check.length; i++) {
                     if(check[i] < checkList.size()) {
                         Thread.sleep(500);
@@ -68,7 +68,7 @@ public class announcementList {
                 }
                 if(uncheck.length != 0){
                     for (int i = 0; i < uncheck.length; i++) {
-                        checkList = getNavList(driver,"fbgg_con_bg","span",0);
+                        checkList = getNavList(driver,null,"fbgg_con_bg","span",0);
                         if(uncheck[i] < checkList.size()){
                             Thread.sleep(500);
                             checkList.get(uncheck[i]).findElement(By.tagName("i")).click();
@@ -106,7 +106,7 @@ public class announcementList {
     //发布成功后操作
     public void releaseSuccess(WebDriver driver){
         try{
-            List<WebElement> checkList = getNavList(driver,"fbgg_con_bg","span",0);
+            List<WebElement> checkList = getNavList(driver,null,"fbgg_con_bg","span",0);
             if(checkList.size() == 0){
                 driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-default")) .click();
                 return;
