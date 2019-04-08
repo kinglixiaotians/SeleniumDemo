@@ -227,19 +227,22 @@ public class enterpriseProcurement {
                 return;
             }
             Thread.sleep(500);
-            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl01_btnDelete")).click();
+            driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete")).click();
             flag = isAlertPresent(driver);
             if(flag){
                 Thread.sleep(500);
                 driver.switchTo().alert().accept();
             }
             Thread.sleep(500);
-            driver.findElement(By.className("imgCloseLogin")).click();
+            flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault",0);
+            if(flag){
+                driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
+            }
             //判断是否没有地址
             flag = isAlertPresent(driver);
             if(flag){
                 driver.switchTo().alert().accept();
-                addAddress(driver,"李si",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
+                addAddress(driver,"李四",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
                 //判断地址数大于5时是否有默认地址
                 flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault",0);
                 if(flag){
@@ -345,6 +348,9 @@ public class enterpriseProcurement {
             purchaseOrder po = new purchaseOrder();
             Thread.sleep(500);
             List<WebElement> productList = getNavList(driver, null,"category_pro_list", "li", 1);
+            if(productList.size() <= 0){
+                return;
+            }
             productList.get(0).click();
             Thread.sleep(500);
             List<String> url = getUrl(driver);
