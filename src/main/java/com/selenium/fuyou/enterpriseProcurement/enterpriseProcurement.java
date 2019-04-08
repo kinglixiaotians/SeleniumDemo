@@ -572,6 +572,11 @@ public class enterpriseProcurement {
                         Thread.sleep(500);
                         return false;
                     }
+                    flag = isExistBoxOrExistButton(driver,"windowsdialog",1);
+                    if(flag){
+                        Thread.sleep(1000 * 4);
+                        return false;
+                    }
                     return true;
                 }
             }
