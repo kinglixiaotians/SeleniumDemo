@@ -25,7 +25,7 @@ public class supplier extends DriverBase {
      */
    // @Test
     public void tabLogin(WebDriver driver) throws InterruptedException {
-        //隐式等待,二十秒内不出现就报错
+        //隐式等待,10秒内不出现就报错
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //获取当前浏览器打开的页面Handle集合
         Set<String> set = driver.getWindowHandles();

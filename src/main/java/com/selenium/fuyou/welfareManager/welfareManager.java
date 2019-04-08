@@ -72,10 +72,13 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             Thread.sleep(1000);
             driver.findElement(By.id("btnSubmit")).click();
+            Thread.sleep(2000);
             //继续发放优分
-            //隐式等待
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
+            if (!isElementPresent(driver)) {
+                //隐式等待
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,23 +149,37 @@ public class welfareManager {
             //修改并上传
             driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             uploadFiles(driver, custom);
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             //继续发放优分
-            //隐式等待
-            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
-            //输入福利名目
-            driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
-            //下载分配模板(员工工号)
-            driver.findElement(By.id("Button2")).click();
-            Thread.sleep(3000);
-            //修改并上传
-            uploadFiles(driver, custom);
+            //是否优分不足
+            if (!isElementPresent(driver)) {
+                //隐式等待
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
+                //输入福利名目
+                driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
+                //下载分配模板(员工工号)
+                driver.findElement(By.id("Button2")).click();
+                Thread.sleep(3000);
+                //修改并上传
+                uploadFiles(driver, custom);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    //判断是否出现优分不足
+    public boolean isElementPresent(WebDriver driver) {
+        try {
+            driver.findElement(By.className("zeromodal-close")).click();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     //直接上传优分为0的模版
@@ -236,6 +253,48 @@ public class welfareManager {
     }
 
     //region 企业收款管理
+
+    /**
+     * 企业收款管理
+     */
+    @Test
+    public boolean companyGatheringQrcode(WebDriver driver) {
+        try {
+            welfareManager w = new welfareManager();
+            //添加固定与动态金额各一个
+            Thread.sleep(500);
+            w.addCompanyGatheringQrcode(driver, true);
+            Thread.sleep(500);
+            w.addCompanyGatheringQrcode(driver, false);
+            Thread.sleep(500);
+            //修改
+            Thread.sleep(500);
+            w.updateCompanyGatheringQrcode(driver, true);
+            Thread.sleep(500);
+            w.updateCompanyGatheringQrcode(driver, false);
+            Thread.sleep(500);
+            //给固定金额设置时间段
+            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[3]")).click();
+            Thread.sleep(500);
+            w.editFixedCompanyGatheringQrcode(driver);
+            //删除
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]/span")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span")).click();
+            Thread.sleep(1000);
+            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]")).click();
+            Thread.sleep(1000);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * 设置固定金额的收款
@@ -322,8 +381,6 @@ public class welfareManager {
     /**
      * 修改企业收款管理(b为是否固定金额)
      * 固定金额修改为动态金额，动态金额改为固定金额
-     *
-     * @return
      */
     //@Test
     public boolean updateCompanyGatheringQrcode(WebDriver driver, boolean b) {
@@ -391,7 +448,7 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             //确认兑换
             driver.findElement(By.id("btnSubmit")).click();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
             log.info("一卡通兑换成功");
@@ -402,6 +459,5 @@ public class welfareManager {
             return false;
         }
     }
-
 
 }

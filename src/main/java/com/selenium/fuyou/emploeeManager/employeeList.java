@@ -160,7 +160,7 @@ public class employeeList {
                     driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
                     clearEmpData(driver);
                 }
-                updateEmpData(driver,new employee("dnf",2,UserIDUtil.getUserId(),"","2019-03-23"));
+                updateEmpData(driver,new employee("小明",2,UserIDUtil.getUserId(),"","2019-03-23"));
                 Thread.sleep(500);
                 //关闭多余编辑窗体
                 flag = isExistBoxOrExistButton(driver,".xubox_main.xubox_main_0",2);

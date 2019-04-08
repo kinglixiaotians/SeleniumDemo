@@ -39,8 +39,7 @@ public class fuYou extends DriverBase {
     @Test
     public void fuYouTest() {
         fuYouLogin(username, password);
-        //隐式等待,二十秒内不出现就报错
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
     }
 
     public boolean fuYouLogin(String username, String password) {
@@ -119,7 +118,7 @@ public class fuYou extends DriverBase {
                             case "优分订单管理":
                                 break;
                             case "企业收款管理":
-                                companyGatheringQrcode();
+                                w.companyGatheringQrcode(driver);
                                 break;
                             case "一卡通兑换":
                                 w.companyCardPassExchange(driver, username);
@@ -371,46 +370,6 @@ public class fuYou extends DriverBase {
 
     }
 
-    /**
-     * 企业收款管理
-     */
-    @Test
-    public boolean companyGatheringQrcode() {
-        try {
-            welfareManager w = new welfareManager();
-            //添加固定与动态金额各一个
-            Thread.sleep(500);
-            w.addCompanyGatheringQrcode(driver, true);
-            Thread.sleep(500);
-            w.addCompanyGatheringQrcode(driver, false);
-            Thread.sleep(500);
-            //修改
-            Thread.sleep(500);
-            w.updateCompanyGatheringQrcode(driver, true);
-            Thread.sleep(500);
-            w.updateCompanyGatheringQrcode(driver, false);
-            Thread.sleep(500);
-            //给固定金额设置时间段
-            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[3]")).click();
-            Thread.sleep(500);
-            w.editFixedCompanyGatheringQrcode(driver);
-            //删除
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]/span")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]")).click();
-            Thread.sleep(1000);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     //endregion
 

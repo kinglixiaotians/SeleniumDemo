@@ -135,7 +135,6 @@ public class sepecEditCustom {
             driver.switchTo().defaultContent();
             Thread.sleep(1000);
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
-            System.out.println(driver.getTitle());
             customNo = driver.findElement(By.name("entity.customNo")).getAttribute("value");
             driver.findElement(By.id("entity.company$text")).sendKeys("ceshi" + nowDate());
             //点击选择业务员

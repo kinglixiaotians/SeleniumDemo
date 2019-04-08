@@ -86,8 +86,8 @@ public class editCustom {
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
-            //输入正确的身份证号
-            updateInput(driver,"id","entity.contactPersonIdcard$text","420984199701051755");
+            //输入正确的身份证号     (身份证百度的)
+            updateInput(driver,"id","entity.contactPersonIdcard$text","370281197811137612");
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(2000);
             //认证失败---点击alert继续

@@ -117,12 +117,10 @@ public class fuYouMethod {
     public static int getNavListId(WebDriver driver,String findName){
         List<WebElement> list = getNavList(driver,null,"fbgg_menu","li",0);
         int num = list.size();
-        String s = null;
         int result = 0;
         for (int i = 0; i < num; i++) {
             list = getNavList(driver,null,"fbgg_menu","li",0);
-            s = list.get(i).getText();
-            if(s.equals(findName)){
+            if(list.get(i).getText().equals(findName)){
                 result = i;
                 break;
             }

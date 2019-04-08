@@ -18,8 +18,10 @@ public class electronicInvoice {
     public void electronicInvoiceSearch(WebDriver driver){
         try {
             inputSearchDate(driver,"2019-01-19","2019-01-21","CompanyTransactionRecordList_startDate","CompanyTransactionRecordList_endDate");
+            driver.findElement(By.className("qyzx_search")).click();
             clearDate(driver,"CompanyTransactionRecordList_startDate","CompanyTransactionRecordList_endDate");
             inputSearchDate(driver,"2019-02-27","2019-2-11","CompanyTransactionRecordList_startDate","CompanyTransactionRecordList_endDate");
+            driver.findElement(By.className("qyzx_search")).click();
 
             Thread.sleep(500);
             List<WebElement> list = getNavList(driver,null,".xsdd_time_bm.index_1","li",2);

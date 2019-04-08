@@ -53,7 +53,7 @@ public class flx extends DriverBase {
             Thread.sleep(500);
             driver.findElement(By.className("mini-button-text")).click();
             driver.findElement(By.id("userId")).click();
-            updateInput(driver,"id","userId",flxUserId);
+            updateInput(driver, "id", "userId", flxUserId);
             driver.findElement(By.className("log")).click();
             Thread.sleep(500);
             //endregion
@@ -88,10 +88,9 @@ public class flx extends DriverBase {
             //开户后的流程，完成后注销账户
             judgement(procedure(se));
             //endregion
-
-            //region 特殊开户
-            if ("true".equals(flxOpenSwitch)) {
-                log.info("---以下为特殊开户。");
+            //region 特殊开户、
+            if (Boolean.parseBoolean(flxOpenSwitch)) {
+                log.info("-----------以下为特殊开户。");
                 login();
                 //客户管理
                 driver.findElement(By.id("1061")).click();
