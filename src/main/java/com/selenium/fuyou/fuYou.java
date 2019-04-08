@@ -419,11 +419,11 @@ public class fuYou extends DriverBase {
     //企业采购
     public void enterpriseProcurementInterface() {
         enterpriseProcurement ep = new enterpriseProcurement();
-//        ep.isHaveAddress(driver);
-//        ep.updateAddress(driver);
-//        ep.deleteAddress(driver);
-//        ep.navMenu(driver);
-//        ep.searchProduct(driver);
+        ep.isHaveAddress(driver);
+        ep.updateAddress(driver);
+        ep.deleteAddress(driver);
+        ep.navMenu(driver);
+        ep.searchProduct(driver);
         ep.purchaseGoods(driver);
     }
 
