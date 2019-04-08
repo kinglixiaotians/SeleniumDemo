@@ -246,7 +246,7 @@ public class fuYou extends DriverBase {
             String currentUrl = driver.getCurrentUrl();
             if (currentUrl.equals(fuYouUrl + "Company/CompanyFirstLoad")) {
                 firstLogin fl = new firstLogin();
-                if (!"true".equals(fl.verificationCustom(driver, username))) {
+                if (!fl.verificationCustom(driver, username)) {
                     driver.close();
                     return false;
                 }

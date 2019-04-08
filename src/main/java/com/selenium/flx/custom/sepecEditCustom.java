@@ -7,10 +7,11 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.selenium.flx.flxPublicMethod.nowDate;
+import static com.selenium.flx.flxPublicMethod.updateInput;
 
 /**
  * 开户
@@ -127,9 +128,6 @@ public class sepecEditCustom {
     //@Test
     public void saveCustomTop(WebDriver driver) {
         try {
-            //获取当前时间并进行格式化
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            String date = sdf.format(new Date());
             //点击添加按钮，弹出添加界面
             driver.switchTo().frame("mainframe");
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-add")).click();
@@ -139,7 +137,7 @@ public class sepecEditCustom {
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
             System.out.println(driver.getTitle());
             customNo = driver.findElement(By.name("entity.customNo")).getAttribute("value");
-            driver.findElement(By.id("entity.company$text")).sendKeys("ceshi" + date);
+            driver.findElement(By.id("entity.company$text")).sendKeys("ceshi" + nowDate());
             //点击选择业务员
             driver.findElement(By.xpath("//*[@id=\"entity.salesmanid\"]/span/span/span[2]/span")).click();
             //返回主窗体切换业务员iframe
@@ -153,8 +151,7 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
             //正确的授权人姓名，错误的身份证和电话
-            driver.findElement(By.id("entity.contactPerson$text")).click();
-            driver.findElement(By.id("entity.contactPerson$text")).sendKeys("test" + date);
+            updateInput(driver,"id","entity.contactPerson$text","test" + nowDate());
             driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("saefea");
             driver.findElement(By.id("entity.cellPhone$text")).sendKeys("2345s423");
             //主站需要进行实名认证,点击后提示输入的身份证号码有误---点击alert继续
@@ -162,15 +159,13 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
             //输入正确的身份证号
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).clear();
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("420984199701051755");
+            updateInput(driver,"id","entity.contactPersonIdcard$text","420984199701051755");
             //继续实名认证,点击后提示输入的手机号码有误---点击alert继续
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
             //输入正确的电话号码
-            driver.findElement(By.id("entity.cellPhone$text")).clear();
-            driver.findElement(By.id("entity.cellPhone$text")).sendKeys(PhoneUtil.getTelephone());
+            updateInput(driver,"id","entity.cellPhone$text",PhoneUtil.getTelephone());
             //继续实名认证
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(3000);
@@ -197,21 +192,19 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
-            log.info("客户管理--开户:{}--成功", customNo);
+            log.info("客户管理--企业:{}--开户成功", customNo);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("客户管理--开户:{}--失败", customNo);
+            log.info("客户管理--企业:{}--开户失败", customNo);
             return false;
         }
     }
 
     /**
      * 勾选业务权限
-     * except为需要取消勾选的id集合
-     *
      * @param driver
-     * @param except
+     * @param except 需要取消勾选的id集合
      */
     //@Test
     public void list(WebDriver driver, List<String> except) {

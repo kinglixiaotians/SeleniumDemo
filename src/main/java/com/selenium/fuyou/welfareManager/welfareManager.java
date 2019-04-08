@@ -54,8 +54,7 @@ public class welfareManager {
             Thread.sleep(1000);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
-            JdbcUtil j = new JdbcUtil();
-            String cord = j.querySmsCode(j.queryCellPhone(custom));
+            String cord = getCord(custom);
             driver.findElement(By.id("mobileCode")).sendKeys("asdf342");
             Thread.sleep(1000);
             driver.findElement(By.id("btnSubmit")).click();
@@ -138,10 +137,8 @@ public class welfareManager {
             Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
             //输入正确验证码  提示  优分不能为0
-            JdbcUtil j = new JdbcUtil();
-            String cord = j.querySmsCode(j.queryCellPhone(custom));
-            driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).clear();
-            driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).sendKeys(cord);
+            String cord = getCord(custom);
+            updateInput(driver, "/html/body/div[4]/div[3]/div[14]/input[1]", cord);
             Thread.sleep(1000);
             driver.findElement(By.id("binImport")).click();
             //刷新页面（可以重新获取验证码）
@@ -201,8 +198,7 @@ public class welfareManager {
         Thread.sleep(1000);
         driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
         Thread.sleep(1000);
-        JdbcUtil j = new JdbcUtil();
-        String cord = j.querySmsCode(j.queryCellPhone(custom));
+        String cord = getCord(custom);
         driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[14]/input[1]")).sendKeys(cord);
         Thread.sleep(1000);
         driver.findElement(By.id("binImport")).click();
@@ -228,9 +224,7 @@ public class welfareManager {
             driver.findElement(By.className("zeromodal-close")).click();
             //通过custom获取验证码
             Thread.sleep(2000);
-            JdbcUtil j = new JdbcUtil();
-            String cord = j.querySmsCode(j.queryCellPhone(custom));
-            log.info("回复企业订单验证码为{}", cord);
+            String cord = getCord(custom);
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             Thread.sleep(1000);
             driver.findElement(By.name("btnReply")).click();
@@ -319,6 +313,12 @@ public class welfareManager {
         driver.findElement(By.xpath(xpath)).sendKeys(str);
     }
 
+    //根据企业号返回验证码
+    public String getCord(String custom) {
+        JdbcUtil j = new JdbcUtil();
+        return j.querySmsCode(j.queryCellPhone(custom));
+    }
+
     /**
      * 修改企业收款管理(b为是否固定金额)
      * 固定金额修改为动态金额，动态金额改为固定金额
@@ -334,8 +334,7 @@ public class welfareManager {
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[2]/div/div/div/span")).click();
             Thread.sleep(500);
             if (!b) {
-                driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[3]/div/div/div/div/input")).clear();
-                driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[3]/div/div/div/div/input")).sendKeys("5");
+                updateInput(driver, "//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[3]/div/div/div/div/input", "5");
             }
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[3]/div/button[2]/span")).click();
@@ -358,8 +357,7 @@ public class welfareManager {
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[1]/div/div/div/input")).sendKeys("测试收款" + nowDate());
             //是否固定金额
             if (b) {
-                driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[3]/div/div/div/div/input")).clear();
-                driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[3]/div/div/div/div/input")).sendKeys("10");
+                updateInput(driver, "//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[3]/div/div/div/div/input", "10");
             } else {
                 driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div/div[2]/form/div/div[2]/div/div/div/span")).click();
             }
@@ -389,8 +387,7 @@ public class welfareManager {
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
-            JdbcUtil j = new JdbcUtil();
-            String cord = j.querySmsCode(j.queryCellPhone(custom));
+            String cord = getCord(custom);
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             //确认兑换
             driver.findElement(By.id("btnSubmit")).click();
@@ -405,7 +402,6 @@ public class welfareManager {
             return false;
         }
     }
-
 
 
 }

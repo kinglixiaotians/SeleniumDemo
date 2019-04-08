@@ -19,7 +19,7 @@ public class supplier extends DriverBase {
 
 
     /**
-     * tab页登录供应商
+     * 已开tab页登录供应商
      *
      * @param driver
      */
@@ -43,7 +43,7 @@ public class supplier extends DriverBase {
         driver.findElement(By.id("btnAdminLogin")).click();
     }
 
-    //用tab页登录并给订单orderId发货
+    //用已开的tab页登录并给订单orderId发货
    // @Test
     public boolean giveExpress(WebDriver driver, String orderId) {
         try {

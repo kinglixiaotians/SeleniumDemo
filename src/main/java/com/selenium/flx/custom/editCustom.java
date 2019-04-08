@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
+import static com.selenium.flx.flxPublicMethod.updateInput;
+
 @Slf4j
 public class editCustom {
     public String customNo;
@@ -79,15 +81,13 @@ public class editCustom {
             driver.switchTo().defaultContent();
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
             //修改为错误的身份证
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).clear();
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("taw4esay43eyt");
+            updateInput(driver,"id","entity.contactPersonIdcard$text","taw4esay43eyt");
             //主站需要进行实名认证,点击后提示输入的身份证号码有误---点击alert继续
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
             //输入正确的身份证号
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).clear();
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("420984199701051755");
+            updateInput(driver,"id","entity.contactPersonIdcard$text","420984199701051755");
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(2000);
             //认证失败---点击alert继续
