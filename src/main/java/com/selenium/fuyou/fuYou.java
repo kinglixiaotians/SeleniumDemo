@@ -156,7 +156,7 @@ public class fuYou extends DriverBase {
 
             //region 对账单
 
-            if(false){
+            if(true){
                 Thread.sleep(500);
                 driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[7]/a")).click();
                 accountStatement as = new accountStatement();

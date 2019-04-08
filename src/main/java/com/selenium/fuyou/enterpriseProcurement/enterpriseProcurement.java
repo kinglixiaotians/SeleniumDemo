@@ -413,8 +413,8 @@ public class enterpriseProcurement {
                     Thread.sleep(500);
                     po.orderProcessRefund(driver,s);
                     Thread.sleep(500);
-                    driver.close();
                 }
+                driver.close();
             }else{
                 driver.close();
             }
@@ -600,8 +600,6 @@ public class enterpriseProcurement {
             productList.get(2).click();
             Thread.sleep(500);
             List<String> url = getUrl(driver);
-            driver.switchTo().window(url.get(1));
-            url = getUrl(driver);
             driver.switchTo().window(url.get(1));
             Thread.sleep(500);
             driver.findElement(By.id("buyButton")).click();
