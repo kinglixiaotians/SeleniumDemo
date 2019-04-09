@@ -63,48 +63,4 @@ public class editCustom {
             return false;
         }
     }
-
-    /**
-     * 修改客户信息
-     *
-     * @param driver
-     */
-    //@Test
-    public boolean UpdateCustom(WebDriver driver) {
-        try {
-            driver.switchTo().frame("mainframe");
-            driver.findElement(By.className("mini-grid-radio-mask")).click();
-            Thread.sleep(1000);
-            //点击修改按钮，弹出修改界面
-            driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-edit")).click();
-            //返回主窗体，进入修改页面
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
-            //修改为错误的身份证
-            updateInput(driver,"id","entity.contactPersonIdcard$text","taw4esay43eyt");
-            //主站需要进行实名认证,点击后提示输入的身份证号码有误---点击alert继续
-            driver.findElement(By.id("certbtn")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
-            //输入正确的身份证号     (身份证百度的)
-            updateInput(driver,"id","entity.contactPersonIdcard$text","370281197811137612");
-            driver.findElement(By.id("certbtn")).click();
-            Thread.sleep(2000);
-            //认证失败---点击alert继续
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
-            //保存
-            driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-save")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a[1]")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.id("mini-127")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a[2]")).click();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
 }

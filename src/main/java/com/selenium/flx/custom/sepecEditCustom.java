@@ -136,7 +136,7 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
             customNo = driver.findElement(By.name("entity.customNo")).getAttribute("value");
-            driver.findElement(By.id("entity.company$text")).sendKeys("ceshi" + nowDate());
+            driver.findElement(By.id("entity.company$text")).sendKeys("ceshi");
             //点击选择业务员
             driver.findElement(By.xpath("//*[@id=\"entity.salesmanid\"]/span/span/span[2]/span")).click();
             //返回主窗体切换业务员iframe
@@ -149,22 +149,10 @@ public class sepecEditCustom {
             driver.switchTo().defaultContent();
             Thread.sleep(1000);
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
-            //正确的授权人姓名，错误的身份证和电话
-            updateInput(driver,"id","entity.contactPerson$text","test" + nowDate());
-            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("saefea");
-            driver.findElement(By.id("entity.cellPhone$text")).sendKeys("2345s423");
-            //主站需要进行实名认证,点击后提示输入的身份证号码有误---点击alert继续
-            driver.findElement(By.id("certbtn")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
-            //输入正确的身份证号
-            updateInput(driver,"id","entity.contactPersonIdcard$text","420984199701051755");
-            //继续实名认证,点击后提示输入的手机号码有误---点击alert继续
-            driver.findElement(By.id("certbtn")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
-            //输入正确的电话号码
-            updateInput(driver,"id","entity.cellPhone$text",PhoneUtil.getTelephone());
+            //正确的授权人姓名，身份证和电话
+            updateInput(driver,"id","entity.contactPerson$text","test");
+            driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("370281197811137612");
+            driver.findElement(By.id("entity.cellPhone$text")).sendKeys("13305317992");
             //继续实名认证
             driver.findElement(By.id("certbtn")).click();
             Thread.sleep(3000);
@@ -187,7 +175,7 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-save")).click();
             Thread.sleep(1000);
-            driver.findElement(By.id("mini-123")).click();
+            driver.findElement(By.id("mini-119")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();

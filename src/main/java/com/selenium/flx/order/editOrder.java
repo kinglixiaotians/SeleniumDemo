@@ -44,8 +44,8 @@ public class editOrder {
             //订单录入时经办
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"savebtn0\"]/span")).click();
-            Thread.sleep(1000);
-            driver.findElement(By.id("mini-146")).click();
+            Thread.sleep(2000);
+            driver.findElement(By.id("mini-147")).click();
 
             log.info("销售管理--订单录入--企业：{}--订单编号：{}--成功", customNo, orderId);
             return true;

@@ -135,9 +135,6 @@ public class flx extends DriverBase {
             //查询客户
             Thread.sleep(1000);
             custom.queryCustom(driver, se.customNo);
-            //修改客户信息
-            Thread.sleep(1000);
-            custom.UpdateCustom(driver);
             //企业审核
             Thread.sleep(1000);
             judgement(custom.auditCustom(driver));
