@@ -77,7 +77,7 @@ public class editOrder {
             driver.findElement(By.id("savebtn1")).click();
             Thread.sleep(1000);
             driver.findElement(By.id("savebtn2")).click();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.id("mini-151")).click();
             driver.switchTo().defaultContent();
             log.info("销售管理--订单复核--企业：{}--订单编号：{}--成功", customNo, orderId);
