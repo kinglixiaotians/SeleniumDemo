@@ -19,7 +19,7 @@ public class firstLogin {
     //@Test
     public boolean verificationCustom(WebDriver driver, String custom) {
         try {
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            Thread.sleep(2000);
             //短信确认
             driver.findElement(By.id("sendcodebt")).click();
             //获取手机验证码
@@ -40,11 +40,11 @@ public class firstLogin {
             driver.findElement(By.id("button")).click();
             Thread.sleep(1000);
             driver.findElement(By.className("layui-layer-btn0")).click();
-            log.info("企业：{}首次登录验证成功",custom);
+            log.info("企业：{}首次登录验证成功", custom);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("企业：{}首次登录验证失败",custom);
+            log.info("企业：{}首次登录验证失败", custom);
             return false;
         }
     }

@@ -60,7 +60,7 @@ public class employeeList {
                 driver.findElement(By.id("CompanyEmployeesList_addJoinDate")).click();
                 //保存
                 driver.findElement(By.xpath("//*[@id=\"createcontent\"]/div/div[9]/label/input")).click();
-                Thread.sleep(1000);
+                Thread.sleep(2000);
 
                 //新增失败后操作
                 String s = driver.findElement(By.className("zeromodal-title1")).getText();

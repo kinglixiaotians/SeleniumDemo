@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 import static com.selenium.fuyou.fuYouMethod.nowDate;
 
 @Slf4j
@@ -26,7 +27,6 @@ public class welfareManager {
     //@Test
     public boolean singleProvideWelfare(WebDriver driver, String custom) {
         try {
-            //测试非人类操作
             driver.findElement(By.id("welfareName")).clear();
             Thread.sleep(500);
             driver.findElement(By.id("Score")).sendKeys("100");
@@ -72,12 +72,9 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             Thread.sleep(1000);
             driver.findElement(By.id("btnSubmit")).click();
-            Thread.sleep(2000);
             //继续发放优分
             if (!isElementPresent(driver)) {
-                //隐式等待
-                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
+                waitClick(driver,"/html/body/div[4]/div[4]/div[2]/a[2]",3);
             }
             return true;
         } catch (Exception e) {
@@ -149,13 +146,10 @@ public class welfareManager {
             //修改并上传
             driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             uploadFiles(driver, custom);
-            Thread.sleep(2000);
             //继续发放优分
             //是否优分不足
             if (!isElementPresent(driver)) {
-                //隐式等待
-                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                driver.findElement(By.xpath("/html/body/div[4]/div[4]/div[2]/a[2]")).click();
+                waitClick(driver,"/html/body/div[4]/div[4]/div[2]/a[2]",3);
                 //输入福利名目
                 driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
                 //下载分配模板(员工工号)
@@ -278,15 +272,14 @@ public class welfareManager {
             Thread.sleep(500);
             w.editFixedCompanyGatheringQrcode(driver);
             //删除
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span")).click();
+            waitClick(driver,"//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span",3);
             Thread.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]/span")).click();
+            waitClick(driver,"/html/body/div[5]/div/div[3]/button[2]/span",3);
             Thread.sleep(1000);
-            driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span")).click();
+            waitClick(driver,"//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span",3);
             Thread.sleep(1000);
-            driver.findElement(By.xpath("/html/body/div[5]/div/div[3]/button[2]")).click();
+            waitClick(driver,"/html/body/div[5]/div/div[3]/button[2]",3);
             Thread.sleep(1000);
             return true;
         } catch (Exception e) {
@@ -295,6 +288,26 @@ public class welfareManager {
         }
     }
 
+    //出现此元素就点击若不出现则一直等（每一秒判断一次）
+    public void waitClick(WebDriver driver,String url,int num) throws InterruptedException {
+        while (!isExistBoxOrExistButton(driver, url, num)) {
+            Thread.sleep(1000);
+        }
+        switch (num){
+            case 0 :
+                driver.findElement(By.id(url)).click();
+                break;
+            case 1 :
+                driver.findElement(By.className(url)).click();
+                break;
+            case 2 :
+                driver.findElement(By.cssSelector(url)).click();
+                break;
+            case 3 :
+                driver.findElement(By.xpath(url)).click();
+                break;
+        }
+    }
 
     /**
      * 设置固定金额的收款
@@ -441,8 +454,7 @@ public class welfareManager {
             //获取验证码
             driver.findElement(By.id("btnyzm")).click();
             Thread.sleep(1000);
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            driver.findElement(By.className("zeromodal-close")).click();
+            waitClick(driver,"zeromodal-close",1);
             Thread.sleep(1000);
             String cord = getCord(custom);
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
