@@ -177,12 +177,14 @@ public class purchaseOrder {
                 driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_Logistics")).click();
                 Thread.sleep(1000);
                 driver.findElement(By.xpath("/html/body/div[1]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[1]/td/div/a")).click();
-                Thread.sleep(1000);
                 //确认订单
+                Thread.sleep(1000);
                 driver.findElement(By.id("CompanyOrderInformation_Common_OrderManage_OrderList___listOrders_ctl00_lkbtnConfirmOrder")).click();
                 //获取弹出的对话框
+                Thread.sleep(1000);
                 Alert alt = driver.switchTo().alert();
                 //点击确定
+                Thread.sleep(1000);
                 alt.accept();
 
             }

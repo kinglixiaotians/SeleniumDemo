@@ -323,6 +323,7 @@ public class employeeList {
                     if(fileName.equals("fuyou\\员工导入模板.xls")){
                         boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
                         if(flag){
+                            Thread.sleep(1000);
                             driver.findElement(By.className("zeromodal-close")).click();
                             Thread.sleep(500);
                             Actions mouse = new Actions(driver);

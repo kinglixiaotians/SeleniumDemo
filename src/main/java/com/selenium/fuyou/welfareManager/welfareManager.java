@@ -74,9 +74,9 @@ public class welfareManager {
             Thread.sleep(1000);
             driver.findElement(By.id("btnSubmit")).click();
             //继续发放优分
-            if (!isElementPresent(driver)) {
-                Thread.sleep(1000);
-                waitClick(driver,"zeromodal-close",1);
+            Thread.sleep(2000);
+            if (isElementPresent(driver)) {
+                driver.findElement(By.className("zeromodal-close")).click();
             }
             return true;
         } catch (Exception e) {
@@ -150,9 +150,12 @@ public class welfareManager {
             uploadFiles(driver, custom);
             //继续发放优分
             //是否优分不足
-            if (!isElementPresent(driver)) {
+            Thread.sleep(1000);
+            if (isElementPresent(driver)) {
+                driver.findElement(By.className("zeromodal-close")).click();
+            } else {
                 Thread.sleep(1000);
-                waitClick(driver,"zeromodal-close",1);
+                driver.findElement(By.className("btn-again")).click();
                 //输入福利名目
                 driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
                 //下载分配模板(员工工号)
@@ -160,6 +163,10 @@ public class welfareManager {
                 Thread.sleep(3000);
                 //修改并上传
                 uploadFiles(driver, custom);
+                if (isElementPresent(driver)) {
+                    Thread.sleep(1000);
+                    waitClick(driver, "zeromodal-close", 1);
+                }
             }
             return true;
         } catch (Exception e) {
@@ -171,7 +178,7 @@ public class welfareManager {
     //判断是否出现优分不足
     public boolean isElementPresent(WebDriver driver) {
         try {
-            driver.findElement(By.className("zeromodal-close")).click();
+            driver.findElement(By.className("zeromodal-close"));
             return true;
         } catch (Exception e) {
             return false;
@@ -276,13 +283,13 @@ public class welfareManager {
             w.editFixedCompanyGatheringQrcode(driver);
             //删除
             Thread.sleep(1000);
-            waitClick(driver,"//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span",3);
+            waitClick(driver, "//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr[1]/td[7]/div/button[1]/span", 3);
             Thread.sleep(1000);
-            waitClick(driver,"/html/body/div[5]/div/div[3]/button[2]/span",3);
+            waitClick(driver, "/html/body/div[5]/div/div[3]/button[2]/span", 3);
             Thread.sleep(1000);
-            waitClick(driver,"//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span",3);
+            waitClick(driver, "//*[@id=\"app\"]/div[1]/div[2]/div[3]/table/tbody/tr/td[7]/div/button[1]/span", 3);
             Thread.sleep(1000);
-            waitClick(driver,"/html/body/div[5]/div/div[3]/button[2]",3);
+            waitClick(driver, "/html/body/div[5]/div/div[3]/button[2]", 3);
             Thread.sleep(1000);
             return true;
         } catch (Exception e) {
@@ -292,21 +299,21 @@ public class welfareManager {
     }
 
     //出现此元素就点击若不出现则一直等（每一秒判断一次）
-    public void waitClick(WebDriver driver,String url,int num) throws InterruptedException {
+    public void waitClick(WebDriver driver, String url, int num) throws InterruptedException {
         while (!isExistBoxOrExistButton(driver, url, num)) {
             Thread.sleep(1000);
         }
-        switch (num){
-            case 0 :
+        switch (num) {
+            case 0:
                 driver.findElement(By.id(url)).click();
                 break;
-            case 1 :
+            case 1:
                 driver.findElement(By.className(url)).click();
                 break;
-            case 2 :
+            case 2:
                 driver.findElement(By.cssSelector(url)).click();
                 break;
-            case 3 :
+            case 3:
                 driver.findElement(By.xpath(url)).click();
                 break;
         }
@@ -322,23 +329,23 @@ public class welfareManager {
         try {
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div[1]/div/button")).click();
             //公司账号（必须为正确已有）
-            Thread.sleep(500);
+            Thread.sleep(1000);
             updateInput(driver, "//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr/td[2]/div/div/input", "01510181");
-            Thread.sleep(500);
+            Thread.sleep(1000);
             updateInput(driver, "//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr/td[3]/div/div/div/input", "10");
-            Thread.sleep(500);
+            Thread.sleep(1000);
             updateInput(driver, "//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr/td[5]/div/div/input", "11:59:59");
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div[1]/div/h3")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr/td[6]/div/button[2]")).click();
-            Thread.sleep(500);
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div[1]/div/button")).click();
-            Thread.sleep(500);
+            Thread.sleep(1000);
             updateInput(driver, "//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[2]/div/div/input", "1543213");
-            Thread.sleep(500);
+            Thread.sleep(1000);
             updateInput(driver, "//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[3]/div/div/div/input", "-243");
-            Thread.sleep(500);
+            Thread.sleep(1000);
             updateInput(driver, "//*[@id=\"app\"]/div[3]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[4]/div/div/input", "11:00:00");
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div[1]/div/h3")).click();
@@ -457,7 +464,7 @@ public class welfareManager {
             //获取验证码
             driver.findElement(By.id("btnyzm")).click();
             Thread.sleep(1000);
-            waitClick(driver,"zeromodal-close",1);
+            waitClick(driver, "zeromodal-close", 1);
             Thread.sleep(1000);
             String cord = getCord(custom);
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
@@ -466,6 +473,12 @@ public class welfareManager {
             Thread.sleep(2000);
             driver.findElement(By.className("zeromodal-close")).click();
             Thread.sleep(1000);
+            if (isExistBoxOrExistButton(driver, "zeromodal-title1", 1)) {
+                if ("企业余额不足".equals(driver.findElement(By.className("zeromodal-title1")).getText())) {
+                    log.info("一卡通兑换失败，企业余额不足");
+                    return false;
+                }
+            }
             log.info("一卡通兑换成功");
             return true;
         } catch (Exception e) {
