@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
+
 public class flxPublicMethod {
 
     //返回当前时间  格式为：yyyyMMddHHmmss（例：20190401160321）
@@ -50,5 +52,26 @@ public class flxPublicMethod {
     public static String getCord(String custom) {
         JdbcUtil j = new JdbcUtil();
         return j.querySmsCode(j.queryCellPhone(custom));
+    }
+
+    //出现此元素就点击若不出现则一直等（每一秒判断一次）
+    public static void waitClick(WebDriver driver,String url,int num) throws InterruptedException {
+        while (!isExistBoxOrExistButton(driver, url, num)) {
+            Thread.sleep(1000);
+        }
+        switch (num){
+            case 0 :
+                driver.findElement(By.id(url)).click();
+                break;
+            case 1 :
+                driver.findElement(By.className(url)).click();
+                break;
+            case 2 :
+                driver.findElement(By.cssSelector(url)).click();
+                break;
+            case 3 :
+                driver.findElement(By.xpath(url)).click();
+                break;
+        }
     }
 }

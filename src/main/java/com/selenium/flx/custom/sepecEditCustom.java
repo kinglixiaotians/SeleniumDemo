@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.selenium.flx.flxPublicMethod.nowDate;
 import static com.selenium.flx.flxPublicMethod.updateInput;
+import static com.selenium.flx.flxPublicMethod.waitClick;
 
 /**
  * 开户
@@ -155,9 +156,10 @@ public class sepecEditCustom {
             driver.findElement(By.id("entity.cellPhone$text")).sendKeys("13305317992");
             //继续实名认证
             driver.findElement(By.id("certbtn")).click();
-            Thread.sleep(3000);
             //认证失败---点击alert继续
-            driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
+//            Thread.sleep(3000);
+            waitClick(driver,"//*[@class='mini-messagebox-buttons']//a",3);
+            //driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
         } catch (Exception e) {
             e.printStackTrace();
         }

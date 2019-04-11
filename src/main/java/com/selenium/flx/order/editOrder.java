@@ -3,8 +3,10 @@ package com.selenium.flx.order;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.testng.annotations.Test;
+import  com.selenium.fuyou.welfareManager.welfareManager;
 
 import static com.selenium.flx.flxPublicMethod.updateInput;
+import static com.selenium.flx.flxPublicMethod.waitClick;
 
 @Slf4j
 public class editOrder {
@@ -148,8 +150,10 @@ public class editOrder {
             driver.findElement(By.xpath("//*[@id=\"savebtn2\"]/span")).click();
             Thread.sleep(1000);
             driver.findElement(By.id("savebtn1")).click();
-            Thread.sleep(5000);
-            driver.findElement(By.id("mini-144")).click();
+            //Thread.sleep(5000);
+            Thread.sleep(1000);
+            waitClick(driver,"mini-144",0);
+            //driver.findElement(By.id("mini-144")).click();
             log.info("财务管理--订单激活--订单号:{}--成功", orderId);
             return true;
         } catch (Exception e) {

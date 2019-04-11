@@ -3,6 +3,7 @@ package com.selenium.fuyou.welfareManager;
 import com.selenium.utils.JdbcUtil;
 import com.selenium.utils.POIUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -74,7 +75,8 @@ public class welfareManager {
             driver.findElement(By.id("btnSubmit")).click();
             //继续发放优分
             if (!isElementPresent(driver)) {
-                waitClick(driver,"/html/body/div[4]/div[4]/div[2]/a[2]",3);
+                Thread.sleep(1000);
+                waitClick(driver,"zeromodal-close",1);
             }
             return true;
         } catch (Exception e) {
@@ -149,7 +151,8 @@ public class welfareManager {
             //继续发放优分
             //是否优分不足
             if (!isElementPresent(driver)) {
-                waitClick(driver,"/html/body/div[4]/div[4]/div[2]/a[2]",3);
+                Thread.sleep(1000);
+                waitClick(driver,"zeromodal-close",1);
                 //输入福利名目
                 driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
                 //下载分配模板(员工工号)
