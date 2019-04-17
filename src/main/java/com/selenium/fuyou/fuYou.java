@@ -349,7 +349,7 @@ public class fuYou extends DriverBase {
      * 企业优分订单回复
      */
     //@Test
-    public boolean scoreOrderManager(String customNo) {
+    public boolean replyCustomOrder(String customNo) {
         try {
             //福利管理 优分订单管理
             Thread.sleep(1000);

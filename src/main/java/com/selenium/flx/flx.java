@@ -166,7 +166,7 @@ public class flx extends DriverBase {
      */
     @Test(dependsOnMethods = "checkOrder",description = "首次登录激活企业")
 //    @Test
-    public void firstLoginFuYou(sepecEditCustom se) {
+    public void firstLoginFuYou() {
         try {
             //首次登录激活企业
             fy.login(se.customNo, "123456");
