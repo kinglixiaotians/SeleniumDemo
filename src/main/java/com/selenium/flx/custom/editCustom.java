@@ -3,22 +3,26 @@ package com.selenium.flx.custom;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
 @Slf4j
 public class editCustom {
     public String customNo;
+
     /**
      * 客户管理 查询用户
      *
      * @param driver
      */
     //@Test
-    public void queryCustom(WebDriver driver, String customNo) {
+    public boolean queryCustom(WebDriver driver, String customNo) {
         try {
-            this.customNo=customNo;
+            Thread.sleep(1000);
+            this.customNo = customNo;
             driver.switchTo().frame("mainframe");
             driver.findElement(By.id("customNo$text")).click();
             driver.findElement(By.id("customNo$text")).sendKeys(customNo);
@@ -27,8 +31,12 @@ public class editCustom {
             driver.findElement(By.id("queryForm"));
             driver.findElement(By.className("mini-button-text")).click();
             driver.switchTo().defaultContent();
-        }catch (Exception e){
+            return true;
+        } catch (Exception e) {
+            taskScreenShot(driver);
+            Reporter.log("客户管理 查询用户失败。错误：" + e.toString());
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -55,11 +63,13 @@ public class editCustom {
             Thread.sleep(1000);
             driver.findElement(By.id("mini-119")).click();
             driver.switchTo().defaultContent();
-            log.info("客户管理--企业:{}已审核",customNo);
+            log.info("客户管理--企业:{}已审核", customNo);
+            Reporter.log("企业审核成功，企业号为：" + customNo);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("客户管理--企业:{}审核失败",customNo);
+            log.info("客户管理--企业:{}审核失败", customNo);
+            Reporter.log("客户管理--企业:" + customNo + "审核失败。错误：" + e.toString());
             return false;
         }
     }

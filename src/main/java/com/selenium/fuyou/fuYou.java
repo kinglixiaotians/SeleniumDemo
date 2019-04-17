@@ -20,11 +20,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Reporter;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.*;
 
 @Slf4j
@@ -288,6 +291,8 @@ public class fuYou extends DriverBase {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("fuyou登录失败。错误：" + e.toString());
             return false;
         }
     }
@@ -360,11 +365,14 @@ public class fuYou extends DriverBase {
             if (!w.replyOrder(driver, customNo)) {
                 driver.close();
             }
+            Thread.sleep(1000);
             log.info("回复企业订单--企业号：{}--成功", customNo);
+            Reporter.log("企业回复订单成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("回复企业订单--企业号：{}--失败", customNo);
+            taskScreenShot(driver);
+            Reporter.log("回复企业订单--企业号："+customNo+"--失败。错误：" + e.toString());
             return false;
         }
 

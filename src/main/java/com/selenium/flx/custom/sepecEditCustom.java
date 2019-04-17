@@ -6,13 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.selenium.flx.flxPublicMethod.nowDate;
-import static com.selenium.flx.flxPublicMethod.updateInput;
-import static com.selenium.flx.flxPublicMethod.waitClick;
+import static com.selenium.flx.flxPublicMethod.*;
 
 /**
  * 开户
@@ -111,14 +110,22 @@ public class sepecEditCustom {
      */
     //@Test
     public boolean normalCustom(WebDriver driver) {
-        this.saveCustomTop(driver);
-        //进入协议信息
-        driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
-        //勾选业务权限，除去企业批量还信用卡
-        ArrayList except = new ArrayList();
-        except.add("mini-62$17");
-        list(driver, except);
-        return this.saveCustomBottom(driver);
+        try {
+            boolean b1 = this.saveCustomTop(driver);
+            //进入协议信息
+            driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
+            //勾选业务权限，除去企业批量还信用卡
+            ArrayList except = new ArrayList();
+            except.add("mini-62$17");
+            list(driver, except);
+            boolean b2 = this.saveCustomBottom(driver);
+            return b1 && b2;
+        } catch (Exception e) {
+            e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("添加客户信息失败。错误：" + e.toString());
+            return false;
+        }
     }
 
     /**
@@ -127,7 +134,7 @@ public class sepecEditCustom {
      * @param driver
      */
     //@Test
-    public void saveCustomTop(WebDriver driver) {
+    public boolean saveCustomTop(WebDriver driver) {
         try {
             //客户管理
             driver.findElement(By.id("1061")).click();
@@ -156,17 +163,21 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/custom/cusprofile/editCusProfileNew.jsp')]")));
             //正确的授权人姓名，身份证和电话
-            updateInput(driver,"id","entity.contactPerson$text","test");
+            updateInput(driver, "id", "entity.contactPerson$text", "test");
             driver.findElement(By.id("entity.contactPersonIdcard$text")).sendKeys("370281197811137612");
             driver.findElement(By.id("entity.cellPhone$text")).sendKeys("13305317992");
             //继续实名认证
             driver.findElement(By.id("certbtn")).click();
             //认证失败---点击alert继续
 //            Thread.sleep(3000);
-            waitClick(driver,"//*[@class='mini-messagebox-buttons']//a",3);
+            waitClick(driver, "//*[@class='mini-messagebox-buttons']//a", 3);
             //driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+//            Reporter.log("添加客户信息失败。错误：" + e.toString());
+            return false;
         }
     }
 
@@ -186,17 +197,19 @@ public class sepecEditCustom {
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
-            log.info("客户管理--企业:{}--开户成功", customNo);
+            log.info("客户管理--企业:" + customNo + "--开户成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("客户管理--企业:{}--开户失败", customNo);
+            taskScreenShot(driver);
+            Reporter.log("客户管理--开户失败。" + e.toString());
             return false;
         }
     }
 
     /**
      * 勾选业务权限
+     *
      * @param driver
      * @param except 需要取消勾选的id集合
      */

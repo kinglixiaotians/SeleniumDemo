@@ -4,8 +4,11 @@ import com.selenium.utils.JdbcUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
 import java.util.concurrent.TimeUnit;
+
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 
 @Slf4j
 public class firstLogin {
@@ -41,10 +44,12 @@ public class firstLogin {
             Thread.sleep(1000);
             driver.findElement(By.className("layui-layer-btn0")).click();
             log.info("企业：{}首次登录验证成功", custom);
+            Reporter.log("首次登录激活企业成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("企业：{}首次登录验证失败", custom);
+            taskScreenShot(driver);
+            Reporter.log("首次登录激活企业失败。错误：" + e.toString());
             return false;
         }
     }

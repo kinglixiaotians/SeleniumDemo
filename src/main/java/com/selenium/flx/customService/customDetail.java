@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
+
 @Slf4j
 public class customDetail {
 
@@ -18,6 +20,9 @@ public class customDetail {
     //@Test
     public boolean queryDetail(WebDriver driver, String customNo) {
         try {
+            driver.findElement(By.id("1662")).click();
+            driver.findElement(By.id("1663")).click();
+            Thread.sleep(1000);
             driver.switchTo().frame("mainframe");
             driver.findElement(By.id("customNo$text")).sendKeys(customNo);
             driver.findElement(By.xpath("//*[@id=\"shopScore\"]/span")).click();
@@ -30,6 +35,8 @@ public class customDetail {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("客服明细查询失败--企业：" + customNo + "。错误：" + e.toString());
             return false;
         }
     }

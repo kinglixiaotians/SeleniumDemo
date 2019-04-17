@@ -14,6 +14,7 @@ import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
 @Slf4j
@@ -45,11 +46,10 @@ public class flx extends DriverBase {
     /**
      * 登录
      */
-    @Test(dependsOnMethods = "flx",description = "登录")
+    @Test(dependsOnMethods = "flx", description = "登录")
 //    @Test
     public void login() {
         try {
-            //region 登录
             Thread.sleep(1000);
             windowsHandle = driver.getWindowHandle();
             driver.findElement(By.id("userId")).sendKeys("789456");
@@ -62,9 +62,10 @@ public class flx extends DriverBase {
             driver.findElement(By.className("log")).click();
             Thread.sleep(500);
             Reporter.log("登入flx成功");
-            //endregion
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("登录flx。错误：" + e.toString());
         }
     }
 
@@ -98,154 +99,99 @@ public class flx extends DriverBase {
     /**
      * 正常开户
      */
-    @Test(dependsOnMethods = "login",description = "正常开户")
+    @Test(dependsOnMethods = "login", description = "正常开户")
 //    @Test
     public void normalOpenCustom() {
-        try {
-            se.normalCustom(driver);
-            Reporter.log("正常开户成功，企业号为：" + se.customNo);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!se.normalCustom(driver)) {
+            driver.findElement(By.id("asdf")).click();
         }
     }
 
     /**
      * 客户管理 企业审核
      */
-    @Test(dependsOnMethods = "normalOpenCustom",description = "客户管理 企业审核")
+    @Test(dependsOnMethods = "normalOpenCustom", description = "客户管理 企业审核")
 //    @Test
     public void auditCustom() {
-        try {
-            //查询客户
-            Thread.sleep(1000);
-            custom.queryCustom(driver, se.customNo);
-            //企业审核
-            Thread.sleep(1000);
-            custom.auditCustom(driver);
-            Reporter.log("企业审核成功，企业号为：" + se.customNo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (!custom.queryCustom(driver, se.customNo) || !custom.auditCustom(driver))
+            driver.findElement(By.id("asdf")).click();
     }
 
     /**
      * 销售管理 订单录入
      */
-    @Test(dependsOnMethods = "auditCustom",description = "销售管理 订单录入")
+    @Test(dependsOnMethods = "auditCustom", description = "销售管理 订单录入")
 //    @Test
     public void entryOrder() {
-        try {
-            driver.findElement(By.id("1081")).click();
-            //订单录入
-            driver.findElement(By.id("1103")).click();
-            Thread.sleep(1000);
-            order.entryOrder(se.customNo, driver);
-            Reporter.log("销售管理 订单录入成功，企业号为：" + se.customNo + " 。订单号为：" + order.orderId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        driver.findElement(By.id("1081")).click();
+        driver.findElement(By.id("1103")).click();
+        if (!order.entryOrder(se.customNo, driver))
+            driver.findElement(By.id("asdf")).click();
     }
 
     /**
      * 销售管理 订单复核
      */
-    @Test(dependsOnMethods = "entryOrder",description = "销售管理 订单复核")
+    @Test(dependsOnMethods = "entryOrder", description = "销售管理 订单复核")
 //    @Test
     public void checkOrder() {
-        try {
-            //订单复核
-            order.checkOrder(se.customNo, driver);
-            Reporter.log("销售管理 订单复核成功，企业号为：" + se.customNo + " 。订单号为：" + order.orderId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //订单复核
+        if (!order.checkOrder(se.customNo, driver))
+            driver.findElement(By.id("asdf")).click();
     }
 
     /**
      * 首次登录激活企业
      */
-    @Test(dependsOnMethods = "checkOrder",description = "首次登录激活企业")
+    @Test(dependsOnMethods = "checkOrder", description = "首次登录激活企业")
 //    @Test
     public void firstLoginFuYou() {
-        try {
-            //首次登录激活企业
-            fy.login(se.customNo, "123456");
-            Reporter.log("首次登录激活企业成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //首次登录激活企业
+        if (!fy.login(se.customNo, "123456"))
+            driver.findElement(By.id("asdf")).click();
     }
 
     /**
      * 激活成功后重新登录 并回复订单
      */
-    @Test(dependsOnMethods = "firstLoginFuYou",description = "激活成功后重新登录 并回复订单")
+    @Test(dependsOnMethods = "firstLoginFuYou", description = "激活成功后重新登录 并回复订单")
 //    @Test
     public void againLoginFuYou() {
-        try {
-            //激活成功后重新登录
-            fy.login(se.customNo, "123456");
-            //企业回复订单
-            fy.replyCustomOrder(se.customNo);
-            Thread.sleep(1000);
-            //关闭fuyou页面
+        //激活成功后重新登录
+        if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
+            driver.findElement(By.id("asdf")).click();
+        else
             fy.driver.close();
-            Reporter.log("企业回复订单成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
      * 财务管理 订单业务 订单经办
      */
-    @Test(dependsOnMethods = "againLoginFuYou",description = "财务管理 订单业务 订单经办")
+    @Test(dependsOnMethods = "againLoginFuYou", description = "财务管理 订单业务 订单经办")
 //    @Test
     public void handleOrder() {
-        try {
-            driver.findElement(By.id("1261")).click();
-            //订单业务 订单经办
-            driver.findElement(By.id("1587")).click();
-            driver.findElement(By.id("1594")).click();
-            Thread.sleep(1000);
-            order.handleOrder(driver);
-            Reporter.log("财务管理 订单业务 订单经办成功，订单号为：" + order.orderId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (order.handleOrder(driver))
+            driver.findElement(By.id("asdf")).click();
     }
 
     /**
      * 财务管理 订单激活
      */
-    @Test(dependsOnMethods = "handleOrder",description = "财务管理 订单激活")
+    @Test(dependsOnMethods = "handleOrder", description = "财务管理 订单激活")
 //    @Test
     public void activateOrder() {
-        try {
-            //订单激活
-            driver.findElement(By.id("1595")).click();
-            Thread.sleep(1000);
-            order.activateOrder(driver);
-            Reporter.log("财务管理 订单激活成功，订单号为：" + order.orderId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (order.activateOrder(driver))
+            driver.findElement(By.id("asdf")).click();
     }
 
     /**
      * 客服明细查询 查询显示余额三秒后注销用户
      */
-    @Test(dependsOnMethods = "activateOrder",description = "客服明细查询 查询显示余额三秒后注销用户")
+    @Test(dependsOnMethods = "activateOrder", description = "客服明细查询 查询显示余额三秒后注销用户")
 //    @Test
     public void queryDetail() {
-        try {
-            Thread.sleep(2000);
-            driver.findElement(By.id("1662")).click();
-            driver.findElement(By.id("1663")).click();
-            Thread.sleep(1000);
-            cd.queryDetail(driver, se.customNo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (cd.queryDetail(driver, se.customNo))
+            driver.findElement(By.id("asdf")).click();
     }
+
 }

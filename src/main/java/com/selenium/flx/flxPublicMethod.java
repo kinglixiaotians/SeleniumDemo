@@ -1,9 +1,15 @@
 package com.selenium.flx;
 
 import com.selenium.utils.JdbcUtil;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -73,5 +79,28 @@ public class flxPublicMethod {
                 driver.findElement(By.xpath(url)).click();
                 break;
         }
+    }
+
+    //失败原因图片截取并加入日志
+    public static void taskScreenShot(WebDriver driver){
+        long date = System.currentTimeMillis();
+        String path = String.valueOf(date);
+        String cusPath = System.getProperty("user.dir");
+        path = path+".png";
+        String screenPath = cusPath+"/"+path;
+        System.out.println(screenPath);
+        //实现截图
+        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(file,new File(screenPath));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Reporter.log("< a href= " + screenPath + " target=_blank>失败原因图片</ a>", true);
+//        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>", true);
+//        Reporter.log("<img src=" + screenPath +">", true);
+//        Reporter.log("失败图片地址为"+screenPath);
+//        Reporter.log("<img src=\"../../" + screenPath + "\"/>");
+//        Reporter.log("<a src=\"../../" + screenPath + "\"/>");
     }
 }
