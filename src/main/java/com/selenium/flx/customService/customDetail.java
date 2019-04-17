@@ -3,6 +3,7 @@ package com.selenium.flx.customService;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
 @Slf4j
 public class customDetail {
@@ -25,7 +26,7 @@ public class customDetail {
             driver.findElement(By.xpath("//*[@class=\"mini-messagebox-buttons\"]/a")).click();
             driver.switchTo().defaultContent();
             driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[1]/div[1]/p/span[2]/a[2]")).click();
-            log.warn("客服明细查询--企业：{}，{}", customNo,str);
+            Reporter.log("客服明细查询--企业：" + customNo + "，" + str);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

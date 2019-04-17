@@ -129,6 +129,11 @@ public class sepecEditCustom {
     //@Test
     public void saveCustomTop(WebDriver driver) {
         try {
+            //客户管理
+            driver.findElement(By.id("1061")).click();
+            //客户开户档案
+            driver.findElement(By.id("1062")).click();
+            Thread.sleep(2000);
             //点击添加按钮，弹出添加界面
             driver.switchTo().frame("mainframe");
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-add")).click();

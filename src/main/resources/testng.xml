@@ -1,71 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="D:/idea_workspace/SeleniumDemo">
+<suite name="All Test Suite" >
+    <test verbose="2" preserve-order="true" name="D:/IDEA/SeleniumDemo3">
         <classes>
-            <class name="com.selenium.flx.custom.editCustom">
-                <methods>
-                    <include name="queryCustom"/>
-                    <include name="saveCustom"/>
-                    <include name="errorSaveCustom"/>
-                    <include name="auditCustom"/>
-                    <include name="updateCustom"/>
-                    <include name="errorUpdateCustom"/>
-                </methods>
-            </class>
-            <class name="com.selenium.flx.custom.sepecEditCustom">
-                <methods>
-                    <include name="custom01"/>
-                    <include name="custom02"/>
-                    <include name="saveCustomTop"/>
-                    <include name="saveCustomBottom"/>
-                    <include name="list"/>
-                </methods>
-            </class>
             <class name="com.selenium.flx.flx">
-                <methods>
-                    <include name="testrun"/>
-                    <include name="runs"/>
-                </methods>
+                <!--<methods>-->
+                    <!--<include name="flx"/>-->
+                    <!--<include name="login"/>-->
+                    <!--<include name="normalOpenCustom"/>-->
+                    <!--<include name="auditCustom"/>-->
+                    <!--<include name="entryOrder"/>-->
+                    <!--<include name="checkOrder"/>-->
+                    <!--<include name="firstLoginFuYou"/>-->
+                    <!--<include name="againLoginFuYou"/>-->
+                    <!--<include name="handleOrder"/>-->
+                    <!--<include name="activateOrder"/>-->
+                    <!--<include name="queryDetail"/>-->
+                <!--</methods>-->
             </class>
-            <class name="com.selenium.flx.order.editOrder">
-                <methods>
-                    <include name="entryOrder"/>
-                    <include name="handleOrder"/>
-                    <include name="activateOrder"/>
-                </methods>
-            </class>
-            <class name="com.selenium.fuyou.emploeeManager.departmentList">
-                <methods>
-                    <include name="addDep"/>
-                    <include name="deleteDep"/>
-                    <include name="updataDep"/>
-                </methods>
-            </class>
-            <class name="com.selenium.fuyou.emploeeManager.employeeList">
-                <methods>
-                    <include name="addEmp"/>
-                    <include name="updateEmp"/>
-                    <include name="deleteEmp"/>
-                    <include name="searchEmp"/>
-                    <include name="batchImportEmp"/>
-                </methods>
-            </class>
-            <class name="com.selenium.fuyou.fuYou">
-                <methods>
-                    <include name="fuYouTest"/>
-                </methods>
-            </class>
-            <class name="com.selenium.fuyou.login.firstLogin">
-                <methods>
-                    <include name="verificationCustom"/>
-                </methods>
-            </class>
-            <class name="com.selenium.DemoApplicationTests">
-                <methods>
-                    <include name="contextLoads"/>
-                </methods>
-            </class>
+            <!--<class name="com.selenium.fuyou.fuYou">-->
+                <!--<methods>-->
+                    <!--<include name="fuYouTest"/>-->
+                    <!--<include name="provideWelfare"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+            <!--<class name="com.selenium.fuyou.welfareManager.welfareManager">-->
+                <!--<methods>-->
+                    <!--<include name="companyGatheringQrcode"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+            <!--<class name="com.selenium.DemoApplicationTests">-->
+                <!--<methods>-->
+                    <!--<include name="contextLoads"/>-->
+                <!--</methods>-->
+            <!--</class>-->
         </classes>
     </test>
 </suite>

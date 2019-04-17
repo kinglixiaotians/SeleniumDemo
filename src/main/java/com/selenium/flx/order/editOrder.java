@@ -11,7 +11,6 @@ import static com.selenium.flx.flxPublicMethod.waitClick;
 @Slf4j
 public class editOrder {
     public String orderId;
-
     /**
      * 销售管理 订单录入
      */
@@ -86,7 +85,7 @@ public class editOrder {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("销售管理--订单复核--企业：{}--订单编号：{}--失败", customNo, orderId);
+            log.info("销售管理--订单复核--企业：{}--失败", customNo, orderId);
             return false;
         }
     }
