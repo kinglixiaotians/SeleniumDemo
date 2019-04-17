@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" allow-return-values="true">
+<suite name="All Test Suite"  >
     <test verbose="2" preserve-order="true" name="D:/IDEA/SeleniumDemo3">
         <classes>
             <class name="com.selenium.flx.flx">
@@ -18,22 +18,22 @@
                     <!--<include name="queryDetail"/>-->
                 <!--</methods>-->
             </class>
-            <!--<class name="com.selenium.fuyou.fuYou">-->
-                <!--<methods>-->
-                    <!--<include name="fuYouTest"/>-->
-                    <!--<include name="provideWelfare"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-            <!--<class name="com.selenium.fuyou.welfareManager.welfareManager">-->
-                <!--<methods>-->
-                    <!--<include name="companyGatheringQrcode"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-            <!--<class name="com.selenium.DemoApplicationTests">-->
-                <!--<methods>-->
-                    <!--<include name="contextLoads"/>-->
-                <!--</methods>-->
-            <!--</class>-->
+            <class name="com.selenium.fuyou.fuYou">
+<!--                <methods>-->
+<!--                    <include name="fuYouTest"/>-->
+<!--                    <include name="provideWelfare"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="com.selenium.fuyou.welfareManager.welfareManager">-->
+<!--                <methods>-->
+<!--                    <include name="companyGatheringQrcode"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="com.selenium.DemoApplicationTests">-->
+<!--                <methods>-->
+<!--                    <include name="contextLoads"/>-->
+<!--                </methods>-->
+            </class>
         </classes>
     </test>
 </suite>

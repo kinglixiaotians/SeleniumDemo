@@ -1,4 +1,4 @@
-package com.selenium.fuyou.emploeeManager;
+package com.selenium.fuyou.employeeManager;
 
 import com.selenium.fuyou.baseDB.employee;
 import com.selenium.utils.PhoneUtil;
@@ -8,7 +8,6 @@ import com.selenium.utils.UserIDUtil;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;

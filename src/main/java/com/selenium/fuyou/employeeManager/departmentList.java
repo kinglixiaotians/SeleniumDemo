@@ -1,8 +1,8 @@
-package com.selenium.fuyou.emploeeManager;
+package com.selenium.fuyou.employeeManager;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 
@@ -10,7 +10,7 @@ public class departmentList {
 
     //region 新增部门
 
-//    @Test
+    @Test
     public void addDep(WebDriver driver){
         try {
             Thread.sleep(500);
