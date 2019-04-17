@@ -63,87 +63,6 @@ public class fuYou extends DriverBase {
         driver.manage().window().maximize();
     }
 
-
-    public boolean fuYouLogin() {
-        try {
-
-            //region 福利管理
-            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.welfareManager.openSwitch"))) {
-                list = getNavList(driver,null,"fbgg_menu","li",0);
-                navIndex = getNavListId(driver,"福利管理");
-                if(navIndex != 0){
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
-                    num = aList.size();
-                    welfareManager w = new welfareManager();
-                    for (int i = 0; i < num; i++) {
-                        list = getNavList(driver,null,"fbgg_menu","li",0);
-                        navIndex = getNavListId(driver,"福利管理");
-                        aList = getNavList(driver,list.get(navIndex),"", "li", 0);
-                        mouse.moveToElement(list.get(navIndex)).perform();
-                        Thread.sleep(500);
-                        s = aList.get(i).findElement(By.tagName("a")).getText();
-                        Thread.sleep(500);
-                        aList.get(i).findElement(By.tagName("a")).click();
-                        Thread.sleep(500);
-                        switch (s) {
-                            case "福利发放":
-                                provideWelfare();
-                                break;
-                            case "团体险":
-                                break;
-                            case "优分订单管理":
-                                break;
-                            case "企业收款管理":
-                                w.companyGatheringQrcode(driver);
-                                break;
-                            case "一卡通兑换":
-                                w.companyCardPassExchange(driver, username);
-                                break;
-                        }
-                    }
-                }
-            }
-            //endregion
-
-            //region 公告管理
-
-            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.announcementManager.openSwitch"))) {
-
-            }
-
-            //endregion
-
-            //region 交易管理
-
-            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.transactionManager.openSwitch"))){
-
-            }
-
-            //endregion
-
-            //region 对账单
-
-            if(Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.accountStatement.openSwitch"))){
-
-            }
-
-            //endregion
-
-            //region 企业采购
-
-            if (Boolean.parseBoolean(PropertiesConfig.getInstance().getProperty("fuYou.enterpriseProcurement.openSwitch"))) {
-
-            }
-
-            //endregion
-
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     //region 登陆
     @Test(dependsOnMethods = "fuYouTest",description = "登陆")
     public boolean login(){
@@ -212,8 +131,6 @@ public class fuYou extends DriverBase {
     }
 
     public boolean login(String username, String password) {
-//        driver.get(fuYouUrl);
-//        driver.manage().window().maximize();
         try {
             loginValidate log = new loginValidate();
             //判断是否存在广告
@@ -359,6 +276,96 @@ public class fuYou extends DriverBase {
 
     //region 福利管理
 
+    @Test(dependsOnMethods = "employeeList",description = "福利发放")
+    public void welfarePayment(){
+        try{
+            list = getNavList(driver,null,"fbgg_menu","li",0);
+            navIndex = getNavListId(driver,"福利管理");
+            if(navIndex != 0){
+                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                num = aList.size();
+                welfareManager w = new welfareManager();
+                for (int i = 0; i < num; i++) {
+                    list = getNavList(driver,null,"fbgg_menu","li",0);
+                    navIndex = getNavListId(driver,"福利管理");
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    mouse.moveToElement(list.get(navIndex)).perform();
+                    Thread.sleep(500);
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
+                    Thread.sleep(500);
+                    aList.get(i).findElement(By.tagName("a")).click();
+                    Thread.sleep(500);
+                    if(s.equals("福利发放")){
+                        provideWelfare();
+                        break;
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test(dependsOnMethods = "welfarePayment",description = "企业收款管理")
+    public void enterpriseReceiptManager(){
+        try{
+            list = getNavList(driver,null,"fbgg_menu","li",0);
+            navIndex = getNavListId(driver,"福利管理");
+            if(navIndex != 0){
+                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                num = aList.size();
+                welfareManager w = new welfareManager();
+                for (int i = 0; i < num; i++) {
+                    list = getNavList(driver,null,"fbgg_menu","li",0);
+                    navIndex = getNavListId(driver,"福利管理");
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    mouse.moveToElement(list.get(navIndex)).perform();
+                    Thread.sleep(500);
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
+                    Thread.sleep(500);
+                    aList.get(i).findElement(By.tagName("a")).click();
+                    Thread.sleep(500);
+                    if(s.equals("企业收款管理")){
+                        w.companyGatheringQrcode(driver);
+                        break;
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test(dependsOnMethods = "enterpriseReceiptManager",description = "一卡通兑换")
+    public void cardExchange(){
+        try{
+            list = getNavList(driver,null,"fbgg_menu","li",0);
+            navIndex = getNavListId(driver,"福利管理");
+            if(navIndex != 0){
+                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                num = aList.size();
+                welfareManager w = new welfareManager();
+                for (int i = 0; i < num; i++) {
+                    list = getNavList(driver,null,"fbgg_menu","li",0);
+                    navIndex = getNavListId(driver,"福利管理");
+                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    mouse.moveToElement(list.get(navIndex)).perform();
+                    Thread.sleep(500);
+                    s = aList.get(i).findElement(By.tagName("a")).getText();
+                    Thread.sleep(500);
+                    aList.get(i).findElement(By.tagName("a")).click();
+                    Thread.sleep(500);
+                    if(s.equals("一卡通兑换")){
+                        w.companyCardPassExchange(driver, username);
+                        break;
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 福利发放
      */
@@ -409,7 +416,7 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 公告管理
-    @Test(dependsOnMethods = "electronicInvoiceMangager",description = "电子发票")
+    @Test(dependsOnMethods = "cardExchange",description = "公告管理")
     public void announcementManager(){
         try{
             Thread.sleep(500);
