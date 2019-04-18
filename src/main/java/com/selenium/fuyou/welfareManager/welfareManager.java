@@ -21,10 +21,10 @@ import static com.selenium.fuyou.fuYouMethod.nowDate;
 public class welfareManager {
 
     //region 福利发放
+
     /**
      * 单个福利发放
      */
-    //@Test
     public boolean singleProvideWelfare(WebDriver driver, String customNo) {
         try {
             driver.findElement(By.id("welfareName")).clear();
@@ -72,11 +72,12 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             Thread.sleep(1000);
             driver.findElement(By.id("btnSubmit")).click();
-            //继续发放优分
-            Thread.sleep(2000);
+            //判断是否发放完成或出现优分不足
+            Thread.sleep(6000);
             if (isElementPresent(driver)) {
                 driver.findElement(By.className("zeromodal-close")).click();
             }
+            Thread.sleep(1000);
             log.info("单个福利发放成功--企业号：{}", customNo);
             Reporter.log("单个福利发放成功");
             return true;
@@ -91,9 +92,9 @@ public class welfareManager {
     /**
      * 批量福利发放
      */
-    //@Test
     public boolean multipleprovideWelfare(WebDriver driver, String customNo) {
         try {
+            Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[4]/ul/li[2]/a")).click();
             //点击确认提交  提示   请上传分配表格
             Thread.sleep(1000);
@@ -105,8 +106,8 @@ public class welfareManager {
             Thread.sleep(3000);
             //直接上传优分为0的模版
             testFiles(driver);
+            Thread.sleep(2000);
             //点击确认提交  提示   福利名不能为空
-            Thread.sleep(1000);
             driver.findElement(By.id("binImport")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
@@ -141,9 +142,8 @@ public class welfareManager {
             //修改并上传
             driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             uploadFiles(driver, customNo);
-            //继续发放优分
+            Thread.sleep(6000);
             //是否优分不足
-            Thread.sleep(1000);
             if (isElementPresent(driver)) {
                 driver.findElement(By.className("zeromodal-close")).click();
             } else {
@@ -221,7 +221,7 @@ public class welfareManager {
         Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"select_btn_1\"]")).sendKeys(fileName);
         //获取验证码
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         driver.findElement(By.id("btnyzm")).click();
         Thread.sleep(1000);
         driver.findElement(By.xpath("/html/body/div[7]/div[2]/div")).click();
@@ -239,7 +239,6 @@ public class welfareManager {
     /**
      * 回复企业订单
      */
-    //@Test
     public boolean replyOrder(WebDriver driver, String customNo) {
         try {
             //回复订单
@@ -267,10 +266,10 @@ public class welfareManager {
     }
 
     //region 企业收款管理
+
     /**
      * 企业收款管理
      */
-    @Test
     public boolean companyGatheringQrcode(WebDriver driver, String customNo) {
         try {
             //添加固定与动态金额各一个
