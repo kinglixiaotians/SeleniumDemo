@@ -20,6 +20,8 @@ public class editOrder {
     //@Test
     public boolean entryOrder(String customNo, WebDriver driver) {
         try {
+            driver.findElement(By.id("1081")).click();
+            driver.findElement(By.id("1103")).click();
             Thread.sleep(1000);
             driver.switchTo().defaultContent();
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/sales/order/orderQueryList.jsp')]")));
@@ -46,7 +48,7 @@ public class editOrder {
             driver.findElement(By.xpath("//*[@id=\"form1\"]/div/div/div[5]")).click();
             //输入框存在默认值时，若需要修改其值。使用sendKeys(Keys.chord(Keys.CONTROL,"a"),"value") value为需要更改的值
             driver.findElement(By.id("integral$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "10000000");
-            //订单录入时经办
+            //订单录入
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"savebtn0\"]/span")).click();
             Thread.sleep(2000);
@@ -161,7 +163,6 @@ public class editOrder {
             driver.findElement(By.className("mini-grid-radio-mask")).click();
             Thread.sleep(1000);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-edit")).click();
-
             driver.switchTo().defaultContent();
             driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/sales/order/entry_order_2.jsp')]")));
             driver.findElement(By.xpath("//*[@id=\"savebtn2\"]/span")).click();

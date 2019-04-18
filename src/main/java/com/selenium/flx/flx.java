@@ -47,7 +47,6 @@ public class flx extends DriverBase {
      * 登录
      */
     @Test(dependsOnMethods = "flx", description = "登录")
-//    @Test
     public void login() {
         try {
             Thread.sleep(1000);
@@ -100,7 +99,6 @@ public class flx extends DriverBase {
      * 正常开户
      */
     @Test(dependsOnMethods = "login", description = "正常开户")
-//    @Test
     public void normalOpenCustom() {
         if (!se.normalCustom(driver)) {
             driver.findElement(By.id("asdf")).click();
@@ -111,7 +109,6 @@ public class flx extends DriverBase {
      * 客户管理 企业审核
      */
     @Test(dependsOnMethods = "normalOpenCustom", description = "客户管理 企业审核")
-//    @Test
     public void auditCustom() {
         if (!custom.queryCustom(driver, se.customNo) || !custom.auditCustom(driver))
             driver.findElement(By.id("asdf")).click();
@@ -121,10 +118,7 @@ public class flx extends DriverBase {
      * 销售管理 订单录入
      */
     @Test(dependsOnMethods = "auditCustom", description = "销售管理 订单录入")
-//    @Test
     public void entryOrder() {
-        driver.findElement(By.id("1081")).click();
-        driver.findElement(By.id("1103")).click();
         if (!order.entryOrder(se.customNo, driver))
             driver.findElement(By.id("asdf")).click();
     }
@@ -133,7 +127,6 @@ public class flx extends DriverBase {
      * 销售管理 订单复核
      */
     @Test(dependsOnMethods = "entryOrder", description = "销售管理 订单复核")
-//    @Test
     public void checkOrder() {
         //订单复核
         if (!order.checkOrder(se.customNo, driver))
@@ -144,7 +137,6 @@ public class flx extends DriverBase {
      * 首次登录激活企业
      */
     @Test(dependsOnMethods = "checkOrder", description = "首次登录激活企业")
-//    @Test
     public void firstLoginFuYou() {
         //首次登录激活企业
         if (!fy.login(se.customNo, "123456"))
@@ -155,7 +147,6 @@ public class flx extends DriverBase {
      * 激活成功后重新登录 并回复订单
      */
     @Test(dependsOnMethods = "firstLoginFuYou", description = "激活成功后重新登录 并回复订单")
-//    @Test
     public void againLoginFuYou() {
         //激活成功后重新登录
         if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
@@ -168,9 +159,8 @@ public class flx extends DriverBase {
      * 财务管理 订单业务 订单经办
      */
     @Test(dependsOnMethods = "againLoginFuYou", description = "财务管理 订单业务 订单经办")
-//    @Test
     public void handleOrder() {
-        if (order.handleOrder(driver))
+        if (!order.handleOrder(driver))
             driver.findElement(By.id("asdf")).click();
     }
 
@@ -178,9 +168,8 @@ public class flx extends DriverBase {
      * 财务管理 订单激活
      */
     @Test(dependsOnMethods = "handleOrder", description = "财务管理 订单激活")
-//    @Test
     public void activateOrder() {
-        if (order.activateOrder(driver))
+        if (!order.activateOrder(driver))
             driver.findElement(By.id("asdf")).click();
     }
 
@@ -188,9 +177,8 @@ public class flx extends DriverBase {
      * 客服明细查询 查询显示余额三秒后注销用户
      */
     @Test(dependsOnMethods = "activateOrder", description = "客服明细查询 查询显示余额三秒后注销用户")
-//    @Test
     public void queryDetail() {
-        if (cd.queryDetail(driver, se.customNo))
+        if (!cd.queryDetail(driver, se.customNo))
             driver.findElement(By.id("asdf")).click();
     }
 

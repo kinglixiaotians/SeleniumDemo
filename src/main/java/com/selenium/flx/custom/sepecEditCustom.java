@@ -169,14 +169,12 @@ public class sepecEditCustom {
             //继续实名认证
             driver.findElement(By.id("certbtn")).click();
             //认证失败---点击alert继续
-//            Thread.sleep(3000);
             waitClick(driver, "//*[@class='mini-messagebox-buttons']//a", 3);
-            //driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']//a")).click();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-//            Reporter.log("添加客户信息失败。错误：" + e.toString());
+            Reporter.log("添加客户信息失败。错误：" + e.toString());
             return false;
         }
     }
@@ -198,6 +196,7 @@ public class sepecEditCustom {
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
             log.info("客户管理--企业:" + customNo + "--开户成功");
+            Reporter.log("客户管理--企业:" + customNo + "--开户成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -64,19 +64,19 @@ public class fuYou extends DriverBase {
     }
 
     //region 登陆
-    @Test(dependsOnMethods = "fuYouTest",description = "登陆")
-    public boolean login(){
+    @Test(dependsOnMethods = "fuYouTest", description = "登陆")
+    public boolean login() {
         try {
             loginValidate log = new loginValidate();
             //判断是否存在广告
-            boolean flag = isExistBoxOrExistButton(driver,"notice",1);
+            boolean flag = isExistBoxOrExistButton(driver, "notice", 1);
             if (flag) {
                 driver.findElement(By.className("notice_close")).click();
                 Thread.sleep(500);
             }
 
             //判断是否存在提示窗体
-            flag = isExistBoxOrExistButton(driver,"layui-layer-shade1",0);
+            flag = isExistBoxOrExistButton(driver, "layui-layer-shade1", 0);
             if (flag) {
                 driver.findElement(By.className("layui-layer-setwin")).click();
                 Thread.sleep(500);
@@ -106,7 +106,7 @@ public class fuYou extends DriverBase {
             }
 
             Thread.sleep(500);
-            flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
+            flag = isExistBoxOrExistButton(driver, "qyBeginIcon", 1);
             if (flag) {
                 Thread.sleep(500);
                 driver.findElement(By.className("qyCloseIcon")).click();
@@ -132,22 +132,19 @@ public class fuYou extends DriverBase {
 
     public boolean login(String username, String password) {
         try {
+            driver.get(fuYouUrl);
+            driver.manage().window().maximize();
             loginValidate log = new loginValidate();
-            //判断是否存在广告
-            boolean flag = isExistBoxOrExistButton(driver,"notice",1);
+            boolean flag = isExistBoxOrExistButton(driver, "notice", 1);
             if (flag) {
                 driver.findElement(By.className("notice_close")).click();
                 Thread.sleep(500);
             }
-
-            //判断是否存在提示窗体
-            flag = isExistBoxOrExistButton(driver,"layui-layer-shade1",0);
+            flag = isExistBoxOrExistButton(driver, "layui-layer-shade1", 0);
             if (flag) {
                 driver.findElement(By.className("layui-layer-setwin")).click();
                 Thread.sleep(500);
             }
-
-
             driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/label[1]/a")).click();
             Thread.sleep(500);
             driver.findElement(By.id("username")).sendKeys(username);
@@ -158,7 +155,6 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
             driver.findElement(By.className("login_Btn")).click();
             Thread.sleep(1000);
-            //循环输入验证码登陆
             while (isAlertPresent(driver)) {
                 driver.switchTo().alert().accept();
                 driver.findElement(By.id("verifyCode")).clear();
@@ -169,14 +165,12 @@ public class fuYou extends DriverBase {
                 driver.findElement(By.className("login_Btn")).click();
                 Thread.sleep(500);
             }
-
             Thread.sleep(500);
-            flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
+            flag = isExistBoxOrExistButton(driver, "qyBeginIcon", 1);
             if (flag) {
                 Thread.sleep(500);
                 driver.findElement(By.className("qyCloseIcon")).click();
             }
-
             //判断是否为企业账号首次登录
             //首次登录企业账号需要进行账号验证并激活！
             Thread.sleep(1000);
@@ -200,23 +194,23 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 员工管理
-    @Test(dependsOnMethods = "login",description = "部门管理")
-    public void departmentList(){
-        try{
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"员工管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+    @Test(dependsOnMethods = "login", description = "部门管理")
+    public void departmentList() {
+        try {
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "员工管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
                 for (int i = num - 1; i >= 0; i--) {
                     Thread.sleep(500);
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"员工管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "员工管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
-                    if(s.equals("部门列表")){
+                    if (s.equals("部门列表")) {
                         aList.get(i).findElement(By.tagName("a")).click();
                         //部门添加
                         dep.addDep(driver);
@@ -228,30 +222,30 @@ public class fuYou extends DriverBase {
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //员工列表
-    @Test(dependsOnMethods = "departmentList",description = "员工列表")
+    @Test(dependsOnMethods = "departmentList", description = "员工列表")
     public void employeeList() {
 
-        try{
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"员工管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+        try {
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "员工管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
                 for (int i = num - 1; i >= 0; i--) {
                     Thread.sleep(500);
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"员工管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "员工管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
-                    if(s.equals("员工列表")){
+                    if (s.equals("员工列表")) {
                         aList.get(i).findElement(By.tagName("a")).click();
                         //添加员工
                         emp.addEmp(driver);
@@ -267,7 +261,7 @@ public class fuYou extends DriverBase {
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -276,92 +270,95 @@ public class fuYou extends DriverBase {
 
     //region 福利管理
 
-    @Test(dependsOnMethods = "employeeList",description = "福利发放")
-    public void welfarePayment(){
-        try{
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"福利管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+    @Test(dependsOnMethods = "employeeList", description = "福利发放")
+    public void welfarePayment() {
+        try {
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "福利管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"福利管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "福利管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     Thread.sleep(500);
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
                     Thread.sleep(500);
-                    if(s.equals("福利发放")){
-                        provideWelfare();
+                    if (s.equals("福利发放")) {
+                        if(!provideWelfare())
+                            driver.findElement(By.id("asdf")).click();
                         break;
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Test(dependsOnMethods = "welfarePayment",description = "企业收款管理")
-    public void enterpriseReceiptManager(){
-        try{
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"福利管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+    @Test(dependsOnMethods = "welfarePayment", description = "企业收款管理")
+    public void enterpriseReceiptManager() {
+        try {
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "福利管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"福利管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "福利管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     Thread.sleep(500);
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
                     Thread.sleep(500);
-                    if(s.equals("企业收款管理")){
-                        w.companyGatheringQrcode(driver);
+                    if (s.equals("企业收款管理")) {
+                        if(!w.companyGatheringQrcode(driver, username))
+                            driver.findElement(By.id("asdf")).click();
                         break;
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Test(dependsOnMethods = "enterpriseReceiptManager",description = "一卡通兑换")
-    public void cardExchange(){
-        try{
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"福利管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+    @Test(dependsOnMethods = "enterpriseReceiptManager", description = "一卡通兑换")
+    public void cardExchange() {
+        try {
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "福利管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
                 welfareManager w = new welfareManager();
                 for (int i = 0; i < num; i++) {
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"福利管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "福利管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     Thread.sleep(500);
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
                     aList.get(i).findElement(By.tagName("a")).click();
                     Thread.sleep(500);
-                    if(s.equals("一卡通兑换")){
-                        w.companyCardPassExchange(driver, username);
+                    if (s.equals("一卡通兑换")) {
+                        if(!w.companyCardPassExchange(driver, username))
+                            driver.findElement(By.id("asdf")).click();
                         break;
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -369,15 +366,11 @@ public class fuYou extends DriverBase {
     /**
      * 福利发放
      */
-    private boolean  provideWelfare() {
+    private boolean provideWelfare() {
         try {
             welfareManager w = new welfareManager();
-            //单个福利发放
-            w.singleProvideWelfare(driver, username);
-            Thread.sleep(1000);
-            //批量福利发放
-            w.multipleprovideWelfare(driver, username);
-            return true;
+            //单个福利发放 批量福利发放
+            return w.singleProvideWelfare(driver, username) && w.multipleprovideWelfare(driver, username);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -400,13 +393,11 @@ public class fuYou extends DriverBase {
                 driver.close();
             }
             Thread.sleep(1000);
-            log.info("回复企业订单--企业号：{}--成功", customNo);
-            Reporter.log("企业回复订单成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("回复企业订单--企业号："+customNo+"--失败。错误：" + e.toString());
+            Reporter.log("回复企业订单--企业号：" + customNo + "--失败。错误：" + e.toString());
             return false;
         }
 
@@ -416,14 +407,14 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 公告管理
-    @Test(dependsOnMethods = "cardExchange",description = "公告管理")
-    public void announcementManager(){
-        try{
+    @Test(dependsOnMethods = "cardExchange", description = "公告管理")
+    public void announcementManager() {
+        try {
             Thread.sleep(500);
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"公告管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "公告管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 announcementList notice = new announcementList();
                 mouse.moveToElement(list.get(navIndex)).perform();
                 Thread.sleep(500);
@@ -431,7 +422,7 @@ public class fuYou extends DriverBase {
                 notice.announcement(driver);
                 notice.deleteAnnouncement(driver);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -439,26 +430,26 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 交易管理
-    @Test(dependsOnMethods = "announcementManager",description = "交易记录")
-    public void electronicInvoiceManager(){
-        try{
+    @Test(dependsOnMethods = "announcementManager", description = "交易记录")
+    public void electronicInvoiceManager() {
+        try {
             Thread.sleep(500);
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"交易管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "交易管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
-                for (int i = 0;i < num;i++){
+                for (int i = 0; i < num; i++) {
                     Thread.sleep(500);
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"交易管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "交易管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     Thread.sleep(500);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
 
-                    if(s.equals("交易记录")){
+                    if (s.equals("交易记录")) {
                         aList.get(i).findElement(By.tagName("a")).click();
                         transactionRecord tr = new transactionRecord();
                         tr.transactionRecordSearch(driver);
@@ -467,30 +458,30 @@ public class fuYou extends DriverBase {
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Test(dependsOnMethods = "electronicInvoiceManager",description = "电子发票")
-    public void transactionRecordManager(){
-        try{
+    @Test(dependsOnMethods = "electronicInvoiceManager", description = "电子发票")
+    public void transactionRecordManager() {
+        try {
             Thread.sleep(500);
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"交易管理");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "交易管理");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 num = aList.size();
-                for (int i = 0;i < num;i++){
+                for (int i = 0; i < num; i++) {
                     Thread.sleep(500);
-                    list = getNavList(driver,null,"fbgg_menu","li",0);
-                    navIndex = getNavListId(driver,"交易管理");
-                    aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                    list = getNavList(driver, null, "fbgg_menu", "li", 0);
+                    navIndex = getNavListId(driver, "交易管理");
+                    aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                     Thread.sleep(500);
                     mouse.moveToElement(list.get(navIndex)).perform();
                     s = aList.get(i).findElement(By.tagName("a")).getText();
                     Thread.sleep(500);
-                    if(s.equals("电子发票")){
+                    if (s.equals("电子发票")) {
                         aList.get(i).findElement(By.tagName("a")).click();
                         electronicInvoice ei = new electronicInvoice();
                         ei.electronicInvoiceSearch(driver);
@@ -498,7 +489,7 @@ public class fuYou extends DriverBase {
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -506,18 +497,18 @@ public class fuYou extends DriverBase {
     //endregion
 
     //region 对账单
-    @Test(dependsOnMethods = "transactionRecordManager",description = "对账单")
-    public void accountStatementManager(){
-        try{
+    @Test(dependsOnMethods = "transactionRecordManager", description = "对账单")
+    public void accountStatementManager() {
+        try {
             Thread.sleep(500);
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"对账单");
-            if(navIndex != 0){
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "对账单");
+            if (navIndex != 0) {
                 list.get(navIndex).click();
                 accountStatement as = new accountStatement();
                 as.searchStatement(driver);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -527,14 +518,14 @@ public class fuYou extends DriverBase {
     //region 企业采购
 
     //企业采购
-    @Test(dependsOnMethods = "accountStatementManager",description = "企业采购")
+    @Test(dependsOnMethods = "accountStatementManager", description = "企业采购")
     public void enterpriseProcurementInterface() {
-        try{
+        try {
             Thread.sleep(500);
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId(driver,"企业采购");
-            if(navIndex != 0){
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+            list = getNavList(driver, null, "fbgg_menu", "li", 0);
+            navIndex = getNavListId(driver, "企业采购");
+            if (navIndex != 0) {
+                aList = getNavList(driver, list.get(navIndex), "", "li", 0);
                 mouse.moveToElement(list.get(navIndex)).perform();
                 Thread.sleep(500);
                 aList.get(0).findElement(By.tagName("a")).click();
@@ -546,7 +537,7 @@ public class fuYou extends DriverBase {
                 ep.searchProduct(driver);
                 ep.purchaseGoods(driver);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

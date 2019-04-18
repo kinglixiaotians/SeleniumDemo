@@ -15,8 +15,6 @@ public class editCustom {
 
     /**
      * 客户管理 查询用户
-     *
-     * @param driver
      */
     //@Test
     public boolean queryCustom(WebDriver driver, String customNo) {
@@ -68,7 +66,6 @@ public class editCustom {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("客户管理--企业:{}审核失败", customNo);
             Reporter.log("客户管理--企业:" + customNo + "审核失败。错误：" + e.toString());
             return false;
         }
