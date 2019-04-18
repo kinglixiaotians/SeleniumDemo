@@ -11,6 +11,7 @@ import org.testng.Reporter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.*;
 
 /**
@@ -34,11 +35,9 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    //@Test
     public boolean custom01(WebDriver driver) {
         try {
-
-            this.saveCustomTop(driver);
+            boolean b1 = this.saveCustomTop(driver);
             //进入协议信息
             driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
             //勾选业务权限，除去企业批量还信用卡
@@ -55,7 +54,8 @@ public class sepecEditCustom {
             //更改积分兑换协议信息
             driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
 
-            return this.saveCustomBottom(driver);
+            boolean b2 = this.saveCustomBottom(driver);
+            return b1 && b2;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -76,10 +76,9 @@ public class sepecEditCustom {
      *
      * @param driver
      */
-    //@Test
     public boolean custom02(WebDriver driver) {
         try {
-            this.saveCustomTop(driver);
+            boolean b1 = this.saveCustomTop(driver);
             //进入协议信息
             driver.findElement(By.xpath("//*[@id=\"mini-2$3\"]/span")).click();
             //勾选业务权限，除去企业批量还信用卡
@@ -96,7 +95,8 @@ public class sepecEditCustom {
             //更改积分兑换协议信息
             driver.findElement(By.id("contract.exchangeServiceFee$text")).sendKeys(Keys.chord(Keys.CONTROL, "a"), "3.00");
 
-            return this.saveCustomBottom(driver);
+            boolean b2 = this.saveCustomBottom(driver);
+            return b1 && b2;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -105,10 +105,7 @@ public class sepecEditCustom {
 
     /**
      * 正常流程开户
-     *
-     * @param driver
      */
-    //@Test
     public boolean normalCustom(WebDriver driver) {
         try {
             boolean b1 = this.saveCustomTop(driver);
@@ -122,18 +119,17 @@ public class sepecEditCustom {
             return b1 && b2;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("添加客户信息失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("添加客户信息失败。错误：" + e.toString());
+            }
             return false;
         }
     }
 
     /**
      * 添加客户信息
-     *
-     * @param driver
      */
-    //@Test
     public boolean saveCustomTop(WebDriver driver) {
         try {
             //客户管理
@@ -173,35 +169,38 @@ public class sepecEditCustom {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("添加客户信息失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("添加客户信息失败。错误：" + e.toString());
+            }
             return false;
         }
     }
 
     /**
      * 保存信息
-     *
-     * @param driver
      */
-    //@Test
     public boolean saveCustomBottom(WebDriver driver) {
         try {
             //保存
             Thread.sleep(1000);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-save")).click();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.id("mini-119")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
-            log.info("客户管理--企业:" + customNo + "--开户成功");
-            Reporter.log("客户管理--企业:" + customNo + "--开户成功");
+            if (journal) {
+                log.info("客户管理--企业:" + customNo + "--开户成功");
+                Reporter.log("客户管理--企业:" + customNo + "--开户成功");
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("客户管理--开户失败。" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("客户管理--开户失败。" + e.toString());
+            }
             return false;
         }
     }
@@ -212,7 +211,6 @@ public class sepecEditCustom {
      * @param driver
      * @param except 需要取消勾选的id集合
      */
-    //@Test
     public void list(WebDriver driver, List<String> except) {
         //勾选业务权限，商城业务与蜘蛛网默认勾选，先取消掉
         driver.findElement(By.id("mini-62$ck$5")).click();

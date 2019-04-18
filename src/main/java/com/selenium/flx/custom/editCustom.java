@@ -1,11 +1,13 @@
 package com.selenium.flx.custom;
 
+import com.selenium.utils.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
@@ -16,7 +18,6 @@ public class editCustom {
     /**
      * 客户管理 查询用户
      */
-    //@Test
     public boolean queryCustom(WebDriver driver, String customNo) {
         try {
             Thread.sleep(1000);
@@ -32,21 +33,20 @@ public class editCustom {
             return true;
         } catch (Exception e) {
             taskScreenShot(driver);
-            Reporter.log("客户管理 查询用户失败。错误：" + e.toString());
-            e.printStackTrace();
+            if (journal) {
+                Reporter.log("客户管理 查询用户失败。错误：" + e.toString());
+                e.printStackTrace();
+            }
             return false;
         }
     }
 
     /**
      * 客户管理 企业审核
-     *
-     * @param driver
      */
-    //@Test
     public boolean auditCustom(WebDriver driver) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.switchTo().frame("mainframe");
             driver.findElement(By.className("mini-grid-radio-mask")).click();
             //点击修改按钮，弹出修改界面
@@ -61,12 +61,16 @@ public class editCustom {
             Thread.sleep(1000);
             driver.findElement(By.id("mini-119")).click();
             driver.switchTo().defaultContent();
-            log.info("客户管理--企业:{}已审核", customNo);
-            Reporter.log("企业审核成功，企业号为：" + customNo);
+            if (journal) {
+                log.info("客户管理--企业:{}已审核", customNo);
+                Reporter.log("企业审核成功，企业号为：" + customNo);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            Reporter.log("客户管理--企业:" + customNo + "审核失败。错误：" + e.toString());
+            if (journal) {
+                Reporter.log("客户管理--企业:" + customNo + "审核失败。错误：" + e.toString());
+            }
             return false;
         }
     }

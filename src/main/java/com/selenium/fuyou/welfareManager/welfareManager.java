@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.util.List;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 import static com.selenium.fuyou.fuYouMethod.nowDate;
@@ -254,13 +255,17 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             Thread.sleep(1000);
             driver.findElement(By.name("btnReply")).click();
-            log.info("回复企业订单--企业号：{}--成功", customNo);
-            Reporter.log("回复企业订单成功，企业号：" + customNo);
+            if (journal) {
+                log.info("回复企业订单--企业号：{}--成功", customNo);
+                Reporter.log("回复企业订单成功，企业号：" + customNo);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("回复企业订单失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("回复企业订单失败。错误：" + e.toString());
+            }
             return false;
         }
     }

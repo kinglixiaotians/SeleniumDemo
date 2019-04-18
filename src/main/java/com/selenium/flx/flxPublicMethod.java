@@ -17,14 +17,6 @@ import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 
 public class flxPublicMethod {
 
-    //返回当前时间  格式为：yyyyMMddHHmmss（例：20190401160321）
-    public static String nowDate() {
-        //获取当前时间并进行格式化
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        return sdf.format(new Date());
-    }
-
-
     /**
      * 清除框内数据并重新赋值
      * @param driver
@@ -52,12 +44,6 @@ public class flxPublicMethod {
                 break;
         }
 
-    }
-
-    //根据企业号返回验证码
-    public static String getCord(String custom) {
-        JdbcUtil j = new JdbcUtil();
-        return j.querySmsCode(j.queryCellPhone(custom));
     }
 
     //出现此元素就点击若不出现则一直等（每一秒判断一次）

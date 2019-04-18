@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 
 @Slf4j
@@ -13,9 +14,6 @@ public class firstLogin {
 
     /**
      * 首次登录进行企业验证
-     *
-     * @param driver
-     * @param custom
      */
     public boolean verificationCustom(WebDriver driver, String custom) {
         try {
@@ -40,13 +38,17 @@ public class firstLogin {
             driver.findElement(By.id("button")).click();
             Thread.sleep(1000);
             driver.findElement(By.className("layui-layer-btn0")).click();
-            log.info("企业：{}首次登录验证成功", custom);
-            Reporter.log("首次登录激活企业成功");
+            if (journal) {
+                log.info("企业：{}首次登录验证成功", custom);
+                Reporter.log("首次登录激活企业成功");
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("首次登录激活企业失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("首次登录激活企业失败。错误：" + e.toString());
+            }
             return false;
         }
     }

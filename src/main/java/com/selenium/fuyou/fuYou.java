@@ -23,6 +23,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.*;
 import static com.selenium.fuyou.fuYouMethod.getNavListId;
@@ -183,8 +184,10 @@ public class fuYou extends DriverBase {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("fuyou登录失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("fuyou登录失败。错误：" + e.toString());
+            }
             return false;
         }
     }
@@ -357,7 +360,6 @@ public class fuYou extends DriverBase {
     /**
      * 企业优分订单回复
      */
-    //@Test
     public boolean replyCustomOrder(String customNo) {
         try {
             //福利管理 优分订单管理
@@ -373,8 +375,10 @@ public class fuYou extends DriverBase {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("回复企业订单--企业号：" + customNo + "--失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("回复企业订单--企业号：" + customNo + "--失败。错误：" + e.toString());
+            }
             return false;
         }
 

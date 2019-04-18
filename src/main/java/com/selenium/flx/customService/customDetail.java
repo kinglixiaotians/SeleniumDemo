@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 
 @Slf4j
@@ -12,12 +13,7 @@ public class customDetail {
 
     /**
      * 客服明细查询 查询客户当前优分余额
-     *
-     * @param driver
-     * @param customNo
-     * @return
      */
-    //@Test
     public boolean queryDetail(WebDriver driver, String customNo) {
         try {
             driver.findElement(By.id("1662")).click();
@@ -31,12 +27,16 @@ public class customDetail {
             driver.findElement(By.xpath("//*[@class=\"mini-messagebox-buttons\"]/a")).click();
             driver.switchTo().defaultContent();
             driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[1]/div[1]/p/span[2]/a[2]")).click();
-            Reporter.log("客服明细查询--企业：" + customNo + "，" + str);
+            if (journal) {
+                Reporter.log("客服明细查询--企业：" + customNo + "，" + str);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("客服明细查询失败--企业：" + customNo + "。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("客服明细查询失败--企业：" + customNo + "。错误：" + e.toString());
+            }
             return false;
         }
     }

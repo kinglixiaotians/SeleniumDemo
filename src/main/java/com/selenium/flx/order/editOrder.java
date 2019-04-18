@@ -6,6 +6,7 @@ import org.testng.Reporter;
 import org.testng.annotations.Test;
 import com.selenium.fuyou.welfareManager.welfareManager;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 import static com.selenium.flx.flxPublicMethod.waitClick;
@@ -17,7 +18,6 @@ public class editOrder {
     /**
      * 销售管理 订单录入
      */
-    //@Test
     public boolean entryOrder(String customNo, WebDriver driver) {
         try {
             driver.findElement(By.id("1081")).click();
@@ -53,14 +53,17 @@ public class editOrder {
             driver.findElement(By.xpath("//*[@id=\"savebtn0\"]/span")).click();
             Thread.sleep(2000);
             driver.findElement(By.id("mini-147")).click();
-
-            log.info("销售管理--订单录入--企业：{}--订单编号：{}--成功", customNo, orderId);
-            Reporter.log("销售管理 订单录入成功，企业号为：" + customNo + " 。订单号为：" + orderId);
+            if (journal) {
+                log.info("销售管理--订单录入--企业：{}--订单编号：{}--成功", customNo, orderId);
+                Reporter.log("销售管理 订单录入成功，企业号为：" + customNo + " 。订单号为：" + orderId);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("销售管理 订单录入失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("销售管理 订单录入失败。错误：" + e.toString());
+            }
             return false;
         }
     }
@@ -68,7 +71,6 @@ public class editOrder {
     /**
      * 销售管理 订单复核
      */
-    //@Test
     public boolean checkOrder(String customNo, WebDriver driver) {
         try {
             //订单录入时复核
@@ -89,23 +91,24 @@ public class editOrder {
             Thread.sleep(2000);
             driver.findElement(By.id("mini-151")).click();
             driver.switchTo().defaultContent();
-            log.info("销售管理--订单复核--企业：{}--订单编号：{}--成功", customNo, orderId);
-            Reporter.log("销售管理 订单复核成功，企业号为：" + customNo + " 。订单号为：" + orderId);
+            if (journal) {
+                log.info("销售管理--订单复核--企业：{}--订单编号：{}--成功", customNo, orderId);
+                Reporter.log("销售管理 订单复核成功，企业号为：" + customNo + " 。订单号为：" + orderId);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("销售管理--订单复核失败，企业号为：" + customNo + " 。订单号为：" + orderId + "。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("销售管理--订单复核失败，企业号为：" + customNo + " 。订单号为：" + orderId + "。错误：" + e.toString());
+            }
             return false;
         }
     }
 
     /**
      * 财务管理 订单经办
-     *
-     * @param driver
      */
-    //@Test
     public boolean handleOrder(WebDriver driver) {
         try {
             driver.findElement(By.id("1261")).click();
@@ -131,13 +134,17 @@ public class editOrder {
             Thread.sleep(2000);
             driver.findElement(By.id("mini-156")).click();
             driver.switchTo().defaultContent();
-            log.info("财务管理--订单经办--订单号:{}--成功", orderId);
-            Reporter.log("财务管理 订单业务 订单经办成功，订单号为：" + orderId);
+            if (journal) {
+                log.info("财务管理--订单经办--订单号:{}--成功", orderId);
+                Reporter.log("财务管理 订单业务 订单经办成功，订单号为：" + orderId);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("财务管理--订单经办--订单号:" + orderId + "--失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("财务管理--订单经办--订单号:" + orderId + "--失败。错误：" + e.toString());
+            }
             return false;
         }
     }
@@ -145,10 +152,7 @@ public class editOrder {
 
     /**
      * 财务管理 订单激活
-     *
-     * @param driver
      */
-    //@Test
     public boolean activateOrder(WebDriver driver) {
         try {
             //订单激活
@@ -168,18 +172,20 @@ public class editOrder {
             driver.findElement(By.xpath("//*[@id=\"savebtn2\"]/span")).click();
             Thread.sleep(1000);
             driver.findElement(By.id("savebtn1")).click();
-            //Thread.sleep(5000);
             Thread.sleep(1000);
             waitClick(driver, "mini-144", 0);
-            //driver.findElement(By.id("mini-144")).click();
-            log.info("财务管理--订单激活--订单号:{}--成功", orderId);
-            Reporter.log("财务管理 订单激活成功，订单号为：" + orderId);
+            if (journal) {
+                log.info("财务管理--订单激活--订单号:{}--成功", orderId);
+                Reporter.log("财务管理 订单激活成功，订单号为：" + orderId);
+            }
             Thread.sleep(2000);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("财务管理--订单激活--订单号:" + orderId + "--失败。错误：" + e.toString());
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("财务管理--订单激活--订单号:" + orderId + "--失败。错误：" + e.toString());
+            }
             return false;
         }
     }

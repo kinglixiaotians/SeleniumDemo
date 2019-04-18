@@ -19,7 +19,6 @@ import static com.selenium.flx.flxPublicMethod.updateInput;
 
 @Slf4j
 public class flx extends DriverBase {
-    public String customNo;
     public WebDriver driver = driverName();
     public String windowsHandle;
     public sepecEditCustom se = new sepecEditCustom();
@@ -35,6 +34,8 @@ public class flx extends DriverBase {
     private String flxPassword = PropertiesConfig.getInstance().getProperty("driver.flx.passWord");
     //开关用于判断是否开启特殊企业开户
     private String flxOpenSwitch = PropertiesConfig.getInstance().getProperty("driver.flx.openSwitch");
+    //是否打印日志
+    public static boolean journal = true;
 
     @Test
     public void flx() {
@@ -60,38 +61,15 @@ public class flx extends DriverBase {
             updateInput(driver, "id", "userId", flxUserId);
             driver.findElement(By.className("log")).click();
             Thread.sleep(500);
-            Reporter.log("登入flx成功");
+            if (journal) {
+                Reporter.log("登入flx成功");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            taskScreenShot(driver);
-            Reporter.log("登录flx。错误：" + e.toString());
-        }
-    }
-
-    /**
-     * 特殊开户1
-     */
-    public boolean specialOpenCustom_1() {
-        try {
-            log.info("-----------以下为特殊开户。");
-            se.custom01(driver);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * 特殊开户2
-     */
-    public boolean specialOpenCustom_2() {
-        try {
-            se.custom02(driver);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("登录flx。错误：" + e.toString());
+            }
         }
     }
 
@@ -149,7 +127,7 @@ public class flx extends DriverBase {
     @Test(dependsOnMethods = "firstLoginFuYou", description = "激活成功后重新登录 并回复订单")
     public void againLoginFuYou() {
         //激活成功后重新登录
-        if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
+        if (!fy.login(se.customNo, "123456") || !fy. replyCustomOrder(se.customNo))
             driver.findElement(By.id("asdf")).click();
         else
             fy.driver.close();
@@ -180,6 +158,69 @@ public class flx extends DriverBase {
     public void queryDetail() {
         if (!cd.queryDetail(driver, se.customNo))
             driver.findElement(By.id("asdf")).click();
+    }
+
+    /**
+     * 特殊开户
+     */
+    @Test(dependsOnMethods = "queryDetail", description = "特殊开户")
+    public void specialOpenCustom_1() {
+        flx();
+        //判断是否开启特殊开户
+        if (Boolean.parseBoolean(flxOpenSwitch)) {
+            Reporter.log("-----------以下为特殊开户。");
+            journal = false;
+
+            login();
+            if (se.custom01(driver) && specialOpenCustomProcedure())
+                Reporter.log("特殊开户1----开户并充值一千万优分成功。企业号：" + se.customNo);
+            else
+                Reporter.log("特殊开户1----开户失败");
+
+            login();
+            if (se.custom02(driver) && specialOpenCustomProcedure())
+                Reporter.log("特殊开户2----开户并充值一千万优分成功。企业号：" + se.customNo);
+            else
+                Reporter.log("特殊开户1----开户失败");
+        } else {
+            Reporter.log("特殊开户未开启");
+        }
+    }
+
+    //特殊开户流程
+    public boolean specialOpenCustomProcedure() {
+        //客户管理 企业审核
+        if (!custom.queryCustom(driver, se.customNo))
+            return false;
+        if (!custom.auditCustom(driver))
+            return false;
+        //销售管理 订单录入
+        if (!order.entryOrder(se.customNo, driver))
+            return false;
+        //销售管理 订单复核
+        if (!order.checkOrder(se.customNo, driver))
+            return false;
+        //首次登录激活企业
+        fuYou fy=new fuYou();
+        if (!fy.login(se.customNo, "123456"))
+            return false;
+        //激活成功后重新登录 并回复订单
+        if (!fy.login(se.customNo, "123456"))
+            return false;
+        if (!fy.replyCustomOrder(se.customNo))
+            return false;
+        else
+            fy.driver.close();
+        //财务管理 订单业务 订单经办
+        if (!order.handleOrder(driver))
+            return false;
+        //财务管理 订单激活
+        if (!order.activateOrder(driver))
+            return false;
+        //完成后注销
+        driver.switchTo().defaultContent();
+        driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[1]/div[1]/p/span[2]/a[2]")).click();
+        return true;
     }
 
 }
