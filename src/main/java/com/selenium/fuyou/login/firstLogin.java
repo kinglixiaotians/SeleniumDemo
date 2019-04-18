@@ -6,8 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
-import java.util.concurrent.TimeUnit;
-
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 
 @Slf4j
@@ -19,7 +17,6 @@ public class firstLogin {
      * @param driver
      * @param custom
      */
-    //@Test
     public boolean verificationCustom(WebDriver driver, String custom) {
         try {
             Thread.sleep(2000);

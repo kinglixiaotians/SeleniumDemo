@@ -4,49 +4,8 @@
     <test verbose="2"  name="D:/IDEA/SeleniumDemo3">
         <classes>
 <!--            <class name="com.selenium.flx.flx">-->
-<!--                &lt;!&ndash;<methods>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="flx"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="login"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="normalOpenCustom"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="auditCustom"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="entryOrder"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="checkOrder"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="firstLoginFuYou"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="againLoginFuYou"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="handleOrder"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="activateOrder"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;<include name="queryDetail"/>&ndash;&gt;-->
-<!--                &lt;!&ndash;</methods>&ndash;&gt;-->
 <!--            </class>-->
             <class name="com.selenium.fuyou.fuYou">
-<!--                <methods>-->
-<!--                    <include name="fuYouTest" />-->
-<!--                    <include name="login" />-->
-<!--                    <include name="departmentList" />-->
-<!--                    <include name="employeeList" />-->
-<!--                    <include name="welfarePayment" />-->
-<!--                    <include name="enterpriseReceiptManager" />-->
-<!--                    <include name="cardExchange" />-->
-<!--                    <include name="announcementManager" />-->
-<!--                    <include name="electronicInvoiceManager" />-->
-<!--                    <include name="transactionRecordManager" />-->
-<!--                    <include name="accountStatementManager" />-->
-<!--                    <include name="enterpriseProcurementInterface" />-->
-<!--                </methods>-->
-<!--                <methods>-->
-<!--                    <include name="fuYouTest"/>-->
-<!--                    <include name="provideWelfare"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--            <class name="com.selenium.fuyou.welfareManager.welfareManager">-->
-<!--                <methods>-->
-<!--                    <include name="companyGatheringQrcode"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--            <class name="com.selenium.DemoApplicationTests">-->
-<!--                <methods>-->
-<!--                    <include name="contextLoads"/>-->
-<!--                </methods>-->
             </class>
         </classes>
     </test>

@@ -3,10 +3,11 @@ package com.selenium.fuyou.accountStatement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
+import org.testng.Reporter;
 
 import java.util.List;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.getNavList;
 import static com.selenium.fuyou.fuYouMethod.inputSearchDate;
 
@@ -14,8 +15,7 @@ public class accountStatement {
 
     //region 对账单
 
-//    @Test
-    public void searchStatement(WebDriver driver){
+    public boolean searchStatement(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.id("cardNo")).sendKeys("17607153713");
@@ -62,8 +62,13 @@ public class accountStatement {
                 Thread.sleep(500);
             }
             Thread.sleep(500);
+            Reporter.log("账单查询成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("账单查询失败，错误："+e.toString());
+            return false;
         }
     }
 

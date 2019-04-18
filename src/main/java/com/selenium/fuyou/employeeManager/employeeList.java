@@ -8,10 +8,12 @@ import com.selenium.utils.UserIDUtil;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Reporter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.*;
 
 
@@ -19,8 +21,7 @@ public class employeeList {
 
     //region 新增员工
 
-//    @Test
-    public void addEmp(WebDriver driver) {
+    public boolean addEmp(WebDriver driver) {
         try {
             Thread.sleep(500);
             //分页测试
@@ -66,6 +67,7 @@ public class employeeList {
                 Thread.sleep(500);
                 if(s.equals("员工工号已存在") || s.equals("已经存在相同的账号") || s.equals("手机号有误")){
                     addEmpErrorOperation(driver,downList);
+                    Reporter.log("员工添加失败，错误："+s);
                     continue;
                 }
                 driver.findElement(By.className("zeromodal-close")).click();
@@ -77,8 +79,13 @@ public class employeeList {
             if(flag){
                 driver.findElement(By.xpath("//*[@id=\"xubox_layer1\"]/div[1]/a")).click();
             }
+            Reporter.log("员工添加成功！");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工添加失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -93,6 +100,7 @@ public class employeeList {
     }
 
     //region 分页
+
     public void paging(WebDriver driver){
         try{
             //判断是否有下一页按钮
@@ -140,8 +148,7 @@ public class employeeList {
 
     //region 修改员工信息
 
-//    @Test
-    public void updateEmp(WebDriver driver){
+    public boolean updateEmp(WebDriver driver){
         try {
             Thread.sleep(500);
             boolean flag = isExistBoxOrExistButton(driver,"//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]",3);
@@ -155,11 +162,13 @@ public class employeeList {
                 String s = updateEmpData(driver,new employee("小刚",2,UserIDUtil.getUserId(),"","2019-01-28"));
                 if(s.equals("员工工号已存在") || s.equals(null)){
                     clearEmpData(driver);
+                    Reporter.log("员工信息修改失败，错误：" + s);
                 }else{
                     driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
                     clearEmpData(driver);
+                    Reporter.log("员工信息修改成功！");
                 }
-                updateEmpData(driver,new employee("小明",2,UserIDUtil.getUserId(),"","2019-03-23"));
+                              updateEmpData(driver,new employee("小明",2,UserIDUtil.getUserId(),"","2019-03-23"));
                 Thread.sleep(500);
                 //关闭多余编辑窗体
                 flag = isExistBoxOrExistButton(driver,".xubox_main.xubox_main_0",2);
@@ -174,10 +183,15 @@ public class employeeList {
                 Thread.sleep(1000);
             }
             else{
-                return;
+                Reporter.log("员工信息修改成功！");
+                return true;
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工信息修改失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -237,8 +251,7 @@ public class employeeList {
 
     //region 删除员工
 
-//    @Test
-    public void deleteEmp(WebDriver driver){
+    public boolean deleteEmp(WebDriver driver){
         try{
             boolean flag = isExistBoxOrExistButton(driver,"//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[2]",3);
             if(flag){
@@ -253,10 +266,16 @@ public class employeeList {
                 eleList.get(0).findElement(By.tagName("a")).click();
                 Thread.sleep(1000);
             }else{
-                return;
+                Reporter.log("员工删除失败，错误：未知错误");
+                return true;
             }
+            Reporter.log("员工删除成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工删除失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -264,15 +283,20 @@ public class employeeList {
 
     //region 搜索员工
 
-//    @Test
-    public void searchEmp(WebDriver driver){
+    public boolean searchEmp(WebDriver driver){
         try{
             Thread.sleep(500);
-            driver.findElement(By.className("qyzx_key_input")).sendKeys(PhoneUtil.getTelephone());
+            String s = PhoneUtil.getTelephone();
+            driver.findElement(By.className("qyzx_key_input")).sendKeys(s);
             driver.findElement(By.className("yqzx_key_search")).click();
             Thread.sleep(1000);
+            Reporter.log("员工查询成功，"+s);
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工查询失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -280,39 +304,43 @@ public class employeeList {
 
     //region 批量导入员工
 
-//    @Test
-    public void batchImportEmp(WebDriver driver){
+    public boolean batchImportEmp(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.className("yqzx_pl")).click();
             Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[7]/a")).click();
             Thread.sleep(1000);
-            batchImprotEmpData(driver,null,false);//空模板错误示例
+            batchImportEmpData(driver,null,false);//空模板错误示例
             Thread.sleep(500);
-            batchImprotEmpData(driver, PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl3"),false);//格式错误示例
+            batchImportEmpData(driver, PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl3"),false);//格式错误示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl2"),false);//模板数据未通过示例
+            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl2"),false);//模板数据未通过示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"),true);//模板数据为空示例
+            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"),true);//模板数据为空示例
             Thread.sleep(500);
-            batchImprotEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
+            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
             Thread.sleep(500);
 
             //分类跳转操作
             List<WebElement> eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
             eleList.get(2).findElement(By.tagName("a")).click();
             Thread.sleep(1000);
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工批量导入失败，错误："+e.toString());
+            return false;
         }
     }
 
     //上传文件选择
-    public void batchImprotEmpData(WebDriver driver,String fileName,boolean isClick){
+    public void batchImportEmpData(WebDriver driver,String fileName,boolean isClick){
         try{
             if (fileName == null){
                 driver.findElement(By.id("btnImport")).click();
+                Reporter.log("员工批量导入失败，错误：fileName为空");
                 Thread.sleep(500);
             }else{
                 if(isClick){
@@ -332,6 +360,7 @@ public class employeeList {
                         }
                     }
                     driver.findElement(By.id("btnImport")).click();
+                    Reporter.log("员工批量导入成功！");
                 }else{
                     String path = ResourcesUrlUtil.pathUrl(fileName);
                     driver.findElement(By.id("select_btn_1")).sendKeys(path);
@@ -340,6 +369,9 @@ public class employeeList {
             boxClose(driver);
         }catch (Exception e){
             e.printStackTrace();
+            e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工批量导入失败，错误："+e.toString());
         }
     }
 

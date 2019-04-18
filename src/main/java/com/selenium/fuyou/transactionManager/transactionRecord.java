@@ -3,18 +3,18 @@ package com.selenium.fuyou.transactionManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
+import org.testng.Reporter;
 
 import java.util.List;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.*;
 
 public class transactionRecord {
 
     //region 查询交易记录
 
-//    @Test
-    public void transactionRecordSearch(WebDriver driver){
+    public boolean transactionRecordSearch(WebDriver driver){
         try {
             //精确日期查询
             Thread.sleep(500);
@@ -46,9 +46,14 @@ public class transactionRecord {
                 Thread.sleep(500);
                 liList.get(i).findElement(By.tagName("a")).click();
             }
+            Reporter.log("交易记录查询成功！");
             Thread.sleep(500);
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("交易记录查询失败，错误："+e.toString());
+            return false;
         }
     }
 

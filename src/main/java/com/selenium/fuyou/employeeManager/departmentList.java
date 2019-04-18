@@ -1,17 +1,17 @@
 package com.selenium.fuyou.employeeManager;
 
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 
 public class departmentList {
 
     //region 新增部门
 
-    @Test
-    public void addDep(WebDriver driver){
+    public boolean addDep(WebDriver driver){
         try {
             Thread.sleep(500);
             String [] dep = new String[] { "运营","研发","测试","后勤" };
@@ -29,20 +29,27 @@ public class departmentList {
                     driver.findElement(By.xpath("/html/body/div[9]/div[2]/div")).click();
                     Thread.sleep(500);
                     driver.findElement(By.id("orgName")).clear();
+                    Reporter.log("部门添加失败,错误：部门已存在");
                     continue;
                 }
+                Reporter.log("部门添加成功！");
                 if(i != dep.length - 1){
                     Thread.sleep(500);
                     driver.findElement(By.id("bumen")).click();
                     Thread.sleep(500);
                 }
+
             }
             boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
             if(flag){
                 driver.findElement(By.className("zeromodal-close")).click();
             }
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("部门添加失败,错误："+e.toString());
+            return false;
         }
     }
 
@@ -50,8 +57,7 @@ public class departmentList {
 
     //region 删除部门
 
-//    @Test
-    public void deleteDep(WebDriver driver){
+    public boolean deleteDep(WebDriver driver){
         try{
             boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[2]",3);
             if(flag){
@@ -64,10 +70,16 @@ public class departmentList {
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-default")).click();
             }else {
-                return;
+                Reporter.log("部门删除失败,错误：未知错误");
+                return true;
             }
+            Reporter.log("部门删除成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("部门删除失败,错误："+e.toString());
+            return false;
         }
     }
 
@@ -75,8 +87,7 @@ public class departmentList {
 
     //region 编辑部门
 
-//    @Test
-    public void updateDep(WebDriver driver){
+    public boolean updateDep(WebDriver driver){
         try{
             boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[4]/div[4]/table/tbody/tr[2]/td[5]/a[1]",3);
             if(flag) {
@@ -89,10 +100,16 @@ public class departmentList {
                 Thread.sleep(500);
                 driver.findElement(By.name("btnupdate")).click();
             }else {
-                return;
+                Reporter.log("部门修改成功！");
+                return true;
             }
+            Reporter.log("部门修改成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("部门修改失败,错误："+e.toString());
+            return false;
         }
     }
 

@@ -6,12 +6,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.Test;
+import org.testng.Reporter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.*;
 
 public class enterpriseProcurement {
@@ -20,8 +21,7 @@ public class enterpriseProcurement {
 
     //region 用户是否有地址以及添加地址
 
-//    @Test
-    public void isHaveAddress(WebDriver driver){
+    public boolean isHaveAddress(WebDriver driver){
         try{
             String s = driver.findElement(By.className("chooseAddressHeader")).getText();
             if(s.equals("请选择收货地址")){
@@ -44,15 +44,19 @@ public class enterpriseProcurement {
                     addAddress(driver,"张三",1,5,0,"东大名路888弄","","", PhoneUtil.getTelephone(),false);
                     isClearData(driver);
                     addAddress(driver,"李三",1,6,0,"国康路47号","","", PhoneUtil.getTelephone(),true);
-
+                    Reporter.log("新增收获地址成功！");
                     driver.findElement(By.className("chooseAddressHeader")).click();
                     Thread.sleep(500);
                     driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl01_btnSetDefault")).click();
+                    return true;
                 }
-                return;
             }
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("新增收货地址失败失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -106,6 +110,7 @@ public class enterpriseProcurement {
             isClearData(driver);
         }catch (Exception e){
             e.printStackTrace();
+            Reporter.log("新增收货地址失败失败，错误："+e.toString());
         }
     }
 
@@ -125,15 +130,15 @@ public class enterpriseProcurement {
 
     //region 编辑地址
 
-//    @Test
-    public void updateAddress(WebDriver driver){
+    public boolean updateAddress(WebDriver driver){
         try{
             driver.findElement(By.className("chooseAddressHeader")).click();
             Thread.sleep(500);
             boolean flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit",0);
             if(!flag){
                 driver.findElement(By.id("imgCloseLogin")).click();
-                return;
+                Reporter.log("地址修成功！");
+                return true;
             }
             addressData(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnEdit",null,null,null,null,null,null,null,PhoneUtil.getTelephone(),true);
             //判断是否有默认地址
@@ -141,8 +146,13 @@ public class enterpriseProcurement {
             if(flag){
                 driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
             }
+            Reporter.log("地址修成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("地址修改失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -211,12 +221,11 @@ public class enterpriseProcurement {
 
     //region 删除地址
 
-//    @Test
-    public void deleteAddress(WebDriver driver){
+    public boolean deleteAddress(WebDriver driver){
         try{
             boolean flag = isExistBoxOrExistButton(driver,"CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete",0);
             if(!flag){
-                return;
+                return true;
             }
             Thread.sleep(500);
             driver.findElement(By.className("chooseAddressHeader")).click();
@@ -224,7 +233,7 @@ public class enterpriseProcurement {
             List<WebElement> list = getNavList(driver,null,"tab_box1","tr",1);
             if(list.size() <= 2){
                 driver.findElement(By.className("imgCloseLogin")).click();
-                return;
+                return true;
             }
             Thread.sleep(500);
             driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnDelete")).click();
@@ -248,12 +257,17 @@ public class enterpriseProcurement {
                 if(flag){
                     Thread.sleep(500);
                     driver.findElement(By.id("CompanyFinishOrder_list_CompanyCommon_Consignee_ConsigneeList___repeaterRegionsSelectm_ctl00_btnSetDefault")).click();
-                    return;
+                    return true;
                 }
                 driver.findElement(By.className("imgCloseLogin")).click();
             }
+            Reporter.log("地址删除成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("地址删除失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -264,8 +278,7 @@ public class enterpriseProcurement {
 
     //region 导航栏
 
-//    @Test
-    public void navMenu(WebDriver driver){
+    public boolean navMenu(WebDriver driver){
         try{
             List<WebElement> list = getNavList(driver,null,"h_chooselist","a",1);
             int num = list.size();
@@ -287,8 +300,10 @@ public class enterpriseProcurement {
 
             list = getNavList(driver,null,"category_list","h2",1);
             list.get(0).findElement(By.tagName("a")).click();
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -296,8 +311,7 @@ public class enterpriseProcurement {
 
     //region 商品搜索
 
-//    @Test
-    public void searchProduct(WebDriver driver){
+    public boolean searchProduct(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.id("CompanyFinishOrder_search_Common_CutdownSearch___txtKeywords")).sendKeys("套装");
@@ -333,8 +347,13 @@ public class enterpriseProcurement {
                 Thread.sleep(500);
                 list.get(i).click();
             }
+            Reporter.log("商品搜错成功！");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("商品搜索失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -342,14 +361,13 @@ public class enterpriseProcurement {
 
     //region 商品购买
 
-//    @Test
-    public void purchaseGoods(WebDriver driver) {
+    public boolean purchaseGoods(WebDriver driver) {
         try {
             purchaseOrder po = new purchaseOrder();
             Thread.sleep(500);
             List<WebElement> productList = getNavList(driver, null,"category_pro_list", "li", 1);
             if(productList.size() <= 0){
-                return;
+                return true;
             }
             productList.get(0).click();
             Thread.sleep(500);
@@ -443,9 +461,13 @@ public class enterpriseProcurement {
             Thread.sleep(500);
             po.orderProcess(driver,s);
             driver.close();
-
+            Reporter.log("商品购买成功！");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("商品购买失败，错误："+e.toString());
+            return false;
         }
 
     }
@@ -618,7 +640,7 @@ public class enterpriseProcurement {
     public void jumpPurchaseOrder(WebDriver driver,Actions mouse){
         try{
             List<WebElement> list = getNavList(driver,null,"fbgg_menu","li",0);
-            int navIndex = getNavListId(driver,"企业采购");
+            int navIndex = getNavListId("企业采购",list);
             List<WebElement> aList = getNavList(driver,list.get(navIndex),"", "li", 0);
             mouse.moveToElement(list.get(navIndex)).perform();
             Thread.sleep(500);

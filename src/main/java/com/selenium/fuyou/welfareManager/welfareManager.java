@@ -3,7 +3,6 @@ package com.selenium.fuyou.welfareManager;
 import com.selenium.utils.JdbcUtil;
 import com.selenium.utils.POIUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +12,6 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;

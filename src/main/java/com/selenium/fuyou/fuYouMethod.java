@@ -114,12 +114,10 @@ public class fuYouMethod {
     }
 
     //匹配导航栏列表
-    public static int getNavListId(WebDriver driver,String findName){
-        List<WebElement> list = getNavList(driver,null,"fbgg_menu","li",0);
+    public static int getNavListId(String findName,List<WebElement> list){
         int num = list.size();
-        int result = 0;
+        int result = -1;
         for (int i = 0; i < num; i++) {
-            list = getNavList(driver,null,"fbgg_menu","li",0);
             if(list.get(i).getText().equals(findName)){
                 result = i;
                 break;

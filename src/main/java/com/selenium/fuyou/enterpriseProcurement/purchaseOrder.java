@@ -3,7 +3,6 @@ package com.selenium.fuyou.enterpriseProcurement;
 import com.selenium.supplier.supplier;
 import com.selenium.utils.PropertiesConfig;
 import org.openqa.selenium.*;
-import org.testng.annotations.Test;
 
 import java.util.Set;
 
@@ -21,7 +20,6 @@ public class purchaseOrder {
      * @param startTime 下单开始时间（格式：2016-06-06）
      * @param endTime   下单结束时间（格式：2016-06-06）
      */
-    //@Test
     public void getOrder(WebDriver driver, String orderId, String goodsName, String startTime, String endTime) throws InterruptedException {
         //订单编号
         driver.findElement(By.id("CompanyOrderInformation_txtOrderId")).clear();
@@ -54,7 +52,6 @@ public class purchaseOrder {
      * 订单流程-1：（订单已付款）
      * 申请退款 查看订单
      */
-    //@Test
     public boolean orderProcessRefund(WebDriver driver, String orderId) {
         try {
             Thread.sleep(1000);
@@ -72,7 +69,6 @@ public class purchaseOrder {
     }
 
     //点击查看进入查看页面3秒后关闭查看页面退回到原页面
-    //@Test
     public void lookOrder(WebDriver driver, String orderId) throws InterruptedException {
         //查看 打开一个新页面
         Thread.sleep(1000);
@@ -87,7 +83,6 @@ public class purchaseOrder {
      * 订单流程2：（订单未付款）
      * 查询订单并取消付款
      */
-    //@Test
     public boolean orderProcessCancelPayment(WebDriver driver, String orderId) {
         try {
             //查询订单
@@ -139,7 +134,6 @@ public class purchaseOrder {
      * @param orderId
      * @return
      */
-    //@Test
     public void orderProcess(WebDriver driver, String orderId) {
         try {
             getOrder(driver, orderId, "", "", "");

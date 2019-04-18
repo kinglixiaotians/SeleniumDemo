@@ -3,10 +3,11 @@ package com.selenium.fuyou.announcementManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
+import org.testng.Reporter;
 
 import java.util.List;
 
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.fuyou.fuYouMethod.getNavList;
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 
@@ -14,8 +15,7 @@ public class announcementList {
 
     //region 发布公告
 
-//    @Test
-    public void announcement(WebDriver driver){
+    public boolean announcement(WebDriver driver){
         try{
             Thread.sleep(500);
             driver.findElement(By.xpath("/html/body/div[4]/div[1]/label/a")).click();
@@ -30,8 +30,12 @@ public class announcementList {
             Thread.sleep(500);
             release(driver,"节假日通知","上班");
             Thread.sleep(500);
+            return true;
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("公告发布失败，错误："+e.toString());
+            return false;
         }
     }
 
@@ -97,9 +101,12 @@ public class announcementList {
             flag = isExistBoxOrExistButton(driver,".zeromodal-body.zeromodal-overflow-y",2);
             if(flag){
                 releaseSuccess(driver);
+                Reporter.log("公告发布成功！" + title);
             }
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("公告发布失败，错误："+e.toString());
         }
     }
 
@@ -134,8 +141,7 @@ public class announcementList {
 
     //region 删除公告
 
-//    @Test
-    public void deleteAnnouncement(WebDriver driver){
+    public boolean deleteAnnouncement(WebDriver driver){
         try{
             boolean flag = isExistBoxOrExistButton(driver,"/html/body/div[4]/div[3]/table/tbody/tr[2]/td[7]/a",3);
             if(flag){
@@ -145,14 +151,19 @@ public class announcementList {
                 if(flag){
                     Thread.sleep(500);
                     driver.findElement(By.cssSelector(".zeromodal-btn.zeromodal-btn-primary.anblock")).click();
+                    Reporter.log("公告删除成功！");
+                    return true;
                 }else{
-                    return;
+                    return true;
                 }
             }else{
-                return;
+                return true;
             }
         }catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("公告发布失败，错误："+e.toString());
+            return false;
         }
     }
 
