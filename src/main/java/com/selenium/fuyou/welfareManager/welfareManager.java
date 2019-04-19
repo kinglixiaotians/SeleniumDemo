@@ -74,7 +74,10 @@ public class welfareManager {
             Thread.sleep(1000);
             driver.findElement(By.id("btnSubmit")).click();
             //判断是否发放完成或出现优分不足
-            Thread.sleep(6000);
+
+            while (isExistBoxOrExistButton(driver,"xubox_shade2",0))
+                Thread.sleep(1000);
+
             if (isElementPresent(driver)) {
                 driver.findElement(By.className("zeromodal-close")).click();
             }
@@ -143,7 +146,7 @@ public class welfareManager {
             //修改并上传
             driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             uploadFiles(driver, customNo);
-            Thread.sleep(3000);
+            Thread.sleep(1000);
             //是否优分不足
             if (isElementPresent(driver)) {
                 driver.findElement(By.className("zeromodal-close")).click();
@@ -154,7 +157,7 @@ public class welfareManager {
                 driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
                 //下载分配模板(员工工号)
                 driver.findElement(By.id("Button2")).click();
-                Thread.sleep(3000);
+                Thread.sleep(1000);
                 //修改并上传
                 uploadFiles(driver, customNo);
                 if (isElementPresent(driver)) {

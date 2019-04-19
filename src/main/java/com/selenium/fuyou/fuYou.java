@@ -293,6 +293,8 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("福利发放--失败。错误：" + e.toString());
         }
     }
 
@@ -315,6 +317,8 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("企业收款管理--失败。错误：" + e.toString());
         }
     }
 
@@ -337,6 +341,8 @@ public class fuYou extends DriverBase {
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("一卡通兑换--失败。错误：" + e.toString());
         }
     }
 
