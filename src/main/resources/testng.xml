@@ -3,8 +3,8 @@
 <suite name="All Test Suite" allow-return-values="true" >
     <test verbose="2"  name="D:/IDEA/SeleniumDemo3">
         <classes>
-<!--            <class name="com.selenium.flx.flx">-->
-<!--            </class>-->
+            <class name="com.selenium.flx.flx">
+            </class>
             <class name="com.selenium.fuyou.fuYou">
             </class>
         </classes>

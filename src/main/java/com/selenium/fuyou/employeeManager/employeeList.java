@@ -67,24 +67,23 @@ public class employeeList {
                 Thread.sleep(500);
                 if(s.equals("员工工号已存在") || s.equals("已经存在相同的账号") || s.equals("手机号有误")){
                     addEmpErrorOperation(driver,downList);
-                    Reporter.log("员工添加失败，错误："+s);
                     continue;
                 }
                 driver.findElement(By.className("zeromodal-close")).click();
                 Thread.sleep(500);
                 driver.findElement(By.id("bgcreate")).click();
                 Thread.sleep(500);
+                Reporter.log("员工管理 员工列表 员工添加成功，员工登陆账号：" + e.getPhoneNum());
             }
             boolean flag = isExistBoxOrExistButton(driver,".xubox_layer.xubox_layer_0",2);
             if(flag){
                 driver.findElement(By.xpath("//*[@id=\"xubox_layer1\"]/div[1]/a")).click();
             }
-            Reporter.log("员工添加成功！");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工添加失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工添加失败，错误："+e.toString());
             return false;
         }
     }
@@ -162,13 +161,11 @@ public class employeeList {
                 String s = updateEmpData(driver,new employee("小刚",2,UserIDUtil.getUserId(),"","2019-01-28"));
                 if(s.equals("员工工号已存在") || s.equals(null)){
                     clearEmpData(driver);
-                    Reporter.log("员工信息修改失败，错误：" + s);
                 }else{
                     driver.findElement(By.xpath("//*[@id=\"qyzx_plist\"]/table/tbody/tr[2]/td[6]/a[1]")).click();
                     clearEmpData(driver);
-                    Reporter.log("员工信息修改成功！");
                 }
-                              updateEmpData(driver,new employee("小明",2,UserIDUtil.getUserId(),"","2019-03-23"));
+                updateEmpData(driver,new employee("小明",2,UserIDUtil.getUserId(),"","2019-03-23"));
                 Thread.sleep(500);
                 //关闭多余编辑窗体
                 flag = isExistBoxOrExistButton(driver,".xubox_main.xubox_main_0",2);
@@ -183,14 +180,15 @@ public class employeeList {
                 Thread.sleep(1000);
             }
             else{
-                Reporter.log("员工信息修改成功！");
+                Reporter.log("员工管理 员工列表 员工信息修改成功");
                 return true;
             }
+            Reporter.log("员工管理 员工列表 员工信息修改成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工信息修改失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工信息修改失败，错误："+e.toString());
             return false;
         }
     }
@@ -266,15 +264,14 @@ public class employeeList {
                 eleList.get(0).findElement(By.tagName("a")).click();
                 Thread.sleep(1000);
             }else{
-                Reporter.log("员工删除失败，错误：未知错误");
                 return true;
             }
-            Reporter.log("员工删除成功！");
+            Reporter.log("员工管理 员工列表 员工删除成功");
             return true;
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工删除失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工删除失败，错误："+e.toString());
             return false;
         }
     }
@@ -290,12 +287,12 @@ public class employeeList {
             driver.findElement(By.className("qyzx_key_input")).sendKeys(s);
             driver.findElement(By.className("yqzx_key_search")).click();
             Thread.sleep(1000);
-            Reporter.log("员工查询成功，"+s);
+            Reporter.log("员工管理 员工列表 员工查询成功，查询手机号："+s);
             return true;
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工查询失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工查询失败，错误："+e.toString());
             return false;
         }
     }
@@ -330,7 +327,7 @@ public class employeeList {
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工批量导入失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString());
             return false;
         }
     }
@@ -340,7 +337,6 @@ public class employeeList {
         try{
             if (fileName == null){
                 driver.findElement(By.id("btnImport")).click();
-                Reporter.log("员工批量导入失败，错误：fileName为空");
                 Thread.sleep(500);
             }else{
                 if(isClick){
@@ -360,7 +356,7 @@ public class employeeList {
                         }
                     }
                     driver.findElement(By.id("btnImport")).click();
-                    Reporter.log("员工批量导入成功！");
+                    Reporter.log("员工管理 员工列表 员工批量导入成功，导入文件名：" + fileName);
                 }else{
                     String path = ResourcesUrlUtil.pathUrl(fileName);
                     driver.findElement(By.id("select_btn_1")).sendKeys(path);
@@ -371,7 +367,7 @@ public class employeeList {
             e.printStackTrace();
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工批量导入失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString());
         }
     }
 

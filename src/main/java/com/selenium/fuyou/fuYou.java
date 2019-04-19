@@ -100,7 +100,7 @@ public class fuYou extends DriverBase {
                 Thread.sleep(500);
             }
 
-            Reporter.log("企业账号登陆成功");
+            Reporter.log("企业账号登陆成功--企业号：" + username);
 
             Thread.sleep(500);
             flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
@@ -124,7 +124,7 @@ public class fuYou extends DriverBase {
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("企业账号登陆失败"+username+",错误："+e.toString());
+            Reporter.log("企业账号登陆失败，企业号："+username+",错误："+e.toString());
             return false;
         }
     }
@@ -447,7 +447,7 @@ public class fuYou extends DriverBase {
         }
     }
 
-//    @Test(dependsOnMethods = "electronicInvoiceManager",description = "电子发票")
+    @Test(dependsOnMethods = "electronicInvoiceManager",description = "电子发票",enabled = false)
     public void transactionRecordManager(){
         try{
             Thread.sleep(500);
