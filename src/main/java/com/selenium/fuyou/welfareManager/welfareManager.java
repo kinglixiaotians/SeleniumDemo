@@ -95,7 +95,7 @@ public class welfareManager {
      */
     public boolean multipleprovideWelfare(WebDriver driver, String customNo) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             driver.findElement(By.xpath("/html/body/div[4]/ul/li[2]/a")).click();
             //点击确认提交  提示   请上传分配表格
             Thread.sleep(1000);
@@ -143,7 +143,7 @@ public class welfareManager {
             //修改并上传
             driver.findElement(By.xpath("//*[@id=\"welfareName\"]")).sendKeys("测试" + nowDate());
             uploadFiles(driver, customNo);
-            Thread.sleep(6000);
+            Thread.sleep(3000);
             //是否优分不足
             if (isElementPresent(driver)) {
                 driver.findElement(By.className("zeromodal-close")).click();

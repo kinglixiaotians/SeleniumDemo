@@ -127,7 +127,7 @@ public class flx extends DriverBase {
     @Test(dependsOnMethods = "firstLoginFuYou", description = "激活成功后重新登录 并回复订单")
     public void againLoginFuYou() {
         //激活成功后重新登录
-        if (!fy.login(se.customNo, "123456") || !fy. replyCustomOrder(se.customNo))
+        if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
             driver.findElement(By.id("asdf")).click();
         else
             fy.driver.close();
@@ -165,7 +165,6 @@ public class flx extends DriverBase {
      */
     @Test(dependsOnMethods = "queryDetail", description = "特殊开户")
     public void specialOpenCustom_1() {
-        flx();
         //判断是否开启特殊开户
         if (Boolean.parseBoolean(flxOpenSwitch)) {
             Reporter.log("-----------以下为特殊开户。");
@@ -201,7 +200,7 @@ public class flx extends DriverBase {
         if (!order.checkOrder(se.customNo, driver))
             return false;
         //首次登录激活企业
-        fuYou fy=new fuYou();
+        fuYou fy = new fuYou();
         if (!fy.login(se.customNo, "123456"))
             return false;
         //激活成功后重新登录 并回复订单

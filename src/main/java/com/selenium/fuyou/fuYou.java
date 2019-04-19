@@ -287,8 +287,7 @@ public class fuYou extends DriverBase {
                 navIndex = getNavListId("福利发放",aList);
                 if(navIndex != -1){
                     aList.get(navIndex).findElement(By.tagName("a")).click();
-                    if(!provideWelfare())
-                        driver.findElement(By.id("asdf")).click();
+                    provideWelfare();
                 }
             }
             Thread.sleep(500);
@@ -310,8 +309,7 @@ public class fuYou extends DriverBase {
                 navIndex = getNavListId("企业收款管理",aList);
                 if(navIndex != -1){
                     aList.get(navIndex).findElement(By.tagName("a")).click();
-                    if(!w.companyGatheringQrcode(driver, username))
-                        driver.findElement(By.id("asdf")).click();
+                    w.companyGatheringQrcode(driver, username);
                 }
             }
             Thread.sleep(500);
@@ -333,8 +331,7 @@ public class fuYou extends DriverBase {
                 navIndex = getNavListId("一卡通兑换",aList);
                 if(navIndex != -1){
                     aList.get(navIndex).findElement(By.tagName("a")).click();
-                    if(!w.companyCardPassExchange(driver, username))
-                        driver.findElement(By.id("asdf")).click();
+                    w.companyCardPassExchange(driver, username);
                 }
             }
             Thread.sleep(500);
@@ -444,7 +441,7 @@ public class fuYou extends DriverBase {
         }
     }
 
-    @Test(dependsOnMethods = "electronicInvoiceManager",description = "电子发票")
+//    @Test(dependsOnMethods = "electronicInvoiceManager",description = "电子发票")
     public void transactionRecordManager(){
         try{
             Thread.sleep(500);
@@ -473,7 +470,7 @@ public class fuYou extends DriverBase {
 
     //region 对账单
 
-    @Test(dependsOnMethods = "transactionRecordManager",description = "对账单")
+    @Test(dependsOnMethods = "electronicInvoiceManager",description = "对账单")
     public void accountStatementManager(){
         try{
             Thread.sleep(500);

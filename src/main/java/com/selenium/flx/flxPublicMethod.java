@@ -67,6 +67,9 @@ public class flxPublicMethod {
         }
     }
 
+    //ReportNG 只能显示字符而无法显示成链接，则取消注释
+    private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";
+
     //失败原因图片截取并加入日志
     public static void taskScreenShot(WebDriver driver){
         long date = System.currentTimeMillis();
@@ -82,8 +85,12 @@ public class flxPublicMethod {
         }catch (IOException e){
             e.printStackTrace();
         }
-        Reporter.log("< a href= " + screenPath + " target=_blank>失败原因图片</ a>", true);
-//        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>", true);
+
+        //ReportNG 只能显示字符而无法显示成链接，则取消注释
+        System.setProperty(ESCAPE_PROPERTY, "false");
+
+        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>", true);
+//        Reporter.log("< a href= " + screenPath + " target=_blank>失败原因图片</ a>", true);
 //        Reporter.log("<img src=" + screenPath +">", true);
 //        Reporter.log("失败图片地址为"+screenPath);
 //        Reporter.log("<img src=\"../../" + screenPath + "\"/>");
