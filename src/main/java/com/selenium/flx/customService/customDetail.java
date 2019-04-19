@@ -28,14 +28,14 @@ public class customDetail {
             driver.switchTo().defaultContent();
             driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[1]/div[1]/p/span[2]/a[2]")).click();
             if (journal) {
-                Reporter.log("客服明细查询--企业：" + customNo + "，" + str);
+                Reporter.log("客服明细查询--企业：" + customNo + "，" + str+"<br/>");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("客服明细查询失败--企业：" + customNo + "。错误：" + e.toString());
+                Reporter.log("客服明细查询失败--企业：" + customNo + "。错误：" + e.toString()+"<br/>");
             }
             return false;
         }

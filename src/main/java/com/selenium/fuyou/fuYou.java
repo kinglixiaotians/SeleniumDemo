@@ -100,7 +100,7 @@ public class fuYou extends DriverBase {
                 Thread.sleep(500);
             }
 
-            Reporter.log("企业账号登陆成功--企业号：" + username);
+            Reporter.log("企业账号登陆成功--企业号：" + username+"<br/>");
 
             Thread.sleep(500);
             flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
@@ -124,7 +124,7 @@ public class fuYou extends DriverBase {
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("企业账号登陆失败，企业号："+username+",错误："+e.toString());
+            Reporter.log("企业账号登陆失败，企业号："+username+",错误："+e.toString()+"<br/>");
             return false;
         }
     }
@@ -186,7 +186,7 @@ public class fuYou extends DriverBase {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("fuyou登录失败。错误：" + e.toString());
+                Reporter.log("fuyou登录失败。错误：" + e.toString()+"<br/>");
             }
             return false;
         }
@@ -294,7 +294,7 @@ public class fuYou extends DriverBase {
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("福利发放--失败。错误：" + e.toString());
+            Reporter.log("福利发放--失败。错误：" + e.toString()+"<br/>");
         }
     }
 
@@ -318,7 +318,7 @@ public class fuYou extends DriverBase {
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("企业收款管理--失败。错误：" + e.toString());
+            Reporter.log("企业收款管理--失败。错误：" + e.toString()+"<br/>");
         }
     }
 
@@ -342,7 +342,7 @@ public class fuYou extends DriverBase {
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("一卡通兑换--失败。错误：" + e.toString());
+            Reporter.log("一卡通兑换--失败。错误：" + e.toString()+"<br/>");
         }
     }
 
@@ -380,7 +380,7 @@ public class fuYou extends DriverBase {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("回复企业订单--企业号：" + customNo + "--失败。错误：" + e.toString());
+                Reporter.log("回复企业订单--企业号：" + customNo + "--失败。错误：" + e.toString()+"<br/>");
             }
             return false;
         }

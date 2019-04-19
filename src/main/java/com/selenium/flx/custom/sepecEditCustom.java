@@ -121,7 +121,7 @@ public class sepecEditCustom {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("添加客户信息失败。错误：" + e.toString());
+                Reporter.log("添加客户信息失败。错误：" + e.toString()+"<br/>");
             }
             return false;
         }
@@ -171,7 +171,7 @@ public class sepecEditCustom {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("添加客户信息失败。错误：" + e.toString());
+                Reporter.log("添加客户信息失败。错误：" + e.toString()+"<br/>");
             }
             return false;
         }
@@ -191,15 +191,14 @@ public class sepecEditCustom {
             driver.findElement(By.xpath("//*[@class='mini-messagebox-buttons']/a[2]")).click();
             driver.switchTo().defaultContent();
             if (journal) {
-                log.info("客户管理--企业:" + customNo + "--开户成功");
-                Reporter.log("客户管理--企业:" + customNo + "--开户成功");
+                Reporter.log("客户管理--企业:" + customNo + "--开户成功"+"<br/>");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("客户管理--开户失败。" + e.toString());
+                Reporter.log("客户管理--开户失败。" + e.toString()+"<br/>");
             }
             return false;
         }

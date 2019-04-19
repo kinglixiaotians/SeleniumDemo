@@ -36,9 +36,15 @@ public class flx extends DriverBase {
     private String flxOpenSwitch = PropertiesConfig.getInstance().getProperty("driver.flx.openSwitch");
     //是否打印日志
     public static boolean journal = true;
+    //ReportNG 只能显示字符而无法显示成链接，则取消注释
+    private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";
 
     @Test
     public void flx() {
+
+        //ReportNG 只能显示字符而无法显示成链接，则取消注释
+        System.setProperty(ESCAPE_PROPERTY, "false");
+
         //chrom插件路径
         driver.get(flxUrl);
         driver.manage().window().maximize();
@@ -62,13 +68,14 @@ public class flx extends DriverBase {
             driver.findElement(By.className("log")).click();
             Thread.sleep(500);
             if (journal) {
-                Reporter.log("登入flx成功");
+                Reporter.log("登入flx成功<br/>");
             }
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("登录flx。错误：" + e.toString());
+                Reporter.log("登录flx。失败。错误：" + e.toString() + "<br/>");
+                driver.findElement(By.id("asdf")).click();
             }
         }
     }
@@ -167,22 +174,22 @@ public class flx extends DriverBase {
     public void specialOpenCustom_1() {
         //判断是否开启特殊开户
         if (Boolean.parseBoolean(flxOpenSwitch)) {
-            Reporter.log("-----------以下为特殊开户。");
+            Reporter.log("-----------以下为特殊开户。"+"<br/>");
             journal = false;
 
             login();
             if (se.custom01(driver) && specialOpenCustomProcedure())
-                Reporter.log("特殊开户1----开户并充值一千万优分成功。企业号：" + se.customNo);
+                Reporter.log("特殊开户1----开户并充值一千万优分成功。企业号：" + se.customNo+"<br/>");
             else
-                Reporter.log("特殊开户1----开户失败");
+                Reporter.log("特殊开户1----开户失败"+"<br/>");
 
             login();
             if (se.custom02(driver) && specialOpenCustomProcedure())
-                Reporter.log("特殊开户2----开户并充值一千万优分成功。企业号：" + se.customNo);
+                Reporter.log("特殊开户2----开户并充值一千万优分成功。企业号：" + se.customNo+"<br/>");
             else
-                Reporter.log("特殊开户1----开户失败");
+                Reporter.log("特殊开户1----开户失败"+"<br/>");
         } else {
-            Reporter.log("特殊开户未开启");
+            Reporter.log("特殊开户未开启"+"<br/>");
         }
     }
 

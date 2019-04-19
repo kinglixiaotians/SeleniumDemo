@@ -82,13 +82,12 @@ public class welfareManager {
                 driver.findElement(By.className("zeromodal-close")).click();
             }
             Thread.sleep(1000);
-            log.info("单个福利发放成功--企业号：{}", customNo);
-            Reporter.log("单个福利发放成功");
+            Reporter.log("单个福利发放成功"+"<br/>");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("单个福利发放失败。错误：" + e.toString());
+            Reporter.log("单个福利发放失败。错误：" + e.toString()+"<br/>");
             return false;
         }
     }
@@ -165,13 +164,12 @@ public class welfareManager {
                     waitClick(driver, "zeromodal-close", 1);
                 }
             }
-            log.info("批量福利发放成功--企业号：{}", customNo);
-            Reporter.log("批量福利发放成功。");
+            Reporter.log("批量福利发放成功。"+"<br/>");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("批量福利发放失败。错误：" + e.toString());
+            Reporter.log("批量福利发放失败。错误：" + e.toString()+"<br/>");
             return false;
         }
     }
@@ -259,15 +257,14 @@ public class welfareManager {
             Thread.sleep(1000);
             driver.findElement(By.name("btnReply")).click();
             if (journal) {
-                log.info("回复企业订单--企业号：{}--成功", customNo);
-                Reporter.log("回复企业订单成功，企业号：" + customNo);
+                Reporter.log("回复企业订单成功，企业号：" + customNo+"<br/>");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("回复企业订单失败。错误：" + e.toString());
+                Reporter.log("回复企业订单失败。错误：" + e.toString()+"<br/>");
             }
             return false;
         }
@@ -301,13 +298,12 @@ public class welfareManager {
             Thread.sleep(1000);
             waitClick(driver, "/html/body/div[5]/div/div[3]/button[2]", 3);
             Thread.sleep(1000);
-            log.info("企业收款管理测试成功--企业号：{}", customNo);
-            Reporter.log("企业收款管理测试成功，企业号：" + customNo);
+            Reporter.log("企业收款管理测试成功，企业号：" + customNo+"<br/>");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("企业收款管理测试失败。错误：" + e.toString());
+            Reporter.log("企业收款管理测试失败。错误：" + e.toString()+"<br/>");
             return false;
         }
     }
@@ -478,18 +474,16 @@ public class welfareManager {
             Thread.sleep(1000);
             if (isExistBoxOrExistButton(driver, "zeromodal-title1", 1)) {
                 if ("企业余额不足".equals(driver.findElement(By.className("zeromodal-title1")).getText())) {
-                    log.info("一卡通兑换失败，企业余额不足");
-                    Reporter.log("一卡通兑换失败，企业余额不足");
+                    Reporter.log("一卡通兑换失败，企业余额不足"+"<br/>");
                     return false;
                 }
             }
-            Reporter.log("一卡通兑换成功");
+            Reporter.log("一卡通兑换成功"+"<br/>");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("一卡通兑换失败");
             taskScreenShot(driver);
-            Reporter.log("一卡通兑换失败。错误：" + e.toString());
+            Reporter.log("一卡通兑换失败。错误：" + e.toString()+"<br/>");
             return false;
         }
     }

@@ -34,7 +34,7 @@ public class editCustom {
         } catch (Exception e) {
             taskScreenShot(driver);
             if (journal) {
-                Reporter.log("客户管理 查询用户失败。错误：" + e.toString());
+                Reporter.log("客户管理 查询用户失败。错误：" + e.toString()+"<br/>");
                 e.printStackTrace();
             }
             return false;
@@ -62,14 +62,13 @@ public class editCustom {
             driver.findElement(By.id("mini-119")).click();
             driver.switchTo().defaultContent();
             if (journal) {
-                log.info("客户管理--企业:{}已审核", customNo);
-                Reporter.log("企业审核成功，企业号为：" + customNo);
+                Reporter.log("企业审核成功，企业号为：" + customNo+"<br/>");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
-                Reporter.log("客户管理--企业:" + customNo + "审核失败。错误：" + e.toString());
+                Reporter.log("客户管理--企业:" + customNo + "审核失败。错误：" + e.toString()+"<br/>");
             }
             return false;
         }

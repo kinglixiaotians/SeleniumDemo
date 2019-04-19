@@ -19,13 +19,14 @@ public class flxPublicMethod {
 
     /**
      * 清除框内数据并重新赋值
+     *
      * @param driver
      * @param byState id , xpath , className , cssSelector
      * @param url
      * @param value
      */
     public static void updateInput(WebDriver driver, String byState, String url, String value) {
-        switch (byState){
+        switch (byState) {
             case "id":
                 driver.findElement(By.id(url)).clear();
                 driver.findElement(By.id(url)).sendKeys(value);
@@ -47,49 +48,45 @@ public class flxPublicMethod {
     }
 
     //出现此元素就点击若不出现则一直等（每一秒判断一次）
-    public static void waitClick(WebDriver driver,String url,int num) throws InterruptedException {
+    public static void waitClick(WebDriver driver, String url, int num) throws InterruptedException {
         while (!isExistBoxOrExistButton(driver, url, num)) {
             Thread.sleep(1000);
         }
-        switch (num){
-            case 0 :
+        switch (num) {
+            case 0:
                 driver.findElement(By.id(url)).click();
                 break;
-            case 1 :
+            case 1:
                 driver.findElement(By.className(url)).click();
                 break;
-            case 2 :
+            case 2:
                 driver.findElement(By.cssSelector(url)).click();
                 break;
-            case 3 :
+            case 3:
                 driver.findElement(By.xpath(url)).click();
                 break;
         }
     }
 
-    //ReportNG 只能显示字符而无法显示成链接，则取消注释
-    private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";
 
     //失败原因图片截取并加入日志
-    public static void taskScreenShot(WebDriver driver){
+    public static void taskScreenShot(WebDriver driver) {
         long date = System.currentTimeMillis();
         String path = String.valueOf(date);
         String cusPath = System.getProperty("user.dir");
-        path = path+".png";
-        String screenPath = cusPath+"/"+path;
+        path = path + ".png";
+        String screenPath = cusPath + "/" + path;
         System.out.println(screenPath);
         //实现截图
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(file,new File(screenPath));
-        }catch (IOException e){
+            FileUtils.copyFile(file, new File(screenPath));
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //ReportNG 只能显示字符而无法显示成链接，则取消注释
-        System.setProperty(ESCAPE_PROPERTY, "false");
 
-        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>", true);
+        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>" + "<br/>", true);
 //        Reporter.log("< a href= " + screenPath + " target=_blank>失败原因图片</ a>", true);
 //        Reporter.log("<img src=" + screenPath +">", true);
 //        Reporter.log("失败图片地址为"+screenPath);

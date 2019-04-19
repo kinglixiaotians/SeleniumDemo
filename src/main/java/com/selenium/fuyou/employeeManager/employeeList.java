@@ -73,7 +73,7 @@ public class employeeList {
                 Thread.sleep(500);
                 driver.findElement(By.id("bgcreate")).click();
                 Thread.sleep(500);
-                Reporter.log("员工管理 员工列表 员工添加成功，员工登陆账号：" + e.getPhoneNum());
+                Reporter.log("员工管理 员工列表 员工添加成功，员工登陆账号：" + e.getPhoneNum()+"<br/>");
             }
             boolean flag = isExistBoxOrExistButton(driver,".xubox_layer.xubox_layer_0",2);
             if(flag){
@@ -83,7 +83,7 @@ public class employeeList {
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工管理 员工列表 员工添加失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工添加失败，错误："+e.toString()+"<br/>");
             return false;
         }
     }
@@ -180,15 +180,15 @@ public class employeeList {
                 Thread.sleep(1000);
             }
             else{
-                Reporter.log("员工管理 员工列表 员工信息修改成功");
+                Reporter.log("员工管理 员工列表 员工信息修改成功"+"<br/>");
                 return true;
             }
-            Reporter.log("员工管理 员工列表 员工信息修改成功");
+            Reporter.log("员工管理 员工列表 员工信息修改成功"+"<br/>");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工管理 员工列表 员工信息修改失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工信息修改失败，错误："+e.toString()+"<br/>");
             return false;
         }
     }
@@ -266,12 +266,12 @@ public class employeeList {
             }else{
                 return true;
             }
-            Reporter.log("员工管理 员工列表 员工删除成功");
+            Reporter.log("员工管理 员工列表 员工删除成功"+"<br/>");
             return true;
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工管理 员工列表 员工删除失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工删除失败，错误："+e.toString()+"<br/>");
             return false;
         }
     }
@@ -287,12 +287,12 @@ public class employeeList {
             driver.findElement(By.className("qyzx_key_input")).sendKeys(s);
             driver.findElement(By.className("yqzx_key_search")).click();
             Thread.sleep(1000);
-            Reporter.log("员工管理 员工列表 员工查询成功，查询手机号："+s);
+            Reporter.log("员工管理 员工列表 员工查询成功，查询手机号："+s+"<br/>");
             return true;
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工管理 员工列表 员工查询失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工查询失败，错误："+e.toString()+"<br/>");
             return false;
         }
     }
@@ -327,7 +327,7 @@ public class employeeList {
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString()+"<br/>");
             return false;
         }
     }
@@ -356,7 +356,7 @@ public class employeeList {
                         }
                     }
                     driver.findElement(By.id("btnImport")).click();
-                    Reporter.log("员工管理 员工列表 员工批量导入成功，导入文件名：" + fileName);
+                    Reporter.log("员工管理 员工列表 员工批量导入成功，导入文件名：" + fileName+"<br/>");
                 }else{
                     String path = ResourcesUrlUtil.pathUrl(fileName);
                     driver.findElement(By.id("select_btn_1")).sendKeys(path);
@@ -367,7 +367,7 @@ public class employeeList {
             e.printStackTrace();
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString());
+            Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString()+"<br/>");
         }
     }
 
