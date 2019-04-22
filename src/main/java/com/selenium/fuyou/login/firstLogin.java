@@ -17,7 +17,6 @@ public class firstLogin {
      */
     public boolean verificationCustom(WebDriver driver, String custom) {
         try {
-            Thread.sleep(2000);
             //短信确认
             driver.findElement(By.id("sendcodebt")).click();
             //获取手机验证码

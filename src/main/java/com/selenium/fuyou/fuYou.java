@@ -52,8 +52,15 @@ public class fuYou extends DriverBase {
     announcementList notice = new announcementList();
     accountStatement as = new accountStatement();
 
+    //ReportNG 只能显示字符而无法显示成链接，则取消注释
+    private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";
+
     @Test
     public void fuYouTest() {
+
+        //ReportNG 只能显示字符而无法显示成链接，则取消注释
+        System.setProperty(ESCAPE_PROPERTY, "false");
+
         driver.get(fuYouUrl);
         driver.manage().window().maximize();
     }
@@ -131,6 +138,10 @@ public class fuYou extends DriverBase {
 
     public boolean login(String username, String password) {
         try {
+
+            //ReportNG 只能显示字符而无法显示成链接，则取消注释
+            System.setProperty(ESCAPE_PROPERTY, "false");
+
             driver.get(fuYouUrl);
             driver.manage().window().maximize();
             loginValidate log = new loginValidate();
@@ -279,14 +290,16 @@ public class fuYou extends DriverBase {
                 navIndex = getNavListId("福利发放",aList);
                 if(navIndex != -1){
                     aList.get(navIndex).findElement(By.tagName("a")).click();
-                    provideWelfare();
+                    if (!provideWelfare())
+                        driver.findElement(By.id("asdf")).click();
                 }
             }
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("福利发放--失败。错误：" + e.toString()+"<br/>");
+            Reporter.log("福利发放--失败。错误：" + e.toString() + "<br/>");
+            driver.findElement(By.id("asdf")).click();
         }
     }
 
@@ -303,14 +316,16 @@ public class fuYou extends DriverBase {
                 navIndex = getNavListId("企业收款管理",aList);
                 if(navIndex != -1){
                     aList.get(navIndex).findElement(By.tagName("a")).click();
-                    w.companyGatheringQrcode(driver, username);
+                    if (!w.companyGatheringQrcode(driver, username))
+                        driver.findElement(By.id("asdf")).click();
                 }
             }
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("企业收款管理--失败。错误：" + e.toString()+"<br/>");
+            Reporter.log("企业收款管理--失败。错误：" + e.toString() + "<br/>");
+            driver.findElement(By.id("asdf")).click();
         }
     }
 
@@ -327,14 +342,16 @@ public class fuYou extends DriverBase {
                 navIndex = getNavListId("一卡通兑换",aList);
                 if(navIndex != -1){
                     aList.get(navIndex).findElement(By.tagName("a")).click();
-                    w.companyCardPassExchange(driver, username);
+                    if(!w.companyCardPassExchange(driver, username))
+                        driver.findElement(By.id("asdf")).click();
                 }
             }
             Thread.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
             taskScreenShot(driver);
-            Reporter.log("一卡通兑换--失败。错误：" + e.toString()+"<br/>");
+            Reporter.log("一卡通兑换--失败。错误：" + e.toString() + "<br/>");
+            driver.findElement(By.id("asdf")).click();
         }
     }
 

@@ -578,7 +578,7 @@ public class enterpriseProcurement {
                     Thread.sleep(1000);
                     driver.findElement(By.className("zeromodal-close")).click();
                     while(!s.equals("发送成功!")){
-                        Thread.sleep(60000);
+                        Thread.sleep(5000);
                         driver.findElement(By.id("btnyzm")).click();
                         Thread.sleep(500);
                         s = driver.findElement(By.className("zeromodal-title1")).getText();
