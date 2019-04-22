@@ -4,11 +4,11 @@ import com.selenium.utils.PropertiesConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
+import org.testng.Reporter;
 
 import java.util.List;
 
-import static com.selenium.fuyou.fuYouMethod.getNavList;
+import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 
 public class orderManager {
 
@@ -17,7 +17,6 @@ public class orderManager {
 
 
     //发货操作
-    //@Test
     public boolean deliverGoods(WebDriver driver, String orderId) {
         try {
             driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/a[2]")).click();
@@ -44,9 +43,12 @@ public class orderManager {
             Thread.sleep(1000);
             //发货
             driver.findElement(By.id("ctl00_contentHolder_btnSendGoods")).click();
+            Reporter.log("登录供应商发货成功。快递名称：" + expressName + "。 快递单号：" + expressOrderId + "<br/>");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            taskScreenShot(driver);
+            Reporter.log("员工管理 员工列表 员工删除失败，错误：" + e.toString() + "<br/>");
             return false;
         }
     }

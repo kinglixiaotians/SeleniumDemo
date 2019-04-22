@@ -17,13 +17,12 @@ public class supplier extends DriverBase {
     private String supplierUsername = PropertiesConfig.getInstance().getProperty("supplier.username");
     private String supplierPassword = PropertiesConfig.getInstance().getProperty("supplier.password");
 
+    //ReportNG 只能显示字符而无法显示成链接，则取消注释
+    private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";
 
     /**
      * 已开tab页登录供应商
-     *
-     * @param driver
      */
-   // @Test
     public void tabLogin(WebDriver driver) throws InterruptedException {
         //隐式等待,10秒内不出现就报错
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -43,16 +42,18 @@ public class supplier extends DriverBase {
         driver.findElement(By.id("btnAdminLogin")).click();
     }
 
-    //用已开的tab页登录并给订单orderId发货
-   // @Test
+    /**
+     * 用已开的tab页登录并给订单orderId发货
+     */
     public boolean giveExpress(WebDriver driver, String orderId) {
         try {
+            //ReportNG 只能显示字符而无法显示成链接，则取消注释
+            System.setProperty(ESCAPE_PROPERTY, "false");
             //登录
             tabLogin(driver);
             orderManager o = new orderManager();
             //发货
-            o.deliverGoods(driver, orderId);
-            return true;
+            return o.deliverGoods(driver, orderId);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

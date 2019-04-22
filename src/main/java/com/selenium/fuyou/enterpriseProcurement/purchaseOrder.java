@@ -134,7 +134,7 @@ public class purchaseOrder {
      * @param orderId
      * @return
      */
-    public void orderProcess(WebDriver driver, String orderId) {
+    public boolean orderProcess(WebDriver driver, String orderId) {
         try {
             getOrder(driver, orderId, "", "", "");
             Thread.sleep(500);
@@ -148,7 +148,7 @@ public class purchaseOrder {
             //进行付款操作
             enterpriseProcurement ep = new enterpriseProcurement();
             boolean flag = ep.payment(driver);
-            if(flag){
+            if (flag) {
                 //关闭当前页面 重新定位到原页面（采购订单页面）
                 returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
 
@@ -162,7 +162,8 @@ public class purchaseOrder {
                 Thread.sleep(500);
                 //登录供应商发货
                 supplier s = new supplier();
-                s.giveExpress(driver, orderId);
+                if (!s.giveExpress(driver, orderId))
+                    return false;
                 //关闭当前页面 重新定位到原页面（采购订单页面）
                 returnOldPage(driver, oldHandle, PropertiesConfig.getInstance().getProperty("driver.fuYou.url") + "Company/CompanyOrderInformation");
 
@@ -180,10 +181,11 @@ public class purchaseOrder {
                 //点击确定
                 Thread.sleep(1000);
                 alt.accept();
-
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 }
