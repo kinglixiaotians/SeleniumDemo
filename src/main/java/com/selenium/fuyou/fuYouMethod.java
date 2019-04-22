@@ -56,7 +56,6 @@ public class fuYouMethod {
             List<WebElement> liList = element.findElements(By.tagName(findTagName));
             return liList;
         }catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }

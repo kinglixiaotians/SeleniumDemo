@@ -197,8 +197,7 @@ public class fuYou extends DriverBase {
     //region 员工管理
 
     @Test(dependsOnMethods = "login",description = "部门列表")
-    public void departmentList(){
-        try{
+    public void departmentList() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
             navIndex = getNavListId("员工管理",list);
@@ -224,14 +223,10 @@ public class fuYou extends DriverBase {
                 }
             }
             Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Test(dependsOnMethods = "departmentList",description = "员工列表")
-    public void employeeList() {
-        try{
+    public void employeeList() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
             navIndex = getNavListId("员工管理",list);
@@ -265,9 +260,6 @@ public class fuYou extends DriverBase {
                 }
             }
             Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     //endregion
@@ -275,7 +267,7 @@ public class fuYou extends DriverBase {
     //region 福利管理
 
     @Test(dependsOnMethods = "employeeList",description = "福利发放")
-    public void welfarePayment(){
+    public void welfarePayment() throws Exception {
         try{
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
@@ -299,7 +291,7 @@ public class fuYou extends DriverBase {
     }
 
     @Test(dependsOnMethods = "welfarePayment",description = "企业收款管理")
-    public void enterpriseReceiptManager(){
+    public void enterpriseReceiptManager() throws Exception {
         try{
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
@@ -323,7 +315,7 @@ public class fuYou extends DriverBase {
     }
 
     @Test(dependsOnMethods = "enterpriseReceiptManager",description = "一卡通兑换")
-    public void cardExchange(){
+    public void cardExchange() throws Exception {
         try{
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
@@ -392,8 +384,7 @@ public class fuYou extends DriverBase {
     //region 公告管理
 
     @Test(dependsOnMethods = "cardExchange",description = "公告管理")
-    public void announcementManager(){
-        try{
+    public void announcementManager() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
             navIndex = getNavListId("公告管理",list);
@@ -413,9 +404,6 @@ public class fuYou extends DriverBase {
                 }
             }
             Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     //endregion
@@ -423,8 +411,7 @@ public class fuYou extends DriverBase {
     //region 交易管理
 
     @Test(dependsOnMethods = "announcementManager",description = "交易记录")
-    public void electronicInvoiceManager(){
-        try{
+    public void electronicInvoiceManager() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
             navIndex = getNavListId("交易管理",list);
@@ -442,14 +429,10 @@ public class fuYou extends DriverBase {
                 }
             }
             Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Test(dependsOnMethods = "electronicInvoiceManager",description = "电子发票",enabled = false)
-    public void transactionRecordManager(){
-        try{
+    public void transactionRecordManager() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
             navIndex = getNavListId("交易管理",list);
@@ -467,9 +450,6 @@ public class fuYou extends DriverBase {
                 }
             }
             Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     //endregion
@@ -477,8 +457,7 @@ public class fuYou extends DriverBase {
     //region 对账单
 
     @Test(dependsOnMethods = "electronicInvoiceManager",description = "对账单")
-    public void accountStatementManager(){
-        try{
+    public void accountStatementManager() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);
             navIndex = getNavListId("对账单",list);
@@ -489,9 +468,6 @@ public class fuYou extends DriverBase {
                 }
             }
             Thread.sleep(500);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     //endregion
@@ -499,46 +475,42 @@ public class fuYou extends DriverBase {
     //region 企业采购
 
     @Test(dependsOnMethods = "accountStatementManager",description = "企业采购")
-    public void enterpriseProcurementInterface() {
-        try{
+    public void enterpriseProcurementInterface() throws Exception {
+        Thread.sleep(500);
+        list = getNavList(driver,null,"fbgg_menu","li",0);
+        navIndex = getNavListId("企业采购",list);
+        if(navIndex != -1){
+            mouse.moveToElement(list.get(navIndex)).perform();
             Thread.sleep(500);
-            list = getNavList(driver,null,"fbgg_menu","li",0);
-            navIndex = getNavListId("企业采购",list);
+            aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+            navIndex = getNavListId("企业采购",aList);
             if(navIndex != -1){
-                mouse.moveToElement(list.get(navIndex)).perform();
-                Thread.sleep(500);
-                aList = getNavList(driver,list.get(navIndex),"", "li", 0);
-                navIndex = getNavListId("企业采购",aList);
-                if(navIndex != -1){
-                    aList.get(navIndex).findElement(By.tagName("a")).click();
+                aList.get(navIndex).findElement(By.tagName("a")).click();
                     //新增企业采购地址
-                    if(!ep.isHaveAddress(driver)){
-                        driver.findElement(By.id("1111")).click();
-                    }
-                    //修改企业采购地址
-                    if(!ep.updateAddress(driver)){
-                        driver.findElement(By.id("1111")).click();
-                    }
-                    //删除企业采购地址
-                    if(!ep.deleteAddress(driver)){
-                        driver.findElement(By.id("1111")).click();
-                    }
-                    ///查找商品
-                    if(!ep.navMenu(driver)){
-                        driver.findElement(By.id("1111")).click();
-                    }
-                    if(!ep.searchProduct(driver)){
-                        driver.findElement(By.id("1111")).click();
-                    }
-                    //商品购买
-                    if(!ep.purchaseGoods(driver)){
-                        driver.findElement(By.id("1111")).click();
-                    }
+                if(!ep.isHaveAddress(driver)){
+                    driver.findElement(By.id("1111")).click();
                 }
-                Thread.sleep(500);
+                    //修改企业采购地址
+                if(!ep.updateAddress(driver)){
+                    driver.findElement(By.id("1111")).click();
+                }
+                    //删除企业采购地址
+                if(!ep.deleteAddress(driver)){
+                    driver.findElement(By.id("1111")).click();
+                }
+                    ///查找商品
+                if(!ep.navMenu(driver)){
+                    driver.findElement(By.id("1111")).click();
+                }
+                if(!ep.searchProduct(driver)){
+                    driver.findElement(By.id("1111")).click();
+                }
+                    //商品购买
+                if(!ep.purchaseGoods(driver)){
+                    driver.findElement(By.id("1111")).click();
+                }
             }
-        }catch (Exception e){
-            e.printStackTrace();
+            Thread.sleep(500);
         }
     }
 

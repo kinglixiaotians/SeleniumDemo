@@ -308,19 +308,31 @@ public class employeeList {
             Thread.sleep(1000);
             driver.findElement(By.xpath("/html/body/div[4]/div[3]/div[7]/a")).click();
             Thread.sleep(1000);
-            batchImportEmpData(driver,null,false);//空模板错误示例
+            batchImportEmpData(driver,null);//空模板错误示例
             Thread.sleep(500);
-            batchImportEmpData(driver, PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl3"),false);//格式错误示例
+            batchImportEmpData(driver, PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl3"));//格式错误示例
             Thread.sleep(500);
-            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl2"),false);//模板数据未通过示例
+            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl2"));//模板数据未通过示例
             Thread.sleep(500);
-            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"),true);//模板数据为空示例
+            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl1"));//模板数据为空示例
             Thread.sleep(500);
-            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"),true);//成功示例，需模板内数据可以通过
+            batchImportEmpData(driver,PropertiesConfig.getInstance().getProperty("fuYou.employeeImportUrl"));//成功示例，需模板内数据可以通过
+            Thread.sleep(500);
+
+            List<WebElement> eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
+            if(eleList == null){
+                Actions mouse = new Actions(driver);
+                List<WebElement> list = getNavList(driver,null,"fbgg_menu","li",0);
+                int navIndex = getNavListId("员工管理",list);
+                mouse.moveToElement(list.get(navIndex)).perform();
+                List<WebElement> aList = getNavList(driver,list.get(navIndex),"", "li", 0);
+                navIndex = getNavListId("员工列表",aList);
+                aList.get(navIndex).findElement(By.tagName("a")).click();
+            }
             Thread.sleep(500);
 
             //分类跳转操作
-            List<WebElement> eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
+            eleList = getNavList(driver,null,".qyzx_bm.bm_menu","li",2);
             eleList.get(2).findElement(By.tagName("a")).click();
             Thread.sleep(1000);
             return true;
@@ -332,58 +344,44 @@ public class employeeList {
         }
     }
 
-    //上传文件选择
-    public void batchImportEmpData(WebDriver driver,String fileName,boolean isClick){
+    public void batchImportEmpData(WebDriver driver,String fileName){
         try{
-            if (fileName == null){
+            if(fileName == null){
                 driver.findElement(By.id("btnImport")).click();
                 Thread.sleep(500);
-            }else{
-                if(isClick){
-                    String path = ResourcesUrlUtil.pathUrl(fileName);
-                    driver.findElement(By.id("select_btn_1")).sendKeys(path);
+                boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
+                if(flag){
                     Thread.sleep(500);
-                    if(fileName.equals("fuyou\\员工导入模板.xls")){
-                        boolean flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
-                        if(flag){
-                            Thread.sleep(1000);
-                            driver.findElement(By.className("zeromodal-close")).click();
-                            Thread.sleep(500);
-                            Actions mouse = new Actions(driver);
-                            mouse.moveToElement(driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/a"))).perform();
-                            driver.findElement(By.xpath("//*[@id=\"fbgg_menu\"]/li[3]/ul/li[1]/a")).click();
-                            return;
-                        }
-                    }
-                    driver.findElement(By.id("btnImport")).click();
-                    Reporter.log("员工管理 员工列表 员工批量导入成功，导入文件名：" + fileName+"<br/>");
-                }else{
-                    String path = ResourcesUrlUtil.pathUrl(fileName);
-                    driver.findElement(By.id("select_btn_1")).sendKeys(path);
+                    driver.findElement(By.className("zeromodal-close")).click();
+                }
+            }else{
+                driver.findElement(By.id("select_btn_1")).sendKeys(ResourcesUrlUtil.pathUrl(fileName));
+                Thread.sleep(500);
+                boolean flag = isAlertPresent(driver);
+                Thread.sleep(1000);
+                if(flag){
+                    driver.switchTo().alert().accept();
+                    return;
+                }
+                Thread.sleep(500);
+                flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
+                Thread.sleep(500);
+                if(flag){
+                    driver.findElement(By.className("zeromodal-close")).click();
+                    return;
+                }
+                Thread.sleep(500);
+                driver.findElement(By.id("btnImport")).click();
+                Thread.sleep(500);
+                flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
+                if(flag){
+                    driver.findElement(By.className("zeromodal-close")).click();
                 }
             }
-            boxClose(driver);
         }catch (Exception e){
-            e.printStackTrace();
             e.printStackTrace();
             taskScreenShot(driver);
             Reporter.log("员工管理 员工列表 员工批量导入失败，错误："+e.toString()+"<br/>");
-        }
-    }
-
-    public void boxClose(WebDriver driver){
-        try{
-            boolean flag = isAlertPresent(driver);
-            if(flag){
-                driver.switchTo().alert().accept();
-            }
-            Thread.sleep(500);
-            flag = isExistBoxOrExistButton(driver,"zeromodal-container",1);
-            if(flag){
-                driver.findElement(By.className("zeromodal-close")).click();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 
