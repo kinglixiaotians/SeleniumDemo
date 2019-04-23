@@ -38,14 +38,14 @@ public class firstLogin {
             Thread.sleep(1000);
             driver.findElement(By.className("layui-layer-btn0")).click();
             if (journal) {
-                Reporter.log("首次登录激活企业成功"+"<br/>");
+                Reporter.log("首次登录激活企业成功，企业号：" + custom + "<br/>");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("首次登录激活企业失败。错误：" + e.toString()+"<br/>");
+                Reporter.log("首次登录激活企业失败。错误：" + e.toString() + "<br/>");
             }
             return false;
         }

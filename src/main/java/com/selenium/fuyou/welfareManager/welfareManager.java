@@ -295,9 +295,6 @@ public class welfareManager {
             driver.findElement(By.id("mobileCode")).sendKeys(cord);
             Thread.sleep(1000);
             driver.findElement(By.name("btnReply")).click();
-            if (journal) {
-                Reporter.log("回复企业订单成功，企业号：" + customNo + "<br/>");
-            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -509,10 +506,11 @@ public class welfareManager {
             } while (isExistBoxOrExistButton(driver, "xubox_shade2", 0));
             Thread.sleep(1000);
             if (isExistBoxOrExistButton(driver, "zeromodal-title1", 1)) {
-                if ("企业余额不足".equals(driver.findElement(By.className("zeromodal-title1")).getText())) {
-                    Reporter.log("一卡通兑换失败，失败原因：企业余额不足" + "<br/>");
+                if (!"兑换成功".equals(driver.findElement(By.className("zeromodal-title1")).getText())) {
+                    taskScreenShot(driver);
+                    Reporter.log("一卡通兑换失败。失败原因见截图" + "<br/>");
                     waitClick(driver, "zeromodal-close", 1);
-                    return true;
+                    return false;
                 }
             }
             waitClick(driver, "zeromodal-close", 1);

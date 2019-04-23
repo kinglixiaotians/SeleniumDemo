@@ -21,10 +21,12 @@ public class customDetail {
             Thread.sleep(1000);
             driver.switchTo().frame("mainframe");
             driver.findElement(By.id("customNo$text")).sendKeys(customNo);
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//*[@id=\"shopScore\"]/span")).click();
             Thread.sleep(3000);
             String str = driver.findElement(By.className("mini-messagebox-content-text")).getText();
             driver.findElement(By.xpath("//*[@class=\"mini-messagebox-buttons\"]/a")).click();
+            Thread.sleep(1000);
             driver.switchTo().defaultContent();
             driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[1]/div[1]/p/span[2]/a[2]")).click();
             if (journal) {

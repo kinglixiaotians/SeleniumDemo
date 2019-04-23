@@ -303,7 +303,7 @@ public class fuYou extends DriverBase {
         }
     }
 
-    @Test(dependsOnMethods = "welfarePayment",description = "企业收款管理")
+    @Test(dependsOnMethods = "welfarePayment",description = "企业收款管理",alwaysRun = true)
     public void enterpriseReceiptManager() throws Exception {
         try{
             Thread.sleep(500);
@@ -329,7 +329,7 @@ public class fuYou extends DriverBase {
         }
     }
 
-    @Test(dependsOnMethods = "enterpriseReceiptManager",description = "一卡通兑换")
+    @Test(dependsOnMethods = "enterpriseReceiptManager",description = "一卡通兑换",alwaysRun = true)
     public void cardExchange() throws Exception {
         try{
             Thread.sleep(500);
@@ -400,7 +400,7 @@ public class fuYou extends DriverBase {
 
     //region 公告管理
 
-    @Test(dependsOnMethods = "cardExchange",description = "公告管理")
+    @Test(dependsOnMethods = "cardExchange",description = "公告管理",alwaysRun = true)
     public void announcementManager() throws Exception {
             Thread.sleep(500);
             list = getNavList(driver,null,"fbgg_menu","li",0);

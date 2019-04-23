@@ -136,8 +136,12 @@ public class flx extends DriverBase {
         //激活成功后重新登录
         if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
             driver.findElement(By.id("asdf")).click();
-        else
+        else {
+            if (journal) {
+                Reporter.log("回复企业订单成功，企业号：" + se.customNo + "订单号为：" + order.orderId + "<br/>");
+            }
             fy.driver.close();
+        }
     }
 
     /**
@@ -174,22 +178,22 @@ public class flx extends DriverBase {
     public void specialOpenCustom_1() {
         //判断是否开启特殊开户
         if (Boolean.parseBoolean(flxOpenSwitch)) {
-            Reporter.log("-----------以下为特殊开户。"+"<br/>");
+            Reporter.log("-----------以下为特殊开户。" + "<br/>");
             journal = false;
 
             login();
             if (se.custom01(driver) && specialOpenCustomProcedure())
-                Reporter.log("特殊开户1----开户并充值一千万优分成功。企业号：" + se.customNo+"<br/>");
+                Reporter.log("特殊开户1----开户并充值一千万优分成功。企业号：" + se.customNo + "<br/>");
             else
-                Reporter.log("特殊开户1----开户失败"+"<br/>");
+                Reporter.log("特殊开户1----开户失败" + "<br/>");
 
             login();
             if (se.custom02(driver) && specialOpenCustomProcedure())
-                Reporter.log("特殊开户2----开户并充值一千万优分成功。企业号：" + se.customNo+"<br/>");
+                Reporter.log("特殊开户2----开户并充值一千万优分成功。企业号：" + se.customNo + "<br/>");
             else
-                Reporter.log("特殊开户1----开户失败"+"<br/>");
+                Reporter.log("特殊开户1----开户失败" + "<br/>");
         } else {
-            Reporter.log("特殊开户未开启"+"<br/>");
+            Reporter.log("特殊开户未开启" + "<br/>");
         }
     }
 
