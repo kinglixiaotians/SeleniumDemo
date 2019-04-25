@@ -231,7 +231,11 @@ public class fuYou extends DriverBase {
                     if(!dep.updateDep(driver)){
                         driver.findElement(By.id("111")).click();
                     }
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
     }
@@ -268,7 +272,11 @@ public class fuYou extends DriverBase {
                     if(!emp.searchEmp(driver)){
                         driver.findElement(By.id("111")).click();
                     }
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
     }
@@ -292,7 +300,11 @@ public class fuYou extends DriverBase {
                     aList.get(navIndex).findElement(By.tagName("a")).click();
                     if (!provideWelfare())
                         driver.findElement(By.id("asdf")).click();
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
         }catch (Exception e){
@@ -318,7 +330,11 @@ public class fuYou extends DriverBase {
                     aList.get(navIndex).findElement(By.tagName("a")).click();
                     if (!w.companyGatheringQrcode(driver, username))
                         driver.findElement(By.id("asdf")).click();
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
         }catch (Exception e){
@@ -344,7 +360,11 @@ public class fuYou extends DriverBase {
                     aList.get(navIndex).findElement(By.tagName("a")).click();
                     if(!w.companyCardPassExchange(driver, username))
                         driver.findElement(By.id("asdf")).click();
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
         }catch (Exception e){
@@ -418,7 +438,11 @@ public class fuYou extends DriverBase {
                     if(!notice.deleteAnnouncement(driver)){
                         driver.findElement(By.id("111")).click();
                     }
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
     }
@@ -464,7 +488,11 @@ public class fuYou extends DriverBase {
                     if(!ei.electronicInvoiceSearch(driver)){
                         driver.findElement(By.id("111")).click();
                     }
+                }else{
+                    Reporter.log("未开通此功能"+"<br/>");
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
     }
@@ -483,6 +511,8 @@ public class fuYou extends DriverBase {
                 if(!as.searchStatement(driver)){
                     driver.findElement(By.id("111")).click();
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
     }
@@ -526,8 +556,12 @@ public class fuYou extends DriverBase {
                 if(!ep.purchaseGoods(driver)){
                     driver.findElement(By.id("1111")).click();
                 }
+            }else{
+                Reporter.log("未开通此功能"+"<br/>");
             }
             Thread.sleep(500);
+        }else{
+            Reporter.log("未开通此功能"+"<br/>");
         }
     }
 
