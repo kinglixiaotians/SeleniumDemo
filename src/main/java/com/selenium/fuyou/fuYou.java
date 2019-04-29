@@ -109,6 +109,11 @@ public class fuYou extends DriverBase {
 
             Reporter.log("企业账号登陆成功--企业号：" + username+"<br/>");
 
+            flag = isExistBoxOrExistButton(driver,"gb",1);
+            if(flag){
+                driver.findElement(By.className("gb")).click();
+            }
+
             Thread.sleep(500);
             flag = isExistBoxOrExistButton(driver,"qyBeginIcon",1);
             if (flag) {
@@ -176,6 +181,10 @@ public class fuYou extends DriverBase {
                 Thread.sleep(500);
             }
             Thread.sleep(500);
+            flag = isExistBoxOrExistButton(driver,"gb",1);
+            if(flag){
+                driver.findElement(By.className("gb")).click();
+            }
             flag = isExistBoxOrExistButton(driver, "qyBeginIcon", 1);
             if (flag) {
                 Thread.sleep(500);
