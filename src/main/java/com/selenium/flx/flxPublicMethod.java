@@ -85,12 +85,15 @@ public class flxPublicMethod {
             e.printStackTrace();
         }
 
-
-        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>" + "<br/>", true);
+//        Reporter.log("<a href=\"" + screenPath + "\">失败原因图片</a>" + "<br/>");
 //        Reporter.log("< a href= " + screenPath + " target=_blank>失败原因图片</ a>", true);
 //        Reporter.log("<img src=" + screenPath +">", true);
 //        Reporter.log("失败图片地址为"+screenPath);
 //        Reporter.log("<img src=\"../../" + screenPath + "\"/>");
 //        Reporter.log("<a src=\"../../" + screenPath + "\"/>");
+
+
+        Reporter.log("<a href=\"" + screenPath + "\">" + "<img src='" + screenPath + "' hight='100' width='100'/>" + "</a>");
+
     }
 }
