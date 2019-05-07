@@ -5,6 +5,7 @@ import com.selenium.flx.customService.customDetail;
 import com.selenium.flx.order.editOrder;
 import com.selenium.flx.custom.editCustom;
 import com.selenium.flx.custom.sepecEditCustom;
+import com.selenium.flx.systemManagement.*;
 import com.selenium.fuyou.fuYou;
 import com.selenium.utils.PropertiesConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class flx extends DriverBase {
     public editCustom custom = new editCustom();
     public editOrder order = new editOrder();
     public customDetail cd = new customDetail();
-    public fuYou fy = new fuYou();
+    //    public fuYou fy = new fuYou();
     //测试地址
     public String flxUrl = PropertiesConfig.getInstance().getProperty("driver.flx.url");
     //登录用户名
@@ -80,6 +81,55 @@ public class flx extends DriverBase {
         }
     }
 
+
+//region    系统管理
+
+    //用户管理
+    @Test(dependsOnMethods = "login", description = "系统管理-用户管理", alwaysRun = true)
+    public void userManage() {
+        driver.findElement(By.id("1021")).click();
+        driver.findElement(By.id("7")).click();
+        userManage u = new userManage();
+        u.selectUser(driver);
+    }
+
+    //菜单管理
+    @Test(dependsOnMethods = "userManage", description = "系统管理-菜单管理", alwaysRun = true)
+    public void menuManage() {
+        driver.findElement(By.id("4")).click();
+        menuManage m = new menuManage();
+        m.menu(driver);
+    }
+
+    //授权管理
+    @Test(dependsOnMethods = "menuManage", description = "系统管理-授权管理", alwaysRun = true)
+    public void authorizationManage() {
+        driver.findElement(By.id("5")).click();
+        authorizationManage a = new authorizationManage();
+        a.roleAuthorization(driver);
+    }
+
+    //角色管理
+    @Test(dependsOnMethods = "authorizationManage", description = "系统管理-角色管理", alwaysRun = true)
+    public void roleManage() {
+        driver.findElement(By.id("6")).click();
+        roleManage r = new roleManage();
+        r.roleManage(driver);
+    }
+
+    //参数管理
+    @Test(dependsOnMethods = "roleManage", description = "系统管理-参数管理", alwaysRun = true)
+    public void parameterManage() {
+        driver.findElement(By.id("7")).click();
+        parameterManage p = new parameterManage();
+        p.parameterManage(driver);
+    }
+
+
+//endregion
+
+//region    客户管理
+
     /**
      * 正常开户
      */
@@ -99,77 +149,7 @@ public class flx extends DriverBase {
             driver.findElement(By.id("asdf")).click();
     }
 
-    /**
-     * 销售管理 订单录入
-     */
-    @Test(dependsOnMethods = "auditCustom", description = "销售管理 订单录入")
-    public void entryOrder() {
-        if (!order.entryOrder(se.customNo, driver))
-            driver.findElement(By.id("asdf")).click();
-    }
-
-    /**
-     * 销售管理 订单复核
-     */
-    @Test(dependsOnMethods = "entryOrder", description = "销售管理 订单复核")
-    public void checkOrder() {
-        //订单复核
-        if (!order.checkOrder(se.customNo, driver))
-            driver.findElement(By.id("asdf")).click();
-    }
-
-    /**
-     * 首次登录激活企业
-     */
-    @Test(dependsOnMethods = "checkOrder", description = "首次登录激活企业")
-    public void firstLoginFuYou() {
-        //首次登录激活企业
-        if (!fy.login(se.customNo, "123456"))
-            driver.findElement(By.id("asdf")).click();
-    }
-
-    /**
-     * 激活成功后重新登录 并回复订单
-     */
-    @Test(dependsOnMethods = "firstLoginFuYou", description = "激活成功后重新登录 并回复订单")
-    public void againLoginFuYou() {
-        //激活成功后重新登录
-        if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
-            driver.findElement(By.id("asdf")).click();
-        else {
-            if (journal) {
-                Reporter.log("回复企业订单成功，企业号：" + se.customNo + "订单号为：" + order.orderId + "<br/>");
-            }
-            fy.driver.close();
-        }
-    }
-
-    /**
-     * 财务管理 订单业务 订单经办
-     */
-    @Test(dependsOnMethods = "againLoginFuYou", description = "财务管理 订单业务 订单经办")
-    public void handleOrder() {
-        if (!order.handleOrder(driver))
-            driver.findElement(By.id("asdf")).click();
-    }
-
-    /**
-     * 财务管理 订单激活
-     */
-    @Test(dependsOnMethods = "handleOrder", description = "财务管理 订单激活")
-    public void activateOrder() {
-        if (!order.activateOrder(driver))
-            driver.findElement(By.id("asdf")).click();
-    }
-
-    /**
-     * 客服明细查询 查询显示余额三秒后注销用户
-     */
-    @Test(dependsOnMethods = "activateOrder", description = "客服明细查询 查询显示余额三秒后注销用户")
-    public void queryDetail() {
-        if (!cd.queryDetail(driver, se.customNo))
-            driver.findElement(By.id("asdf")).click();
-    }
+    //region     特殊开户
 
     /**
      * 特殊开户
@@ -232,5 +212,103 @@ public class flx extends DriverBase {
         driver.findElement(By.xpath("//*[@id=\"wrapper\"]/div[1]/div[1]/p/span[2]/a[2]")).click();
         return true;
     }
+    //endregion
+
+//endregion
+
+//region    销售管理
+
+    /**
+     * 销售管理 订单录入
+     */
+    @Test(dependsOnMethods = "auditCustom", description = "销售管理 订单录入")
+    public void entryOrder() {
+        if (!order.entryOrder(se.customNo, driver))
+            driver.findElement(By.id("asdf")).click();
+    }
+
+    /**
+     * 销售管理 订单复核
+     */
+    @Test(dependsOnMethods = "entryOrder", description = "销售管理 订单复核")
+    public void checkOrder() {
+        //订单复核
+        if (!order.checkOrder(se.customNo, driver))
+            driver.findElement(By.id("asdf")).click();
+    }
+//endregion
+
+//region    运营管理
+//endregion
+
+//region    财务管理
+
+    /**
+     * 财务管理 订单业务 订单经办
+     */
+    @Test(dependsOnMethods = "againLoginFuYou", description = "财务管理 订单业务 订单经办")
+    public void handleOrder() {
+        if (!order.handleOrder(driver))
+            driver.findElement(By.id("asdf")).click();
+    }
+
+    /**
+     * 财务管理 订单激活
+     */
+    @Test(dependsOnMethods = "handleOrder", description = "财务管理 订单激活")
+    public void activateOrder() {
+        if (!order.activateOrder(driver))
+            driver.findElement(By.id("asdf")).click();
+    }
+//endregion
+
+//region    矩阵还款
+//endregion
+
+//region    客服明细
+
+    /**
+     * 客服明细查询 查询显示余额三秒后注销用户
+     */
+    @Test(dependsOnMethods = "activateOrder", description = "客服明细查询 查询显示余额三秒后注销用户")
+    public void queryDetail() {
+        if (!cd.queryDetail(driver, se.customNo))
+            driver.findElement(By.id("asdf")).click();
+    }
+//endregion
+
+//region    绩效管理
+//endregion
+
+//region    银联扫码
+//endregion
+
+
+    /**
+     * 首次登录激活企业
+     */
+    @Test(dependsOnMethods = "checkOrder", description = "首次登录激活企业")
+    public void firstLoginFuYou() {
+        //首次登录激活企业
+//        if (!fy.login(se.customNo, "123456"))
+//        driver.findElement(By.id("asdf")).click();
+    }
+
+    /**
+     * 激活成功后重新登录 并回复订单
+     */
+    @Test(dependsOnMethods = "firstLoginFuYou", description = "激活成功后重新登录 并回复订单")
+    public void againLoginFuYou() {
+        //激活成功后重新登录
+//        if (!fy.login(se.customNo, "123456") || !fy.replyCustomOrder(se.customNo))
+//            driver.findElement(By.id("asdf")).click();
+//        else {
+//            if (journal) {
+//                Reporter.log("回复企业订单成功，企业号：" + se.customNo + "订单号为：" + order.orderId + "<br/>");
+//            }
+//            fy.driver.close();
+//        }
+    }
+
 
 }

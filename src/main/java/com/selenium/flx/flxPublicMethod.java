@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.selenium.flx.flx.journal;
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
+import static com.selenium.fuyou.fuYouMethod.trySelectGet;
 
 public class flxPublicMethod {
 
@@ -42,6 +44,10 @@ public class flxPublicMethod {
             case "cssSelector":
                 driver.findElement(By.cssSelector(url)).clear();
                 driver.findElement(By.cssSelector(url)).sendKeys(value);
+                break;
+            case "name":
+                driver.findElement(By.name(url)).clear();
+                driver.findElement(By.name(url)).sendKeys(value);
                 break;
         }
 
@@ -96,4 +102,31 @@ public class flxPublicMethod {
         Reporter.log("<a href=\"" + screenPath + "\">" + "<img src='" + screenPath + "' hight='100' width='100'/>" + "</a>");
 
     }
+
+
+
+//模版
+    public boolean asdf(WebDriver driver) {
+        try {
+
+            Thread.sleep(500);
+            driver.switchTo().defaultContent();
+            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_manager.jsp')]")));
+
+
+            if (journal) {
+                Reporter.log("系统管理--用户管理--测试完成 <br/>");
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (journal) {
+                taskScreenShot(driver);
+                Reporter.log("系统管理--用户管理--测试失败。错误：" + e.toString() + "<br/>");
+            }
+            return false;
+        }
+    }
+
+
 }
