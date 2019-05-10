@@ -104,14 +104,26 @@ public class flxPublicMethod {
     }
 
 
+    /**
+     * 切换iframe(切换为子级(i=0)或同级)
+     *
+     * @param driver
+     * @param iframeSrc iframe[contains(@src,'iframeSrc')] iframe的src
+     * @param i         切换为子级(0)或同级
+     */
+    public static void switchIframe(WebDriver driver, String iframeSrc, int i) {
+        if (i == 0)
+            driver.switchTo().defaultContent();
+        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'" + iframeSrc + "')]")));
+    }
 
-//模版
+
+    //模版
     public boolean asdf(WebDriver driver) {
         try {
 
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_manager.jsp')]")));
+            switchIframe(driver,"",0);
 
 
             if (journal) {

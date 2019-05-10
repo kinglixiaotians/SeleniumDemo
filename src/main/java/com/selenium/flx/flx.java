@@ -88,43 +88,74 @@ public class flx extends DriverBase {
     @Test(dependsOnMethods = "login", description = "系统管理-用户管理", alwaysRun = true)
     public void userManage() {
         driver.findElement(By.id("1021")).click();
-        driver.findElement(By.id("7")).click();
-        userManage u = new userManage();
-        u.selectUser(driver);
+//        driver.findElement(By.id("7")).click();
+//        userManage u = new userManage();
+//        u.selectUser(driver);
     }
 
     //菜单管理
     @Test(dependsOnMethods = "userManage", description = "系统管理-菜单管理", alwaysRun = true)
     public void menuManage() {
-        driver.findElement(By.id("4")).click();
-        menuManage m = new menuManage();
-        m.menu(driver);
+//        driver.findElement(By.id("4")).click();
+//        menuManage m = new menuManage();
+//        m.menu(driver);
     }
 
     //授权管理
     @Test(dependsOnMethods = "menuManage", description = "系统管理-授权管理", alwaysRun = true)
     public void authorizationManage() {
-        driver.findElement(By.id("5")).click();
-        authorizationManage a = new authorizationManage();
-        a.roleAuthorization(driver);
+//        driver.findElement(By.id("5")).click();
+//        authorizationManage a = new authorizationManage();
+//        a.roleAuthorization(driver);
     }
 
     //角色管理
     @Test(dependsOnMethods = "authorizationManage", description = "系统管理-角色管理", alwaysRun = true)
     public void roleManage() {
-        driver.findElement(By.id("6")).click();
-        roleManage r = new roleManage();
-        r.roleManage(driver);
+//        driver.findElement(By.id("6")).click();
+//        roleManage r = new roleManage();
+//        r.roleManage(driver);
     }
 
     //参数管理
     @Test(dependsOnMethods = "roleManage", description = "系统管理-参数管理", alwaysRun = true)
     public void parameterManage() {
-        driver.findElement(By.id("7")).click();
-        parameterManage p = new parameterManage();
-        p.parameterManage(driver);
+//        driver.findElement(By.id("1101")).click();
+//        parameterManage p = new parameterManage();
+//        p.parameterManage(driver);
     }
 
+    //应用功能管理
+    @Test(dependsOnMethods = "parameterManage", description = "系统管理-应用功能管理", alwaysRun = true)
+    public void appFunctionManage() {
+//        driver.findElement(By.id("3")).click();
+//        appFunctionManage a = new appFunctionManage();
+//        a.appFunctionManage(driver);
+    }
+
+    //组织机构管理
+    @Test(dependsOnMethods = "appFunctionManage", description = "系统管理-组织机构管理", alwaysRun = true)
+    public void organizationManage() {
+//        driver.findElement(By.id("8")).click();
+//        organizationManage o = new organizationManage();
+//        o.organizationManage(driver);
+    }
+
+    //接口权限管理
+    @Test(dependsOnMethods = "organizationManage", description = "系统管理-接口权限管理", alwaysRun = true)
+    public void interfacesPowerManage() {
+//        driver.findElement(By.id("1301")).click();
+//        interfacesPowerManage i = new interfacesPowerManage();
+//        i.interfacesPowerManage(driver);
+    }
+
+    //客户IP设置
+    @Test(dependsOnMethods = "interfacesPowerManage", description = "系统管理-客户IP设置", alwaysRun = true)
+    public void customerIPSettings() {
+        driver.findElement(By.id("1301")).click();
+        customerIPSettings c = new customerIPSettings();
+        c.customerIPSettings(driver);
+    }
 
 //endregion
 

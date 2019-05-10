@@ -122,7 +122,7 @@ public class menuManage {
             Thread.sleep(1000);
             driver.findElement(By.id("removemenu$text")).click();
             Thread.sleep(1000);
-            driver.findElement(By.id("mini-22")).click();
+            driver.findElement(By.xpath("//a[contains(@style,'width: 58px; margin-right: 15px;')]")).click();
             Thread.sleep(1000);
 
             driver.switchTo().defaultContent();
