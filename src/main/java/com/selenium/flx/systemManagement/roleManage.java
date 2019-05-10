@@ -5,17 +5,17 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
 import static com.selenium.flx.flx.journal;
+import static com.selenium.flx.flxPublicMethod.switchIframe;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
 public class roleManage {
 
-
+    //角色管理
     public boolean roleManage(WebDriver driver) {
         try {
             Thread.sleep(1000);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_manager.jsp')]")));
+            switchIframe(driver,"/FlxServer/coframe/rights/role/role_manager.jsp",0);
             //输入查询
             Thread.sleep(500);
             updateInput(driver,"name","criteria._expr[0].roleCode","admin");
@@ -32,8 +32,7 @@ public class roleManage {
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-add")).click();
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_add.jsp')]")));
+            switchIframe(driver,"/FlxServer/coframe/rights/role/role_add.jsp",0);
             //直接点击保存出现两个非空警告
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-save")).click();
@@ -45,8 +44,7 @@ public class roleManage {
 
             //查询新增的角色
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_manager.jsp')]")));
+            switchIframe(driver,"/FlxServer/coframe/rights/role/role_manager.jsp",0);
             Thread.sleep(500);
             updateInput(driver,"name","criteria._expr[1].roleName","自动化测试使用");
             Thread.sleep(500);
@@ -59,8 +57,7 @@ public class roleManage {
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-edit")).click();
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_update.jsp')]")));
+            switchIframe(driver,"/FlxServer/coframe/rights/role/role_update.jsp",0);
             Thread.sleep(500);
             updateInput(driver,"id","capRole.roleCode$text","test003");
             Thread.sleep(500);
@@ -70,8 +67,7 @@ public class roleManage {
 
             //删除
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/role/role_manager.jsp')]")));
+            switchIframe(driver,"/FlxServer/coframe/rights/role/role_manager.jsp",0);
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-remove")).click();
             Thread.sleep(1000);

@@ -14,7 +14,7 @@ import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
 public class appFunctionManage {
-
+    //应用功能管理
     public boolean appFunctionManage(WebDriver driver) {
         try {
 

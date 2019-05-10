@@ -13,7 +13,7 @@ import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
 public class interfacesPowerManage {
-
+    //接口权限管理
     public boolean interfacesPowerManage(WebDriver driver) {
         try {
 

@@ -5,9 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+
 import java.util.List;
 
 import static com.selenium.flx.flx.journal;
+import static com.selenium.flx.flxPublicMethod.switchIframe;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
@@ -19,21 +21,19 @@ public class userManage {
     //  用户管理 查询用户
     public boolean selectUser(WebDriver driver) {
         try {
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/coframe/rights/user/user_list.jsp')]")));
+            switchIframe(driver, "/FlxServer/coframe/rights/user/user_list.jsp", 0);
             updateInput(driver, "className", "mini-textbox-input", "admin");
             Thread.sleep(500);
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-search")).click();
             Thread.sleep(1000);
             driver.findElement(By.className("mini-textbox-input")).clear();
             Thread.sleep(500);
-
             driver.findElement(By.className("mini-buttonedit-icon")).click();
-            List list = driver.findElements(By.className("mini-listbox-item"));
-
+            Thread.sleep(500);
+            List<WebElement> list = driver.findElements(By.className("mini-listbox-item"));
             for (int i = 1; i < list.size(); i++) {
-                WebElement element = (WebElement) list.get(i);
-                element.click();
+                Thread.sleep(500);
+                list.get(i).click();
                 Thread.sleep(500);
                 driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-search")).click();
                 Thread.sleep(1000);

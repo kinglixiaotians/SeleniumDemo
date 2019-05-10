@@ -8,19 +8,19 @@ import org.testng.Reporter;
 import java.util.List;
 
 import static com.selenium.flx.flx.journal;
+import static com.selenium.flx.flxPublicMethod.switchIframe;
 import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 import static com.selenium.fuyou.fuYouMethod.isExistBoxOrExistButton;
 import static com.selenium.utils.PhoneUtil.getNum;
 
 public class parameterManage {
-
+    //参数管理
     public boolean parameterManage(WebDriver driver) {
         try {
 
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/parameter/code/bank_sys_code.jsp')]")));
+            switchIframe(driver,"/FlxServer/parameter/code/bank_sys_code.jsp",0);
 
             //点击添加提示需要选中一条记录
             Thread.sleep(500);
@@ -51,8 +51,7 @@ public class parameterManage {
             driver.findElement(By.cssSelector(".mini-button-text.mini-button-icon.icon-edit")).click();
 
             Thread.sleep(500);
-            driver.switchTo().defaultContent();
-            driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'/FlxServer/parameter/code/bank_sys_code_update.jsp')]")));
+            switchIframe(driver,"/FlxServer/parameter/code/bank_sys_code_update.jsp",0);
             Thread.sleep(500);
             updateInput(driver, "name", "sysCode.codeName", "测试" + getNum(1, 999) + getNum(1, 999));
             Thread.sleep(500);

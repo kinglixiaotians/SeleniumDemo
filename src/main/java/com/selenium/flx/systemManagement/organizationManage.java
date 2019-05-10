@@ -14,7 +14,7 @@ import static com.selenium.flx.flxPublicMethod.taskScreenShot;
 import static com.selenium.flx.flxPublicMethod.updateInput;
 
 public class organizationManage {
-
+    //组织机构管理
     public boolean organizationManage(WebDriver driver) {
         try {
 
@@ -23,7 +23,7 @@ public class organizationManage {
 
             //新增测试组织
             Actions mouse = new Actions(driver);
-            List<WebElement> list = driver.findElements(By.className("mini-tree-nodeshow"));
+            List<WebElement> list = driver.findElements(By.className("mini-tree-nodetext"));
             Thread.sleep(500);
             mouse.contextClick(list.get(0)).perform();
             Thread.sleep(500);
@@ -59,7 +59,12 @@ public class organizationManage {
             switchIframe(driver, "/FlxServer/coframe/org/organization/org_tree.jsp", 0);
             list = driver.findElements(By.className("mini-tree-nodeshow"));
             Thread.sleep(500);
-            list.get(2).click();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getText().equals("test公司")) {
+                    list.get(2).click();
+                    break;
+                }
+            }
             Thread.sleep(500);
             switchIframe(driver, "/FlxServer/coframe/org/organization/org_update.jsp", 1);
             Thread.sleep(500);

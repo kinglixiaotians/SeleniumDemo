@@ -16,6 +16,11 @@
                     <include name="organizationManage"/>
                     <include name="interfacesPowerManage"/>
                     <include name="customerIPSettings"/>
+                    <include name="thirdPartyAccountManage"/>
+                    <include name="other"/>
+                    <include name="queryShopScore"/>
+                    <include name="queryShopScoreAlter"/>
+                    <include name="queryLog"/>
                 </methods>
             </class>
             <!--<class name="com.selenium.fuyou.fuYou">-->

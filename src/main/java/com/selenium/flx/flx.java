@@ -88,75 +88,116 @@ public class flx extends DriverBase {
     @Test(dependsOnMethods = "login", description = "系统管理-用户管理", alwaysRun = true)
     public void userManage() {
         driver.findElement(By.id("1021")).click();
-//        driver.findElement(By.id("7")).click();
-//        userManage u = new userManage();
-//        u.selectUser(driver);
+        driver.findElement(By.id("7")).click();
+        userManage u = new userManage();
+        u.selectUser(driver);
     }
 
     //菜单管理
     @Test(dependsOnMethods = "userManage", description = "系统管理-菜单管理", alwaysRun = true)
     public void menuManage() {
-//        driver.findElement(By.id("4")).click();
-//        menuManage m = new menuManage();
-//        m.menu(driver);
+        driver.findElement(By.id("4")).click();
+        menuManage m = new menuManage();
+        m.menu(driver);
     }
 
     //授权管理
     @Test(dependsOnMethods = "menuManage", description = "系统管理-授权管理", alwaysRun = true)
     public void authorizationManage() {
-//        driver.findElement(By.id("5")).click();
-//        authorizationManage a = new authorizationManage();
-//        a.roleAuthorization(driver);
+        driver.findElement(By.id("5")).click();
+        authorizationManage a = new authorizationManage();
+        a.roleAuthorization(driver);
     }
 
     //角色管理
     @Test(dependsOnMethods = "authorizationManage", description = "系统管理-角色管理", alwaysRun = true)
     public void roleManage() {
-//        driver.findElement(By.id("6")).click();
-//        roleManage r = new roleManage();
-//        r.roleManage(driver);
+        driver.findElement(By.id("6")).click();
+        roleManage r = new roleManage();
+        r.roleManage(driver);
     }
 
     //参数管理
     @Test(dependsOnMethods = "roleManage", description = "系统管理-参数管理", alwaysRun = true)
     public void parameterManage() {
-//        driver.findElement(By.id("1101")).click();
-//        parameterManage p = new parameterManage();
-//        p.parameterManage(driver);
+        driver.findElement(By.id("1101")).click();
+        parameterManage p = new parameterManage();
+        p.parameterManage(driver);
     }
 
     //应用功能管理
     @Test(dependsOnMethods = "parameterManage", description = "系统管理-应用功能管理", alwaysRun = true)
     public void appFunctionManage() {
-//        driver.findElement(By.id("3")).click();
-//        appFunctionManage a = new appFunctionManage();
-//        a.appFunctionManage(driver);
+        driver.findElement(By.id("3")).click();
+        appFunctionManage a = new appFunctionManage();
+        a.appFunctionManage(driver);
     }
 
     //组织机构管理
     @Test(dependsOnMethods = "appFunctionManage", description = "系统管理-组织机构管理", alwaysRun = true)
     public void organizationManage() {
-//        driver.findElement(By.id("8")).click();
-//        organizationManage o = new organizationManage();
-//        o.organizationManage(driver);
+        driver.findElement(By.id("8")).click();
+        organizationManage o = new organizationManage();
+        o.organizationManage(driver);
     }
 
     //接口权限管理
     @Test(dependsOnMethods = "organizationManage", description = "系统管理-接口权限管理", alwaysRun = true)
     public void interfacesPowerManage() {
-//        driver.findElement(By.id("1301")).click();
-//        interfacesPowerManage i = new interfacesPowerManage();
-//        i.interfacesPowerManage(driver);
+        driver.findElement(By.id("1301")).click();
+        interfacesPowerManage i = new interfacesPowerManage();
+        i.interfacesPowerManage(driver);
     }
 
     //客户IP设置
     @Test(dependsOnMethods = "interfacesPowerManage", description = "系统管理-客户IP设置", alwaysRun = true)
     public void customerIPSettings() {
-        driver.findElement(By.id("1301")).click();
+        driver.findElement(By.id("1641")).click();
         customerIPSettings c = new customerIPSettings();
         c.customerIPSettings(driver);
     }
 
+    //第三方账号管理
+    @Test(dependsOnMethods = "customerIPSettings", description = "系统管理-第三方账号管理", alwaysRun = true)
+    public void thirdPartyAccountManage() {
+        driver.findElement(By.id("3021")).click();
+        thirdPartyAccountManage t = new thirdPartyAccountManage();
+        t.thirdPartyAccountManage(driver);
+    }
+
+    //其他(设置安全策略、配置业务字典)
+    @Test(dependsOnMethods = "thirdPartyAccountManage", description = "系统管理-其他(设置安全策略、配置业务字典)", alwaysRun = true)
+    public void other() {
+        driver.findElement(By.id("1102")).click();
+        other o = new other();
+        o.installSafeStrategy(driver);
+        o.disposeTransactionDictionary(driver);
+    }
+
+    //系统账户优分设置
+    @Test(dependsOnMethods = "other", description = "系统管理-系统账户优分设置", alwaysRun = true)
+    public void queryShopScore() {
+        driver.findElement(By.id("2344")).click();
+        queryShopScore q = new queryShopScore();
+        q.queryShopScore(driver);
+    }
+
+    //系统账户优分设置变更记录
+    @Test(dependsOnMethods = "queryShopScore", description = "系统管理-系统账户优分设置变更记录", alwaysRun = true)
+    public void queryShopScoreAlter() {
+        driver.findElement(By.id("2361")).click();
+        queryShopScoreAlter q = new queryShopScoreAlter();
+        q.queryShopScoreAlter(driver);
+    }
+
+    //日志查询(用户登录日志、用户操作日志)
+    @Test(dependsOnMethods = "queryShopScoreAlter", description = "系统管理-日志查询(用户登录日志、用户操作日志)", alwaysRun = true)
+    public void queryLog() {
+        driver.findElement(By.id("2301")).click();
+        queryLog q = new queryLog();
+        q.userLoginLog(driver);
+        q.userOperateLog(driver);
+    }
 //endregion
 
 //region    客户管理
