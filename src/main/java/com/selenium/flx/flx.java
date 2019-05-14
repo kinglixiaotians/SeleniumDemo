@@ -2,6 +2,9 @@ package com.selenium.flx;
 
 import com.selenium.base.DriverBase;
 import com.selenium.flx.customService.customDetail;
+import com.selenium.flx.customerManagement.cooperationCustomRelation;
+import com.selenium.flx.customerManagement.cooperationManager;
+import com.selenium.flx.customerManagement.cusProfileAlterManager;
 import com.selenium.flx.order.editOrder;
 import com.selenium.flx.custom.editCustom;
 import com.selenium.flx.custom.sepecEditCustom;
@@ -202,6 +205,32 @@ public class flx extends DriverBase {
 
 //region    客户管理
 
+    //客户档案变更记录
+    @Test(dependsOnMethods = "queryLog", description = "客户管理--客户档案变更记录", alwaysRun = true)
+    public void cusProfileAlterManager() {
+        driver.findElement(By.id("1061")).click();
+        driver.findElement(By.id("1481")).click();
+        cusProfileAlterManager c = new cusProfileAlterManager();
+        c.cusProfileAlterManager(driver);
+    }
+
+    //合作伙伴档案管理
+    @Test(dependsOnMethods = "cusProfileAlterManager", description = "客户管理--合作伙伴档案管理", alwaysRun = true)
+    public void cooperationManager() {
+        driver.findElement(By.id("2561")).click();
+        cooperationManager c = new cooperationManager();
+        c.cooperationManager(driver);
+    }
+
+    //客户与合作伙伴关系管理
+    @Test(dependsOnMethods = "cooperationManager", description = "客户管理--客户与合作伙伴关系管理", alwaysRun = true)
+    public void cooperationCustomRelation() {
+        driver.findElement(By.id("2562")).click();
+        cooperationCustomRelation c = new cooperationCustomRelation();
+        c.cooperationCustomRelation(driver);
+    }
+
+
     /**
      * 正常开户
      */
@@ -289,6 +318,7 @@ public class flx extends DriverBase {
 //endregion
 
 //region    销售管理
+
 
     /**
      * 销售管理 订单录入
