@@ -5,9 +5,13 @@ import com.selenium.flx.customService.customDetail;
 import com.selenium.flx.customerManagement.cooperationCustomRelation;
 import com.selenium.flx.customerManagement.cooperationManager;
 import com.selenium.flx.customerManagement.cusProfileAlterManager;
+import com.selenium.flx.operateManagement.agentList;
+import com.selenium.flx.operateManagement.custom_power;
 import com.selenium.flx.order.editOrder;
 import com.selenium.flx.custom.editCustom;
 import com.selenium.flx.custom.sepecEditCustom;
+import com.selenium.flx.saleManagement.bankCardCountList;
+import com.selenium.flx.saleManagement.prepaidCardCountList;
 import com.selenium.flx.systemManagement.*;
 import com.selenium.fuyou.fuYou;
 import com.selenium.utils.PropertiesConfig;
@@ -319,6 +323,22 @@ public class flx extends DriverBase {
 
 //region    销售管理
 
+    //银行卡库存查询
+    @Test(dependsOnMethods = "cooperationCustomRelation", description = "销售管理--银行卡库存查询", alwaysRun = true)
+    public void bankCardCountList() {
+        driver.findElement(By.id("1081")).click();
+        driver.findElement(By.id("1201")).click();
+        bankCardCountList b = new bankCardCountList();
+        b.bankCardCountList(driver);
+    }
+
+    //充值卡库存查询
+    @Test(dependsOnMethods = "bankCardCountList", description = "销售管理--充值卡库存查询", alwaysRun = true)
+    public void prepaidCardCountList() {
+        driver.findElement(By.id("1241")).click();
+        prepaidCardCountList p = new prepaidCardCountList();
+        p.prepaidCardCountList(driver);
+    }
 
     /**
      * 销售管理 订单录入
@@ -341,6 +361,25 @@ public class flx extends DriverBase {
 //endregion
 
 //region    运营管理
+
+    //客户绑定
+    @Test(dependsOnMethods = "prepaidCardCountList", description = "运营管理--客户绑定", alwaysRun = true)
+    public void custom_power() {
+        driver.findElement(By.id("1121")).click();
+        driver.findElement(By.id("1701")).click();
+        custom_power q = new custom_power();
+        q.custom_power(driver);
+    }
+
+    //代理商管理
+    @Test(dependsOnMethods = "custom_power", description = "运营管理--代理商管理", alwaysRun = true)
+    public void agentList() {
+        driver.findElement(By.id("2921")).click();
+        agentList a = new agentList();
+        a.agentList(driver);
+    }
+
+
 //endregion
 
 //region    财务管理

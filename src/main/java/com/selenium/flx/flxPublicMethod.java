@@ -127,14 +127,14 @@ public class flxPublicMethod {
 
 
             if (journal) {
-                Reporter.log("客户管理--用户管理--测试完成 <br/>");
+                Reporter.log("运营管理--用户管理--测试完成 <br/>");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (journal) {
                 taskScreenShot(driver);
-                Reporter.log("客户管理--用户管理--测试失败。错误：" + e.toString() + "<br/>");
+                Reporter.log("运营管理--用户管理--测试失败。错误：" + e.toString() + "<br/>");
             }
             return false;
         }
