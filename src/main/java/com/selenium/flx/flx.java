@@ -386,14 +386,14 @@ public class flx extends DriverBase {
 //region    财务管理
 
     //批量代充业务（查询）
-    @Test(dependsOnMethods = "login", description = "财务管理--批量代充业务（查询）", alwaysRun = true)
-    public void rechargeQueryList() {
-        driver.findElement(By.id("1261")).click();
-        driver.findElement(By.id("1591")).click();
-        driver.findElement(By.id("1596")).click();
-        rechargeQueryList r = new rechargeQueryList();
-        r.rechargeQueryList(driver);
-    }
+//    @Test(dependsOnMethods = "login", description = "财务管理--批量代充业务（查询）", alwaysRun = true)
+//    public void rechargeQueryList() {
+//        driver.findElement(By.id("1261")).click();
+//        driver.findElement(By.id("1591")).click();
+//        driver.findElement(By.id("1596")).click();
+//        rechargeQueryList r = new rechargeQueryList();
+//        r.rechargeQueryList(driver);
+//    }
 
 
     /**
