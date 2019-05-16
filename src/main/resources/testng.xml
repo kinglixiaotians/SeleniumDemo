@@ -8,6 +8,7 @@
 
                     <include name="flx"/>
                     <include name="login"/>
+
                     <include name="userManage"/>
                     <include name="menuManage"/>
                     <include name="authorizationManage"/>
@@ -22,13 +23,20 @@
                     <include name="queryShopScore"/>
                     <include name="queryShopScoreAlter"/>
                     <include name="queryLog"/>
+
                     <include name="cusProfileAlterManager"/>
                     <include name="cooperationManager"/>
                     <include name="cooperationCustomRelation"/>
+
                     <include name="bankCardCountList"/>
                     <include name="prepaidCardCountList"/>
+
                     <include name="custom_power"/>
                     <include name="agentList"/>
+
+                    <!--<include name="rechargeQueryList"/>-->
+
+
 
                 </methods>
             </class>

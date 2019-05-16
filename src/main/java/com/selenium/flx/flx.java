@@ -5,6 +5,7 @@ import com.selenium.flx.customService.customDetail;
 import com.selenium.flx.customerManagement.cooperationCustomRelation;
 import com.selenium.flx.customerManagement.cooperationManager;
 import com.selenium.flx.customerManagement.cusProfileAlterManager;
+import com.selenium.flx.financeManagement.rechargeQueryList;
 import com.selenium.flx.operateManagement.agentList;
 import com.selenium.flx.operateManagement.custom_power;
 import com.selenium.flx.order.editOrder;
@@ -383,6 +384,17 @@ public class flx extends DriverBase {
 //endregion
 
 //region    财务管理
+
+    //批量代充业务（查询）
+    @Test(dependsOnMethods = "login", description = "财务管理--批量代充业务（查询）", alwaysRun = true)
+    public void rechargeQueryList() {
+        driver.findElement(By.id("1261")).click();
+        driver.findElement(By.id("1591")).click();
+        driver.findElement(By.id("1596")).click();
+        rechargeQueryList r = new rechargeQueryList();
+        r.rechargeQueryList(driver);
+    }
+
 
     /**
      * 财务管理 订单业务 订单经办
